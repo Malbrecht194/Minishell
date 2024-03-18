@@ -6,33 +6,22 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/08 16:35:52 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/18 14:06:15 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/minishell.h"
 
-void	change_quoting(char **to_change)
+void	change_quoting(char **to_change, char **env)
 {
 	int		i;
-	int		len;
 	char	**tmp;
-	char	*s_env;
 
 	i = 1;
 	tmp = ft_split(*to_change, '$');
 	while (tmp[i])
 	{
-		len = 0;
-		while(ft_isalnum(tmp[i][len]))
-			len++;
-		s_env = ft_substr(tmp[i], 0, len);
-		if (!getenv(s_env))
-			tmp[0] = join_and_free(tmp[0], "");
-		else
-			tmp[0] = join_and_free(tmp[0], getenv(s_env));
-		tmp[0] = join_and_free(tmp[0], tmp[i] + len);
-		free(s_env);
+		expand_env(&tmp[0], &tmp[i], env);
 		i++;
 	}
 	free(*to_change);
@@ -40,24 +29,23 @@ void	change_quoting(char **to_change)
 	ft_free_2d_array((void **)tmp);
 }
 
-void	check_quoting(t_pipex **l_list)
+void	check_quoting(t_pipex **l_list, char **env)
 {
 	int		i;
-	int		j;
 	t_pipex	*tmp;
 
 	tmp = *l_list;
-	i = 1;
 	while (tmp)
 	{
-		j = 0;
+		i = 1;
 		while (tmp->cmd.flags[i])
 		{
 			if (ft_strstr(tmp->cmd.flags[i], "\""))
-				change_quoting(&tmp->cmd.flags[i]);
+				change_quoting(&tmp->cmd.flags[i], env);
 			else if (!ft_strstr(tmp->cmd.flags[i], "\"")
-				&& !ft_strstr(tmp->cmd.flags[i], "\'"))
-				change_quoting(&tmp->cmd.flags[i]);
+				&& !ft_strstr(tmp->cmd.flags[i], "\'")
+				&& tmp->cmd.flags[i][0] == '$')
+				expand_env(NULL, &tmp->cmd.flags[i], env);
 			i++;
 		}
 		tmp = tmp->next;
@@ -74,7 +62,7 @@ char	check_ifs(char a_char)
 	while (ifs[i])
 	{
 		if (a_char == ifs[i])
-			return (1);
+			return (-1);
 		i++;
 	}
 	return (a_char);

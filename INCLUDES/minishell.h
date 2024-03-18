@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 11:20:52 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/08 14:11:29 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/16 19:15:59 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 /*================================== INCLUDES ================================*/
 
 # include "../Libft/libft.h"
+# include "builtins.h"
 # include <errno.h>
 # include <limits.h>
 # include <readline/history.h>
@@ -69,17 +70,17 @@ typedef struct s_minishell
 	char			**env;
 }					t_minishell;
 
-char				*get_prompt(void);
-int					array_len(void **array);
-t_pipex				*create_link_list(char **commands);
+char				*get_prompt(char **env);
+t_pipex				*create_link_list(char **commands, char **env);
 void				ft_pipe_lstclear(t_pipex **lst);
 void				ft_pipe_lstadd_back(t_pipex **lst, t_pipex *new);
 t_pipex				*ft_pipe_lstlast(t_pipex *lst);
-char				*test_access(char *command);
+char				*test_access(char *command, char **env);
 char				**get_flags(char *command, char *access);
 void				check_args(t_minishell *minish, char *rl_args);
-char	**dup_array(char **array);
-char	*skip_quoting(char *arg);
-void	check_quoting(t_pipex **l_list);
+char				**dup_array(char **array);
+char				*skip_quoting(char *arg);
+void				check_quoting(t_pipex **l_list, char **env);
+void				expand_env(char **add_to, char **to_search, char **env);
 
 #endif

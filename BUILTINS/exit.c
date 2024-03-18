@@ -6,13 +6,13 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:25:43 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/07 16:29:21 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/15 21:39:54 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../INCLUDES/builtins.h"
 
-int	ft_exit(int ac, char **av, char **env)
+int	ft_exit(int ac, char **av, char ***env)
 {
 	(void) ac;
 	(void) av;

@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:08:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/07 20:42:46 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/18 14:11:29 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**get_flags(char *command, char *access)
 {
 	char	**flags;
 
-	flags = ft_split(command, 1);
+	flags = ft_split(command, -1);
 	if (!flags || !*flags)
 		return (NULL);
 	free(flags[0]);
@@ -53,28 +53,27 @@ char	**get_flags(char *command, char *access)
 	return (flags);
 }
 
-char	**get_path(void)
+char	**get_path(char **env)
 {
 	char	*paths;
 	char	**split_path;
 
-	paths = ft_strjoin("./BUILTINS:", getenv("PATH"));
+	paths = ft_getenv("PATH", env);
 	if (!paths)
 		return(NULL);
 	split_path = ft_split(paths, ':');
 	if (!split_path)
 		return (NULL);
-	free(paths);
 	return (split_path);
 }
 
-char	*test_access(char *command)
+char	*test_access(char *command, char **env)
 {
 	char	**exe_path;
 	char	*tmp_path;
 	char	**if_flags;
 
-	if_flags = ft_split(command, 1);
+	if_flags = ft_split(command, -1);
 	if (!if_flags)
 		return (NULL);
 	if (access(if_flags[0], F_OK | X_OK) == 0)
@@ -85,7 +84,7 @@ char	*test_access(char *command)
 		ft_free_2d_array((void **)if_flags);
 		return (tmp_path);
 	}
-	exe_path = get_path();
+	exe_path = get_path(env);
 	if (!exe_path)
 		return (NULL);
 	tmp_path = check_access(exe_path, if_flags[0]);

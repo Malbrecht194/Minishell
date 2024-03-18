@@ -6,11 +6,11 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:38:09 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/07 16:29:00 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/15 21:40:18 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../INCLUDES/builtins.h"
 
 int	check_flags(char *av)
 {
@@ -19,7 +19,7 @@ int	check_flags(char *av)
 	i = 0;
 	if (!av)
 		return (0);
-	if (av[i] == '-')
+	if (av[i] == '-' && av[i + 1] == 'n')
 		i++;
 	while (av[i] == 'n')
 		i++;
@@ -29,22 +29,25 @@ int	check_flags(char *av)
 		return (0);
 }
 
-int	ft_echo(int ac, char **av, char **env)
+int	ft_echo(int ac, char **av, char ***env)
 {
 	int		nl;
+	int		o_nl;
 	int		i;
 
 	(void) env;
-	nl = 0;
+	nl = 1;
+	o_nl = 1;
 	i = 0;
 	while(ac > 1 && av[++i])
 	{
 		nl = check_flags(av[i]);
-		if (nl == 1)
+		if (o_nl == 1 && nl == 1)
 			continue ;
 		printf("%s", av[i]);
 		if (av[i + 1])
 			printf(" ");
+		o_nl = nl;
 	}
 	if (ac >= 1 && !check_flags(av[1]))
 		printf("\n");

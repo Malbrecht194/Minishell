@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/08 16:37:03 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/14 20:43:10 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,26 @@
 char	**dup_array(char **array)
 {
 	char	**n_array;
-	char	*tmp;
+	int		len;
+	int		i;
 
 	if (!array || !*array)
 		return (NULL);
-	tmp = ft_unsplit(array, 1);
-	if (!tmp)
+	i = 0;
+	len = ft_array_len((void **)array);
+	n_array = ft_calloc(sizeof(char *), len + 1);
+	if (!n_array)
 		return (NULL);
-	n_array = ft_split(tmp, 1);
-	free(tmp);
-	if (!n_array || !*n_array)
-		return (NULL);
+	while (i < len)
+	{
+		n_array[i] = ft_strdup(array[i]);
+		if (!n_array[i])
+		{
+			ft_free_2d_array((void **)n_array);
+			return (NULL);
+		}
+		i++;
+	}
 	return (n_array);
 }
+
