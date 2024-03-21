@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 11:20:52 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/16 19:15:59 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/18 15:19:46 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,6 @@
 /*=================================== STRUCT =================================*/
 
 # define IFS " \t\n"
-
-typedef struct s_prompt
-{
-	char			*login;
-	char			*location;
-	char			*pwd;
-	char			*cwd;
-	char			*tmp_prompt;
-	char			*tmp_prompt2;
-	char			*final_prompt;
-}					t_prompt;
 
 typedef struct s_exec
 {

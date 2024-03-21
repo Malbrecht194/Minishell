@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:19:24 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/16 13:49:37 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/18 14:35:44 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ char	*check_home(char *home, char *cwd)
 	char		*tmp;
 	
 	i = 0;
-	while (home[i] == cwd[i])
+	while (home && home[i] == cwd[i])
 		i++;
-	if (i == ft_strlen(home))
+	if (home && i == ft_strlen(home))
 	{
 		tmp = ft_substr(cwd, i, ft_strlen(pwd) - ft_strlen(home));
 		if (!tmp)

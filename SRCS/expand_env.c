@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:29:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/16 19:29:24 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/18 15:34:07 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	expand_env(char **add_to, char **to_search, char **env)
 	len = 0;
 	if ((*to_search)[0] == '$')
 		*to_search += 1;
-	while(ft_isalnum((*to_search)[len]))
+	while (ft_isalnum((*to_search)[len]) || (*to_search)[len] == '_')
 		len++;
 	s_env = ft_substr((*to_search), 0, len);
-	if(add_to)
+	if (add_to)
 	{
 		if (!ft_getenv(s_env, env))
 			*add_to = join_and_free(*add_to, "");

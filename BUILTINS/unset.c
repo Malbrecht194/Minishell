@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:23:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/16 10:57:35 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/18 15:15:06 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	ft_unset(int ac, char **av, char ***env)
 	int	i;
 	int	tmp;
 
-	i = 1;
 	(void)ac;
-	while (av[i])
+	i = 0;
+	while (av[++i])
 	{
 		tmp = check_env((*env), av[i]);
 		if (!tmp)
@@ -85,7 +85,6 @@ int	ft_unset(int ac, char **av, char ***env)
 			continue ;
 		}
 		change_env(tmp, env);
-		i++;
 	}
 	remake_env(env);
 	return (0);

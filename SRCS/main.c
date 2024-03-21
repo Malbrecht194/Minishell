@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:33:20 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/16 13:31:10 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/18 15:20:46 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	main(int ac, char **av, char **envp)
 		minish->prompt = get_prompt(minish->env);
 		rl_buff = readline(minish->prompt);
 		add_history(rl_buff);
-		check_args(minish, rl_buff);
+		// check_args(minish, rl_buff);
 		free(minish->prompt);
 	}
-	
+
 }

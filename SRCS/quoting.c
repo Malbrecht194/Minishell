@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quoting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/18 14:06:15 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/18 15:26:51 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,11 @@ int		to_next_quote(char *arg, char quot)
 	else
 		return (i + 1);
 }
+
 char	*skip_quoting(char *arg)
 {
 	int	i;
-	
+
 	i = 0;
 	while (arg[i])
 	{
