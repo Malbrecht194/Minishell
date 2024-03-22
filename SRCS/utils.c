@@ -6,11 +6,27 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/14 20:43:10 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/22 10:11:39 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/minishell.h"
+
+char	check_ifs(char a_char)
+{
+	int		i;
+	char	*ifs;
+
+	i = 0;
+	ifs = IFS;
+	while (ifs[i])
+	{
+		if (a_char == ifs[i])
+			return (-1);
+		i++;
+	}
+	return (a_char);
+}
 
 char	**dup_array(char **array)
 {

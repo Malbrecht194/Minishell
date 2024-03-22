@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 11:20:52 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/16 19:15:59 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/22 10:42:25 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,13 @@ char				*test_access(char *command, char **env);
 char				**get_flags(char *command, char *access);
 void				check_args(t_minishell *minish, char *rl_args);
 char				**dup_array(char **array);
-char				*skip_quoting(char *arg);
-void				check_quoting(t_pipex **l_list, char **env);
-void				expand_env(char **add_to, char **to_search, char **env);
+char				*skip_quoting(char *arg, char **env);
+int					check_expand(char **arg, char *pre_quot, char *b_quot,
+						char **env);
+int					expand_env(char **add_to, char **to_search, char **env);
+int					to_next_quote(char *arg, char quot);
+int					check_e_quot(char **arg, char *pre_quot, char *b_quot,
+						char **env);
+void				change_expand(char **arg, char **env);
 
 #endif

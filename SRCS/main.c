@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:33:20 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/16 13:31:10 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/20 19:07:42 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ int	main(int ac, char **av, char **envp)
 		check_args(minish, rl_buff);
 		free(minish->prompt);
 	}
-	
+	free(rl_buff);
 }

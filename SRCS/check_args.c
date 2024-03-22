@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:48:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/18 14:10:23 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/22 09:44:56 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 void	check_args(t_minishell *minish, char *rl_args)
 {
 	char	**args;
-	char	*no_redir;
 
-	rl_args = skip_quoting(rl_args);
-	no_redir = ft_strtrim(rl_args, "<>");
-	args = ft_split(no_redir, '|');
-	free(no_redir);
+	if (!rl_args)
+		return ;
+	rl_args = skip_quoting(rl_args, minish->env);
+	if (!rl_args)
+		return ;
+	// printf("%s\n", rl_args);
+	args = ft_split(rl_args, '|');
 	minish->cmd = create_link_list(args, minish->env);
 	
 	t_pipex	*tmp;
 	int		i;
 	
 	tmp = minish->cmd;
-	check_quoting(&tmp, minish->env);
 	while(tmp)
 	{
 		i = 0;

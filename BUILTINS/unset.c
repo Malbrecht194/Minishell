@@ -6,31 +6,24 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:23:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/16 10:57:35 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/22 10:47:50 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/builtins.h"
 
-int	remake_env(char ***env)
+void	remake_env(char ***env)
 {
 	char	**e_tmp;
 	int		env_size;
 	int		i;
 
 	i = 0;
-	env_size = ft_array_len(*(void **)env);
-	e_tmp = ft_calloc(sizeof(char *), env_size + 1);
+	e_tmp = dup_array(*env);
 	if (!e_tmp)
-		return (1);
-	while ((*env)[i])
-	{
-		e_tmp[i] = (*env)[i];
-		i++;
-	}
-	free(*env);
+		return ;
 	*env = e_tmp;
-	return (0);
+	return ;
 }
 
 void	change_env(int to_del, char ***env)
