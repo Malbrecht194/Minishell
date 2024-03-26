@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:33:20 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/18 15:20:46 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:39:04 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ int	main(int ac, char **av, char **envp)
 		minish->prompt = get_prompt(minish->env);
 		rl_buff = readline(minish->prompt);
 		add_history(rl_buff);
-		// check_args(minish, rl_buff);
+		check_args(minish, rl_buff);
 		free(minish->prompt);
 	}
-
 }

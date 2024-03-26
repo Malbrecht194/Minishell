@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 11:20:52 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/18 15:19:46 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:09:13 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <term.h>
+# include "lexor.h"
 
 /*================================ PIPE FD TYPE ==============================*/
 # define READ_FD 0
@@ -55,6 +56,7 @@ typedef struct s_pipex
 typedef struct s_minishell
 {
 	struct s_pipex	*cmd;
+	struct s_chris	*cmd_line;
 	char			*prompt;
 	char			**env;
 }					t_minishell;

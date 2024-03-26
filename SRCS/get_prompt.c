@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:19:24 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/18 14:35:44 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/03/22 09:49:37 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*check_home(char *home, char *cwd)
 	size_t		i;
 	char		*pwd;
 	char		*tmp;
-	
+
 	i = 0;
 	while (home && home[i] == cwd[i])
 		i++;
@@ -63,6 +63,7 @@ char	*check_home(char *home, char *cwd)
 		return (NULL);
 	return (pwd);
 }
+
 char	*last_part(char **env)
 {
 	char	*pwd;
@@ -114,5 +115,5 @@ char	*get_prompt(char **env)
 		return (error);
 	if (error)
 		free(error);
-	return(final);
+	return (final);
 }

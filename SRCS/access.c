@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:08:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/18 14:11:29 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/22 09:49:51 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**get_path(char **env)
 
 	paths = ft_getenv("PATH", env);
 	if (!paths)
-		return(NULL);
+		return (NULL);
 	split_path = ft_split(paths, ':');
 	if (!split_path)
 		return (NULL);
