@@ -6,20 +6,28 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:29:04 by malbrech          #+#    #+#             */
-/*   Updated: 2024/03/26 15:38:11 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:58:13 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/minishell.h"
+#include "../INCLUDES/lexor.h"
 
 //Creer un chris vide
-t_chris	*ft_chrisnew(int index)
+//------Penser a changer ce que j'ai besoin quand je creer un chris-----------//
+t_chris	*ft_chrisnew(char **cmd)
 {
 	t_chris	*new;
 
 	new = (t_chris *)malloc(sizeof(*new));
 	if (!new)
 		return (NULL);
+	new->cmd = cmd;
+	new->fd_in = NULL;
+	new->fd_out = NULL;
+	new->redirection = NULL;
+	new->pid = NULL;
+	new->pipe = NULL;
 	new->next = NULL;
 	return (new);
 }
