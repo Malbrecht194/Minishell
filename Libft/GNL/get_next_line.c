@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:10:14 by mhaouas           #+#    #+#             */
-/*   Updated: 2023/11/20 13:26:27 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/26 15:03:53 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*gnl_loop(char *storage, int fd)
 			return (NULL);
 		}
 		buffer[nb_char] = 0;
-		storage = join_and_free(storage, buffer);
+		storage = join_and_free(storage, buffer, 1, 0);
 		if (is_new_line(storage) != -1 || nb_char < BUFFER_SIZE)
 			break ;
 	}

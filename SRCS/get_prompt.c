@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:19:24 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/18 17:54:06 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/26 15:43:17 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ char	*first_part(void)
 	tmp = ft_strjoin("\001\033[37m\002", login);
 	if (!tmp)
 		return (error);
-	tmp = join_and_free(tmp, "\001\033[31m\002@");
+	tmp = join_and_free(tmp, "\001\033[31m\002@", 1, 0);
 	if (!tmp)
 		return (error);
-	tmp = join_and_free(tmp, location);
-	tmp = join_and_free(tmp, ":");
+	tmp = join_and_free(tmp, location, 1, 0);
+	tmp = join_and_free(tmp, ":", 1, 0);
 	if (!tmp)
 		return (error);
 	if (error)
@@ -54,8 +54,7 @@ char	*check_home(char *home, char *cwd)
 		tmp = ft_substr(cwd, i, ft_strlen(pwd) - ft_strlen(home));
 		if (!tmp)
 			return (NULL);
-		pwd = ft_strjoin("\001\033[36m\002~", tmp);
-		free(tmp);
+		pwd = join_and_free("\001\033[36m\002~", tmp, 0, 1);
 	}
 	else
 		pwd = ft_strjoin("\001\033[36m\002", cwd);
@@ -82,7 +81,7 @@ char	*last_part(char **env)
 	without_home = check_home(home, pwd);
 	if (i)
 		free(pwd);
-	pwd = join_and_free(without_home, ">\001\033[0m\002 ");
+	pwd = join_and_free(without_home, ">\001\033[0m\002 ", 1, 0);
 	if (!pwd)
 		return (error);
 	if (error)
@@ -107,9 +106,7 @@ char	*get_prompt(char **env)
 		free(f_part);
 		return (error);
 	}
-	final = ft_strjoin(f_part, l_part);
-	free(f_part);
-	free(l_part);
+	final = join_and_free(f_part, l_part, 1, 1);
 	if (!final && error)
 		return (error);
 	if (error)

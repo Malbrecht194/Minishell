@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:47:25 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/22 09:47:00 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/25 18:30:39 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	main(int ac, char **av, char **env)
 	while (av[i])
 	{
 		tmp = ft_strdup(av[i]);
-		tmp = skip_quoting(tmp, dup_env);
+		tmp = skip_quoting(&tmp, dup_env);
+		tmp = delete_quote(&tmp, tmp, 0, 0);
 		printf("%s\n", tmp);
 		free(tmp);
 		i++;
@@ -40,5 +41,4 @@ int	main(int ac, char **av, char **env)
 	// test[2] = "b\'";
 	// test[3] = NULL;
 	// execve(test[0], test, dup_env);
-	printf("fshfjkshfjk");
 }

@@ -12,8 +12,8 @@ SRCS = SRCS/main.c \
 	SRCS/link_list_utils.c \
 	SRCS/access.c \
 	SRCS/utils.c \
-	SRCS/quoting.c \
-	SRCS/expand_env.c
+	SRCS/format_readline/format_rl.c \
+	SRCS/format_readline/expand_env.c
 
 #============= BUILTINS SOUCES =============#
 BUILTINS = BUILTINS/echo.c \

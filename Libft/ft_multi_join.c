@@ -1,48 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   ft_multi_join.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 12:10:08 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/26 14:58:09 by mhaouas          ###   ########.fr       */
+/*   Created: 2024/03/26 15:14:56 by mhaouas           #+#    #+#             */
+/*   Updated: 2024/03/26 15:22:04 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
 
-int	is_new_line(char *buff)
+#include "libft.h"
+
+char	*ft_multi_join(int n_to_free, char *join_to, ...)
 {
-	int	i;
+	va_list	va_to_join;
+	char	*tmp;
+	char	*final;
+	int		i;
 
 	i = 0;
-	while (buff[i] != '\n' && buff[i])
+	va_start(va_to_join, join_to);
+	final = ft_strdup(join_to);
+	if (!final)
+		return (NULL);
+	while (i < n_to_free)
 	{
+		tmp = va_arg(va_to_join, char *);
+		if (tmp)
+			final = join_and_free(final, tmp, 1, 0);
+		if (!final)
+			return (NULL);
 		i++;
 	}
-	if (buff[i] == '\n')
-		return (i + 1);
-	return (-1);
-}
-
-char	*ft_strcat(char *s1, char *s2, char *array)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	while (s1 && s1[i])
-	{
-		array[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		array[i + j] = s2[j];
-		j++;
-	}
-	array[j + i] = '\0';
-	return (array);
+	va_end(va_to_join);
+	return (final);
 }

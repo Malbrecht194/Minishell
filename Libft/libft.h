@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:50:38 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/08 10:31:04 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/26 15:46:29 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ int					ft_atoi_base(char *base, char *to_convert);
 int					ft_abs(int to_check);
 size_t				ft_array_len(void **array);
 char				*ft_unsplit(char **tab_to_unsplit, char sep);
+char				*join_and_free(char *s1, char *s2, int f_s1, int f_s2);
+void				ft_multi_free(int n_to_free, ...);
+
 /*=================== BONUS PART ===================*/
 /*=========BONUS STRUCT=========*/
 typedef struct s_list

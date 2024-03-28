@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_multi_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 12:10:11 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/26 14:58:48 by mhaouas          ###   ########.fr       */
+/*   Created: 2024/03/26 15:06:11 by mhaouas           #+#    #+#             */
+/*   Updated: 2024/03/26 15:15:19 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
+void	ft_multi_free(int n_to_free, ...)
+{
+	va_list	va_to_free;
+	void	*tmp;
+	int		i;
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include "../libft.h"
-
-char	*get_next_line(int fd);
-char	*gnl_loop(char *storage, int fd);
-int		is_new_line(char *buff);
-char	*dup_to_new_line(char *storage);
-char	*ft_strcat(char *s1, char *s2, char *array);
-
-#endif
+	i = 0;
+	va_start(va_to_free, n_to_free);
+	while (i < n_to_free)
+	{
+		tmp = va_arg(va_to_free, void *);
+		if (tmp)
+			free(tmp);
+		i++;
+	}
+	va_end(va_to_free);
+}

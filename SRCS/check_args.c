@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:48:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/22 09:44:56 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/27 13:57:17 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_args(t_minishell *minish, char *rl_args)
 
 	if (!rl_args)
 		return ;
-	rl_args = skip_quoting(rl_args, minish->env);
+	format_rl(&rl_args, minish->env);
 	if (!rl_args)
 		return ;
 	// printf("%s\n", rl_args);
