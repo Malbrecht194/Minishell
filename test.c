@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:47:25 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/25 18:30:39 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/29 09:35:27 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,21 @@ int	main(int ac, char **av, char **env)
 	// (void) ac;
 	// (void) av;
 	dup_env = dup_array(env);
-	if (ac == 1)
+	(void) av;
+	if (ac != 1)
 		return (1);
-	while (av[i])
+	tmp = "";
+	while (tmp)
 	{
-		tmp = ft_strdup(av[i]);
-		tmp = skip_quoting(&tmp, dup_env);
+		tmp = readline("> ");
+		add_history(tmp);
+		format_rl(&tmp, dup_env);
 		tmp = delete_quote(&tmp, tmp, 0, 0);
 		printf("%s\n", tmp);
 		free(tmp);
 		i++;
 	}
+	free(tmp);
 	ft_free_2d_array((void **)dup_env);
 	// char	*test[4];
 	

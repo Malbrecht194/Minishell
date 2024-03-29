@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/29 13:14:42 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/26 09:56:09 by mhaouas          ###   ########.fr       */
+/*   Created: 2024/03/28 15:10:46 by mhaouas           #+#    #+#             */
+/*   Updated: 2024/03/28 15:10:51 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static int	envp_size(char *env)
 	return (i);
 }
 
-
 char	*ft_getenv(char *to_get, char **env)
 {
 	int		i;
@@ -40,13 +39,14 @@ char	*ft_getenv(char *to_get, char **env)
 	else if (env[i] && !ft_strncmp(to_get, env[i], ft_strlen(to_get))
 		&& env[i][ft_strlen(to_get)] != '=')
 		return (ft_getenv(to_get, &env[i + 1]));
-	return(NULL);
+	else
+		return (NULL);
 }
 
 int	ft_env(int ac, char **av, char ***envp)
 {
 	int	i;
-	
+
 	(void)ac;
 	(void)av;
 	i = 0;

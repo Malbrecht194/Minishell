@@ -13,7 +13,8 @@ SRCS = SRCS/main.c \
 	SRCS/access.c \
 	SRCS/utils.c \
 	SRCS/format_readline/format_rl.c \
-	SRCS/format_readline/expand_env.c
+	SRCS/format_readline/expand_env.c \
+	SRCS/format_readline/utils_expand.c
 
 #============= BUILTINS SOUCES =============#
 BUILTINS = BUILTINS/echo.c \

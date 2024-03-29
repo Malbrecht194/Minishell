@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 20:17:29 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/20 11:17:52 by mhaouas          ###   ########.fr       */
+/*   Created: 2024/03/28 15:11:00 by mhaouas           #+#    #+#             */
+/*   Updated: 2024/03/28 15:11:03 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	env_size(char *env)
 	if (env[i] != '=' && !(ft_isalnum(env[i]) || env[i] == '_'))
 		return (-1);
 	else if (env[i] != '=')
-		return (1);
+		return (0);
 	return (i);
 }
 
@@ -85,7 +85,7 @@ int	ft_export(int ac, char **av, char ***env)
 			continue ;
 		while ((*env)[i] && ft_strncmp((*env)[i], av[j], env_len))
 			i++;
-		if ((*env)[i] && !ft_strncmp((*env)[i ], av[j], env_len))
+		if ((*env)[i] && !ft_strncmp((*env)[i], av[j], env_len))
 			error += replace_env(av[j], &((*env)[i]));
 		else
 			error += no_env(av[j], env);

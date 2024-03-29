@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 16:23:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/22 10:47:50 by mhaouas          ###   ########.fr       */
+/*   Created: 2024/03/28 15:11:26 by mhaouas           #+#    #+#             */
+/*   Updated: 2024/03/28 15:11:29 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int	ft_unset(int ac, char **av, char ***env)
 	int	i;
 	int	tmp;
 
-	i = 1;
 	(void)ac;
-	while (av[i])
+	i = 0;
+	while (av[++i])
 	{
 		tmp = check_env((*env), av[i]);
 		if (!tmp)
@@ -78,7 +78,6 @@ int	ft_unset(int ac, char **av, char ***env)
 			continue ;
 		}
 		change_env(tmp, env);
-		i++;
 	}
 	remake_env(env);
 	return (0);

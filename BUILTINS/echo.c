@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:38:09 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/15 21:40:18 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/28 15:11:36 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_flags(char *av)
 {
 	int	i;
-	
+
 	i = 0;
 	if (!av)
 		return (0);
@@ -39,7 +39,7 @@ int	ft_echo(int ac, char **av, char ***env)
 	nl = 1;
 	o_nl = 1;
 	i = 0;
-	while(ac > 1 && av[++i])
+	while (ac > 1 && av[++i])
 	{
 		nl = check_flags(av[i]);
 		if (o_nl == 1 && nl == 1)

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/29 11:20:52 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/27 14:08:02 by mhaouas          ###   ########.fr       */
+/*   Created: 2024/03/28 14:45:34 by mhaouas           #+#    #+#             */
+/*   Updated: 2024/03/28 15:37:21 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,13 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <term.h>
+# include "lexor.h"
 
 /*================================ PIPE FD TYPE ==============================*/
 # define READ_FD 0
 # define WRITE_FD 1
 
 /*=================================== STRUCT =================================*/
-
-typedef struct s_prompt
-{
-	char			*login;
-	char			*location;
-	char			*pwd;
-	char			*cwd;
-	char			*tmp_prompt;
-	char			*tmp_prompt2;
-	char			*final_prompt;
-}					t_prompt;
-
 typedef struct s_exec
 {
 	char			*command;
@@ -65,6 +54,7 @@ typedef struct s_pipex
 typedef struct s_minishell
 {
 	struct s_pipex	*cmd;
+	struct s_chris	*cmd_line;
 	char			*prompt;
 	char			**env;
 }					t_minishell;

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/29 13:08:04 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/22 13:48:23 by mhaouas          ###   ########.fr       */
+/*   Created: 2024/03/28 15:11:14 by mhaouas           #+#    #+#             */
+/*   Updated: 2024/03/28 15:11:18 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	ft_pwd(int ac, char **av, char ***env)
 {
+	char	*pwd;
+
 	(void) ac;
 	(void) av;
 	(void) env;
-	char	*pwd;
-	
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		pwd = "no pwd found...";

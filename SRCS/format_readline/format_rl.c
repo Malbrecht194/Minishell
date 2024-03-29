@@ -6,11 +6,11 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/27 15:11:57 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/29 09:49:23 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/expand.h"
+#include "../../INCLUDES/expand.h"
 
 char	*delete_quote(char **arg, char *to_check, char a_quote, int index)
 {
@@ -36,37 +36,6 @@ char	*delete_quote(char **arg, char *to_check, char a_quote, int index)
 	return (*arg);
 }
 
-int	check_e_quot(char **arg, char *pre_quot, char *a_quote, char **env)
-{
-	char	*search;
-	char	*final;
-	size_t	i;
-
-	i = 1;
-	if (!pre_quot)
-		return (to_next_quote(a_quote + 1, '\"'));
-	while (a_quote[i] != '\"')
-	{
-		if (a_quote[i++] == '$')
-		{
-			search = ft_substr(a_quote, 0, i - 1);
-			if (!search)
-				continue ;
-			i += expand_env(&search, &a_quote[i], env);
-		}
-		if (i > ft_strlen(a_quote))
-			break ;
-	}
-	if (!search)
-		return (i);
-	final = join_and_free(pre_quot, search, 1, 1);
-	if (!final)
-		return (0);
-	free(*arg);
-	*arg = final;
-	return (i);
-}
-
 int		to_next_quote(char *arg, char quot)
 {
 	int		i;
@@ -82,27 +51,31 @@ int		to_next_quote(char *arg, char quot)
 
 void	check_expand(char **arg, char **env)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while ((*arg)[i])
 	{
+		if ((*arg)[i] == '<' && (*arg)[i + i] == '<')
+			i += skip_heredoc(*arg, i);
 		if ((*arg)[i] == '\"')
 			do_expand(arg, &i, '\"', env);
 		else if ((*arg)[i] == '\'')
 			i += to_next_quote((*arg) + i + 1, '\'');
 		else if ((*arg)[i] == '$')
 			do_expand(arg, &i, 0, env);
+		if (i >= (int)ft_strlen(*arg))
+			break ;
 		i++;
 	}
 }
 
 void	format_rl(char **arg, char **env)
 {
-	int	i;
+	size_t	i;
 	
 	i = 0;
-	change_expand(arg, env);
+	check_expand(arg, env);
 	while ((*arg)[i])
 	{
 		if ((*arg)[i] == -2)
@@ -110,12 +83,14 @@ void	format_rl(char **arg, char **env)
 		else if ((*arg)[i] == '\"' || (*arg)[i] == '\'')
 		{
 			if (to_next_quote((*arg) + i + 1, (*arg)[i]) == -1)
-				return (NULL); //error
+				return ; //error
 			else
 				i += to_next_quote((*arg) + i + 1, (*arg)[i]);
 		}
 		(*arg)[i] = check_ifs((*arg)[i]);
+		if (i >= ft_strlen(*arg))
+			break ;
 		i++;
 	}
-	return (*arg);
+	return ;
 }
