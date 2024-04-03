@@ -6,11 +6,12 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:00 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/28 15:11:03 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/29 14:21:08 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/builtins.h"
+#include "../INCLUDES/minishell.h"
 
 int	env_size(char *env)
 {

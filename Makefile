@@ -14,14 +14,25 @@ SRCS = SRCS/main.c \
 	SRCS/utils.c \
 	SRCS/format_readline/format_rl.c \
 	SRCS/format_readline/expand_env.c \
-	SRCS/format_readline/utils_expand.c
+	SRCS/format_readline/utils_expand.c \
+	SRCS/check_builtins/check_cmd.c\
+	SRCS/check_builtins/exec_builtins.c
 
 #============= BUILTINS SOUCES =============#
 BUILTINS = BUILTINS/echo.c \
 	BUILTINS/env.c \
 	BUILTINS/pwd.c \
-	BUILTINS/exit.c
-
+	BUILTINS/exit.c \
+	BUILTINS/cd.c \
+	BUILTINS/export.c \
+	BUILTINS/unset.c
+	
+#============= LIB SOUCES =============#
+LIB = INCLUDES/minishell.h \
+	INCLUDES/builtins.h\
+	INCLUDES/expand.h\
+	INCLUDES/lexor.h\
+	INCLUDES/check_builtins.h\
 #============ TRANSFORM .c TO .o ============#
 OBJ = $(SRCS:.c=.o)
 OBJBUILTINS = $(BUILTINS: .c=.o)
@@ -33,10 +44,10 @@ $(LIBFT) :
 	@ $(MAKE) -C Libft all
 
 %.o : %.c INCLUDES/minishell.h
-	@ $(CC) $(FLAGS) -c $< -o $@
+	@ $(CC) $(FLAGS) -fsanitize=address -c $< -o $@
 
 $(NAME) : $(OBJ) $(OBJBUILTINS) $(LIBFT) 
-	$(CC) $(FLAGS) -lreadline $(OBJ) $(OBJBUILTINS) $(LIBFT) -o $(NAME)
+	$(CC) $(FLAGS) -lreadline $(OBJ) $(OBJBUILTINS) -fsanitize=address $(LIBFT) -o $(NAME)
 
 clean :
 	@ $(MAKE) -C Libft clean

@@ -4,6 +4,7 @@
 		"minishell.h": "c",
 		"cstdlib": "c",
 		"libft.h": "c",
-		"builtins.h": "c"
+		"builtins.h": "c",
+		"check_builtins.h": "c"
 	}
 }

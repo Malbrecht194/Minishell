@@ -6,11 +6,12 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:38:09 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/28 15:11:36 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/29 14:20:52 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/builtins.h"
+#include "../INCLUDES/minishell.h"
 
 int	check_flags(char *av)
 {

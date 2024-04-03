@@ -6,14 +6,14 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 09:44:39 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/16 13:43:55 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/29 14:27:47 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "minishell.h"
+# include "../Libft/libft.h"
 
 int		env_size(char *env);
 int		check_env(char **env, char *av);

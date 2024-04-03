@@ -6,11 +6,12 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:47:25 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/29 09:35:27 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/29 15:27:27 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "INCLUDES/minishell.h"
+#include "INCLUDES/expand.h"
 
 int	main(int ac, char **av, char **env)
 {
@@ -31,7 +32,7 @@ int	main(int ac, char **av, char **env)
 		tmp = readline("> ");
 		add_history(tmp);
 		format_rl(&tmp, dup_env);
-		tmp = delete_quote(&tmp, tmp, 0, 0);
+		delete_quote(&tmp);
 		printf("%s\n", tmp);
 		free(tmp);
 		i++;

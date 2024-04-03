@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:08:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/22 09:49:51 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/04/03 11:29:07 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	*check_access(char **paths, char *cmd)
 {
 	int		i;
-	int		access_state;
 	char	*tmp_cmd;
 	char	*tmp_path;
 
@@ -30,27 +29,14 @@ char	*check_access(char **paths, char *cmd)
 		tmp_path = ft_strjoin(paths[i++], tmp_cmd);
 		if (!tmp_path)
 			return (NULL);
-		access_state = access(tmp_path, F_OK | X_OK);
-		if (access_state == 0)
+		if (access(tmp_path, F_OK | X_OK) == 0)
 			break ;
 		free(tmp_path);
 	}
 	free(tmp_cmd);
-	if (access_state == -1)
+	if (!paths[i])
 		return (NULL);
 	return (tmp_path);
-}
-
-char	**get_flags(char *command, char *access)
-{
-	char	**flags;
-
-	flags = ft_split(command, -1);
-	if (!flags || !*flags)
-		return (NULL);
-	free(flags[0]);
-	flags[0] = access;
-	return (flags);
 }
 
 char	**get_path(char **env)
@@ -71,25 +57,15 @@ char	*test_access(char *command, char **env)
 {
 	char	**exe_path;
 	char	*tmp_path;
-	char	**if_flags;
 
-	if_flags = ft_split(command, -1);
-	if (!if_flags)
-		return (NULL);
-	if (access(if_flags[0], F_OK | X_OK) == 0)
-	{
-		tmp_path = ft_strdup(if_flags[0]);
-		if (!tmp_path)
-			return (NULL);
-		ft_free_2d_array((void **)if_flags);
-		return (tmp_path);
-	}
+	if (access(command, F_OK | X_OK) == 0)
+		return (command);
 	exe_path = get_path(env);
 	if (!exe_path)
 		return (NULL);
-	tmp_path = check_access(exe_path, if_flags[0]);
-	ft_free_2d_array((void **)if_flags);
+	tmp_path = check_access(exe_path, command);
 	ft_free_2d_array((void **)exe_path);
+	free(command);
 	if (!tmp_path)
 		return (NULL);
 	return (tmp_path);

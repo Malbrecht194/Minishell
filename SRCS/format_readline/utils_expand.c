@@ -6,11 +6,12 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:06:48 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/29 09:48:09 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/29 14:29:12 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../INCLUDES/expand.h"
+#include "../../INCLUDES/minishell.h"
 
 void	rm_char(char **arg, int index)
 {

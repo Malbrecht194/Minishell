@@ -6,11 +6,12 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:29:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/28 16:12:25 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/29 20:04:23 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../INCLUDES/expand.h"
+#include "../../INCLUDES/minishell.h"
 
 int	quot_in_expand(char **arg, char *to_check, int index)
 {
@@ -49,7 +50,7 @@ void	do_expand(char **arg, int *index, char state, char **env)
 	j = 0;
 	if (state)
 		j++;
-	while ((*arg)[i + j])
+	while ((*arg)[i + j] && (*arg)[i + j] != state)
 	{
 		if (state && (*arg)[i + j] == state)
 			break ;
@@ -59,7 +60,7 @@ void	do_expand(char **arg, int *index, char state, char **env)
 			i += expand_env(arg, i + j, env);
 			if (!state)
 			{	
-				i += quot_in_expand(arg, (*arg) + (*index), 0);
+				i += quot_in_expand(arg, (*arg) + (*index), (*index));
 				break ;
 			}
 		}

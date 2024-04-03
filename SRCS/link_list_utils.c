@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 15:32:36 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/06 10:01:04 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/03/29 14:24:10 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_pipe_lstclear(t_pipex **lst)
 	while (*lst != NULL)
 	{
 		tmp = (*lst)->next;
-		ft_free_2d_array((void **)(*lst)->cmd.flags);
+		ft_free_2d_array((void **)(*lst)->cmd.cmd);
 		free(*lst);
 		*lst = tmp;
 	}

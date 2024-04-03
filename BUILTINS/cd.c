@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:05:22 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/18 14:53:33 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:20:58 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/builtins.h"
+#include "../INCLUDES/minishell.h"
 
 void	replace_pwd(char ***env)
 {

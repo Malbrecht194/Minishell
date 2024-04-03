@@ -6,16 +6,16 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:26 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/28 15:11:29 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/03 11:11:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/builtins.h"
+#include "../INCLUDES/minishell.h"
 
 void	remake_env(char ***env)
 {
 	char	**e_tmp;
-	int		env_size;
 	int		i;
 
 	i = 0;
