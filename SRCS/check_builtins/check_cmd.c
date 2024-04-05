@@ -6,12 +6,13 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:06:12 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/03 15:11:29 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/04 17:58:27 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../INCLUDES/check_builtins.h"
 #include "../../INCLUDES/minishell.h"
+#include "../../INCLUDES/lexor.h"
 
 int	is_builtins(char *cmd)
 {
@@ -38,15 +39,15 @@ int	is_builtins(char *cmd)
 
 void	check_cmd(t_minishell *minish)
 {
-	t_pipex	*tmp;
+	t_chris	*tmp;
 	int		builtins;
 
 	tmp = minish->cmd;
 	while (tmp)
 	{
-		builtins = is_builtins(tmp->cmd.cmd[0]);
+		builtins = is_builtins(tmp->cmd[0]);
 		if (builtins == NO_BUILTINS)
-			tmp->cmd.cmd[0] = test_access(tmp->cmd.cmd[0], minish->env);
+			tmp->cmd[0] = test_access(tmp->cmd[0], minish->env);
 		tmp = tmp->next;
 	}
 	

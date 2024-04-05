@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:29:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/29 20:04:23 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/05 11:26:32 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	do_expand(char **arg, int *index, char state, char **env)
 		if (i++ + j > ft_strlen(*arg))
 			break ;
 	}
-	*index = i;
+	*index = i + j;
 }
 
 int	expand_env(char **arg, int index, char **env)

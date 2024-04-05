@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/29 20:18:26 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/05 11:27:01 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ void	check_expand(char **arg, char **env)
 			i += to_next_quote((*arg) + i + 1, '\'') + 1;
 		else if ((*arg)[i] == '$')
 			do_expand(arg, &i, 0, env);
-		else
-			i++;
+		i++;
 		if (i >= (int)ft_strlen(*arg))
 			break ;
 	}

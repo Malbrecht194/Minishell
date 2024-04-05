@@ -6,48 +6,46 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 15:32:36 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/29 14:24:10 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/04 19:17:26 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../INCLUDES/check_builtins.h"
+#include "../INCLUDES/expand.h"
+#include "../INCLUDES/lexor.h"
 #include "../INCLUDES/minishell.h"
 
-t_pipex	*ft_pipe_lstlast(t_pipex *lst)
+int	check_type(char *arg)
 {
-	while (lst != NULL)
-	{
-		if (lst->next == NULL)
-			return (lst);
-		lst = lst->next;
-	}
-	return (NULL);
-}
+	int	i;
 
-void	ft_pipe_lstadd_back(t_pipex **lst, t_pipex *new)
-{
-	t_pipex	*tmp;
-
-	if (!(*lst))
-		*lst = new;
+	i = 0;
+	if (arg[i] == '|')
+		return (PIPE);
+	else if (arg[i] == '<' && arg[i + 1] == '<')
+		return (HEREDOC);
+	else if (arg[i] == '<')
+		return (INFILE);
+	else if (arg[i] == '>' && arg[i + 1] == '>')
+		return (OUT_A);
+	else if (arg[i] == '>')
+		return (OUT_T);
+	else if (!is_ifs(arg[i]))
+		return (ARG);
 	else
-	{
-		tmp = ft_pipe_lstlast(*lst);
-		tmp->next = new;
-	}
+		return (0);
 }
 
-void	ft_pipe_lstclear(t_pipex **lst)
+int	open_fd(char *f_name, int type)
 {
-	t_pipex	*tmp;
+	int	fd;
 
-	if (!lst)
-		return ;
-	while (*lst != NULL)
-	{
-		tmp = (*lst)->next;
-		ft_free_2d_array((void **)(*lst)->cmd.cmd);
-		free(*lst);
-		*lst = tmp;
-	}
-	*lst = NULL;
+	fd = 0;
+	if (type == OUT_A)
+		fd = open(f_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else if (type == OUT_T)
+		fd = open(f_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (type == INFILE)
+		fd = open(f_name, O_RDONLY);
+	return (fd);
 }

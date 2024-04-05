@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:06:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/03 11:13:45 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/04 18:01:40 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ enum	e_builtins
 };
 
 void	check_cmd(t_minishell *minish);
-void	exec_builtins(t_minishell *minish, t_pipex *cmd, int b_num);
+// void	exec_builtins(t_minishell *minish, t_pipex *cmd, int b_num);
 int		is_builtins(char *cmd);
 
 #endif

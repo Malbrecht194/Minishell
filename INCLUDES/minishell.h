@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:45:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/29 14:25:59 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/04 18:01:22 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,6 @@
 
 /*=================================== STRUCT =================================*/
 
-typedef struct s_exec
-{
-	char			**cmd;
-	char			**envp;
-	int				in;
-	int				out;
-}					t_exec;
-
-typedef struct s_pipex
-{
-	struct s_exec	cmd;
-	pid_t			pid;
-	struct s_pipex	*next;
-}					t_pipex;
-
 typedef struct s_minishell
 {
 	struct s_pipex	*cmd;
@@ -56,10 +41,6 @@ typedef struct s_minishell
 	int				last_error;
 }					t_minishell;
 
-t_pipex				*create_link_list(char **commands/*, char **env*/);
-void				ft_pipe_lstclear(t_pipex **lst);
-void				ft_pipe_lstadd_back(t_pipex **lst, t_pipex *new);
-t_pipex				*ft_pipe_lstlast(t_pipex *lst);
 char				*test_access(char *command, char **env);
 char				**get_flags(char *command, char *access);
 

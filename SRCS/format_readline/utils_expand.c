@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:06:48 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/29 14:29:12 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/04 18:08:41 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,8 @@ char	check_ifs(char a_char)
 
 int	is_ifs(char a_char)
 {
-	int		i;
-	char	*ifs;
-
-	i = 0;
-	ifs = IFS;
-	while (ifs[i])
-	{
-		if (a_char == ifs[i])
-			return (1);
-		i++;
-	}
+	if (a_char == -1)
+		return (1);
 	return (0);
 }
 
@@ -78,9 +69,9 @@ size_t	skip_heredoc(char *arg, int index)
 	size_t	i;
 
 	i = 0;
-	while (arg[i + index + 2] && is_ifs(arg[i + index + 2]))
+	while (arg[i + index + 2] && check_ifs(arg[i + index + 2]) == -1)
 		i++;
-	while (arg[i + index + 2] && !is_ifs(arg[i + index + 2]))
+	while (arg[i + index + 2] && check_ifs(arg[i + index + 2]))
 		i++;
 	return (i + 2);
 }

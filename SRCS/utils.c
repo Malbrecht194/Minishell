@@ -6,11 +6,22 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/28 15:37:30 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/04 17:53:35 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/minishell.h"
+#include "../INCLUDES/expand.h"
+
+int	skip_ifs(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == -1)
+		i++;
+	return (i);
+}
 
 char	**dup_array(char **array)
 {
@@ -36,4 +47,19 @@ char	**dup_array(char **array)
 		i++;
 	}
 	return (n_array);
+}
+
+char	*sub_and_trim(char *str, int start, size_t len, char *set)
+{
+	char	*tmp;
+	char	*final;
+
+	tmp = ft_substr(str, start, len);
+	if (!tmp)
+		return (NULL);
+	final = ft_strtrim(tmp, set);
+	free(tmp);
+	if (!final)
+		return (NULL);
+	return (final);
 }

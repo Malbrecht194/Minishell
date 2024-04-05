@@ -10,13 +10,14 @@ SRCS = SRCS/main.c \
 	SRCS/check_args.c \
 	SRCS/link_list.c \
 	SRCS/link_list_utils.c \
+	SRCS/link_list_utils2.c \
 	SRCS/access.c \
 	SRCS/utils.c \
 	SRCS/format_readline/format_rl.c \
 	SRCS/format_readline/expand_env.c \
 	SRCS/format_readline/utils_expand.c \
-	SRCS/check_builtins/check_cmd.c\
-	SRCS/check_builtins/exec_builtins.c
+	# SRCS/check_builtins/check_cmd.c\
+	# SRCS/check_builtins/exec_builtins.c
 
 #============= BUILTINS SOUCES =============#
 BUILTINS = BUILTINS/echo.c \
@@ -37,17 +38,20 @@ LIB = INCLUDES/minishell.h \
 OBJ = $(SRCS:.c=.o)
 OBJBUILTINS = $(BUILTINS: .c=.o)
 LIBFT = Libft/libft.a
+OBJ_DIR = OBJ/
+SRCS_DIR = SRCS/
 
 all : $(NAME)
 
 $(LIBFT) :
 	@ $(MAKE) -C Libft all
 
-%.o : %.c INCLUDES/minishell.h
-	@ $(CC) $(FLAGS) -fsanitize=address -c $< -o $@
+$(OBJ_DIR)%.o : .c INCLUDES/minishell.h
+	@ mkdir -p $(dir $@)
+	@ $(CC) $(FLAGS) -c $< -o $@
 
 $(NAME) : $(OBJ) $(OBJBUILTINS) $(LIBFT) 
-	$(CC) $(FLAGS) -lreadline $(OBJ) $(OBJBUILTINS) -fsanitize=address $(LIBFT) -o $(NAME)
+	$(CC) $(FLAGS) -lreadline $(OBJ) $(OBJBUILTINS) $(LIBFT) -o $(NAME)
 
 clean :
 	@ $(MAKE) -C Libft clean
@@ -55,8 +59,7 @@ clean :
 
 fclean :
 	@ $(MAKE) -C Libft fclean
-	rm -rf $(NAME) $(OBJ) $(OBJECHO) $(OBJENV) $(OBJEXIT) $(OBJPWD) \
-	BUILTINS/echo BUILTINS/env BUILTINS/exit BUILTINS/pwd
+	rm -rf $(NAME) $(OBJ) $(OBJECHO) $(OBJENV) $(OBJEXIT) $(OBJPWD)
 
 re : fclean all
 
