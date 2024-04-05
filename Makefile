@@ -4,62 +4,57 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror -g 
 #=================== NAME ===================#
 NAME = minishell
-#============= MINISHELL SOUCES =============#
-SRCS = SRCS/main.c \
-	SRCS/get_prompt.c \
-	SRCS/check_args.c \
-	SRCS/link_list.c \
-	SRCS/link_list_utils.c \
-	SRCS/link_list_utils2.c \
-	SRCS/access.c \
-	SRCS/utils.c \
-	SRCS/format_readline/format_rl.c \
-	SRCS/format_readline/expand_env.c \
-	SRCS/format_readline/utils_expand.c \
-	# SRCS/check_builtins/check_cmd.c\
-	# SRCS/check_builtins/exec_builtins.c
+#============ MINISHELL SOURCES =============#
+SRCS = get_prompt.c \
+	main.c \
+	check_args.c \
+	link_list.c \
+	link_list_utils.c \
+	link_list_utils2.c \
+	access.c \
+	utils.c \
+	builtins/echo.c \
+	builtins/env.c \
+	builtins/pwd.c \
+	builtins/exit.c \
+	builtins/cd.c \
+	builtins/export.c \
+	builtins/unset.c \
+	format_readline/format_rl.c \
+	format_readline/expand_env.c \
+	format_readline/utils_expand.c 
+# check_builtins/check_cmd.c\
+# check_builtins/exec_builtins.c
 
-#============= BUILTINS SOUCES =============#
-BUILTINS = BUILTINS/echo.c \
-	BUILTINS/env.c \
-	BUILTINS/pwd.c \
-	BUILTINS/exit.c \
-	BUILTINS/cd.c \
-	BUILTINS/export.c \
-	BUILTINS/unset.c
-	
-#============= LIB SOUCES =============#
-LIB = INCLUDES/minishell.h \
-	INCLUDES/builtins.h\
-	INCLUDES/expand.h\
-	INCLUDES/lexor.h\
-	INCLUDES/check_builtins.h\
+
 #============ TRANSFORM .c TO .o ============#
-OBJ = $(SRCS:.c=.o)
-OBJBUILTINS = $(BUILTINS: .c=.o)
-LIBFT = Libft/libft.a
-OBJ_DIR = OBJ/
-SRCS_DIR = SRCS/
+LIBFT = libft/libft.a
+OBJ_DIR = obj/
+SRCS_DIR = srcs/
+INCLUDE_DIR = includes
+OBJ = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
+
+INCLUDES = -I$(INCLUDE_DIR)
 
 all : $(NAME)
 
 $(LIBFT) :
-	@ $(MAKE) -C Libft all
+	@ $(MAKE) -C libft all --no-print-directory
 
-$(OBJ_DIR)%.o : .c INCLUDES/minishell.h
+$(OBJ_DIR)%.o : $(SRCS_DIR)%.c
 	@ mkdir -p $(dir $@)
-	@ $(CC) $(FLAGS) -c $< -o $@
+	@ $(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME) : $(OBJ) $(OBJBUILTINS) $(LIBFT) 
-	$(CC) $(FLAGS) -lreadline $(OBJ) $(OBJBUILTINS) $(LIBFT) -o $(NAME)
+$(NAME) : $(LIBFT) $(OBJ) $(OBJBUILTINS)
+	@ $(CC) $(FLAGS) -lreadline $(OBJ) $(OBJBUILTINS) $(INCLUDES) $(LIBFT) -o $(NAME)
 
 clean :
-	@ $(MAKE) -C Libft clean
-	rm -rf $(OBJ) $(OBJECHO) $(OBJENV) $(OBJEXIT) $(OBJPWD)
+	@ $(MAKE) -C libft clean --no-print-directory
+	@ rm -rf $(OBJ_DIR)
 
 fclean :
-	@ $(MAKE) -C Libft fclean
-	rm -rf $(NAME) $(OBJ) $(OBJECHO) $(OBJENV) $(OBJEXIT) $(OBJPWD)
+	@ $(MAKE) -C libft fclean --no-print-directory
+	@ rm -rf $(NAME) $(OBJ_DIR)
 
 re : fclean all
 
