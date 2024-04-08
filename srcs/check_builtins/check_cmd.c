@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:06:12 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:55:07 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/08 13:19:42 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	check_cmd(t_minishell *minish)
 	
 	while (minish->cmd)
 	{
-		printf("%s\n", minish->cmd->cmd.cmd[0]);
-		minish->cmd = minish->cmd->next;
+		printf("%s\n", minish->cmd_line->cmd[0]);
+		minish->cmd = minish->cmd_line->next;
 	}
 }

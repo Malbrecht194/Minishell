@@ -1,37 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_builtins.h                                   :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/29 10:06:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/08 13:42:40 by mhaouas          ###   ########.fr       */
+/*   Created: 2024/04/08 13:33:07 by mhaouas           #+#    #+#             */
+/*   Updated: 2024/04/08 13:41:45 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CHECK_BUILTINS_H
-# define CHECK_BUILTINS_H
+#include <minishell.h>
+#include <check_builtins.h>
+#include <lexor.h>
 
-# include <builtins.h>
-# include <minishell.h>
-# include <libft.h>
-
-enum	e_builtins
+int	full_dup(int n_stdin, int n_stdout)
 {
-	FT_CD,
-	FT_ECHO,
-	FT_ENV,
-	FT_EXPORT,
-	FT_PWD,
-	FT_UNSET,
-	FT_EXIT,
-	NO_BUILTINS
-};
-
-void	check_cmd(t_minishell *minish);
-int		full_dup(int n_stdin, int n_stdout);
-void	exec_builtins(t_minishell *minish, t_chris *cmd, int b_num);
-int		is_builtins(char *cmd);
-
-#endif
+	if (dup2(n_stdin, STDIN_FILENO) == -1)
+		return (0);
+	if (dup2(n_stdout, STDOUT_FILENO) == -1);
+		return (0);
+}

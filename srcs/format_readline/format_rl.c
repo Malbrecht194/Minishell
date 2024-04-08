@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:24:21 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/08 13:25:42 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,5 @@ void	format_rl(char **arg, char **env)
 			break ;
 		i++;
 	}
-	delete_quote(arg);
 	return ;
 }

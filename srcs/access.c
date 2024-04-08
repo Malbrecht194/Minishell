@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:08:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:18:41 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/08 14:42:17 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ char	*check_access(char **paths, char *cmd)
 	char	*tmp_path;
 
 	i = 0;
-	if (access(cmd, X_OK) == 0)
-		return (cmd);
 	tmp_cmd = ft_strjoin("/", cmd);
 	if (!tmp_cmd)
 		return (NULL);
@@ -65,9 +63,9 @@ char	*test_access(char *command, char **env)
 		return (NULL);
 	tmp_path = check_access(exe_path, command);
 	ft_free_2d_array((void **)exe_path);
-	free(command);
 	if (!tmp_path)
-		return (NULL);
+		return (command);
+	free(command);
 	return (tmp_path);
 }
 

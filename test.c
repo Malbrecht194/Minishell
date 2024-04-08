@@ -6,39 +6,64 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:47:25 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/03/29 15:27:27 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/08 14:13:02 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "INCLUDES/minishell.h"
-#include "INCLUDES/expand.h"
+// #include "includes/minishell.h"
+// #include "includes/expand.h"
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <sys/wait.h>
+# include <term.h>
+# include <stdlib.h>
+# include <unistd.h>
+#include <stdio.h>
 
 int	main(int ac, char **av, char **env)
 {
-	char	**dup_env;
-	char	*tmp;
-	int		i;
+	int		test;
+	int		*test_2;
+	pid_t	pid;
 
-	i = 1;
-	// (void) ac;
-	// (void) av;
-	dup_env = dup_array(env);
-	(void) av;
-	if (ac != 1)
-		return (1);
-	tmp = "";
-	while (tmp)
+	test = 0;
+	test_2 = &test;
+	pid = fork();
+
+	if (!pid)
 	{
-		tmp = readline("> ");
-		add_history(tmp);
-		format_rl(&tmp, dup_env);
-		delete_quote(&tmp);
-		printf("%s\n", tmp);
-		free(tmp);
-		i++;
+		*test_2 = 1;
+		exit(EXIT_SUCCESS);
 	}
-	free(tmp);
-	ft_free_2d_array((void **)dup_env);
+	else
+		wait(NULL);
+	printf("%d\n", test);
+	
+	// char	**dup_env;
+	// char	*tmp;
+	// int		i;
+
+	// i = 1;
+	// // (void) ac;
+	// // (void) av;
+	// dup_env = dup_array(env);
+	// (void) av;
+	// if (ac != 1)
+	// 	return (1);
+	// tmp = "";
+	// while (tmp)
+	// {
+	// 	tmp = readline("> ");
+	// 	add_history(tmp);
+	// 	format_rl(&tmp, dup_env);
+	// 	delete_quote(&tmp);
+	// 	printf("%s\n", tmp);
+	// 	free(tmp);
+	// 	i++;
+	// }
+	// free(tmp);
+	// ft_free_2d_array((void **)dup_env);
 	// char	*test[4];
 	
 	// test[0] = "/usr/bin/cat";

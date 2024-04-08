@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:54:58 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/08 15:02:18 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,25 @@ int	check_rl_args(char *rl)
 {
 	size_t		i;
 	int			j;
+	int			type;
 	int			state;
 
 	i = 0;
 	i += skip_ifs(rl);
-	if (i >= ft_strlen(rl))
-		return (1);
+	// if (i >= ft_strlen(rl))
+	// 	return (1);
 	if (rl[i] == '|')
 		return (0);
 	while (rl[i])
 	{
 		state = 0;
-		if (check_type(&rl[i]) == INFILE || check_type(&rl[i]) == OUT_T
-			|| check_type(&rl[i]) == PIPE)
+		type = check_type(&rl[i]);
+		if (type == INFILE || type == OUT_T || type == PIPE)
 			state = 1;
-		else if (check_type(&rl[i]) == HEREDOC || check_type(&rl[i]) == OUT_A)
+		else if (type == HEREDOC || type == OUT_A)
 			state = 2;
 		j = i + skip_ifs(&rl[i + state]);
-		if (state && (rl[j] == '<' || rl[j] == '>' || rl[j] == '|'))
+		if (state && (rl[j + state] == '<' || rl[j + state] == '>' || rl[j + state] == '|'))
 			return (0);
 		if (skip_ifs(rl + ++i))
 			i += skip_ifs(rl + i);
@@ -51,7 +52,7 @@ t_f_lexor	*w_lexor_sort(char *rl_args)
 	t_f_lexor	*f_lexor;
 
 	i = 0;
-	j = 1;
+	j = 0;
 	if (!rl_args || !*rl_args)
 		return (NULL);
 	f_lexor = ft_calloc(sizeof(t_f_lexor), 1);
@@ -59,10 +60,12 @@ t_f_lexor	*w_lexor_sort(char *rl_args)
 	f_lexor->type = check_type(rl_args + i);
 	if (!(f_lexor->type == PIPE || f_lexor->type == 0))
 	{
-		if (f_lexor->type == HEREDOC || f_lexor->type == OUT_A)
+		if (f_lexor->type == INFILE || f_lexor->type == OUT_T)
 			j++;
+		if (f_lexor->type == HEREDOC || f_lexor->type == OUT_A)
+			j += 2;
 		i += skip_ifs(rl_args + i + j);
-		while (rl_args[i + j] && !is_ifs(rl_args[i + j]))
+		while (rl_args[i + j] && !is_ifs(rl_args[i + j]) && rl_args[i + j] != '|' && rl_args[i + j] != '<' && rl_args[i + j] != '>')
 			j++;
 		f_lexor->str = sub_and_trim(rl_args, i, j, "<>");
 		if (!f_lexor->str)
