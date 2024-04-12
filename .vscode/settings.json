@@ -1,5 +1,8 @@
 {
 	"files.associations": {
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"lexor.h": "c",
+		"check_builtins.h": "c",
+		"expand.h": "c"
 	}
 }

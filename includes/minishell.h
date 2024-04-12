@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:45:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 16:16:59 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:45:58 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 /*================================== INCLUDES ================================*/
 
-# include <libft.h>
 # include <builtins.h>
-# include <lexor.h>
 # include <errno.h>
+# include <lexor.h>
+# include <libft.h>
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -42,10 +42,10 @@ typedef struct s_minishell
 }					t_minishell;
 
 char				*test_access(char *command, char **env);
-char				**get_flags(char *command, char *access);
 
 char				*get_prompt(char **env);
 void				check_args(t_minishell *minish, char *rl_args);
 char				**dup_array(char **array);
+int					try_close(int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:08:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/08 14:42:17 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/11 09:26:47 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*test_access(char *command, char **env)
 	tmp_path = check_access(exe_path, command);
 	ft_free_2d_array((void **)exe_path);
 	if (!tmp_path)
-		return (command);
+		return (NULL);
 	free(command);
 	return (tmp_path);
 }

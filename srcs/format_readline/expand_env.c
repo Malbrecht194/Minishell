@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:29:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:24:21 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/11 11:04:40 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,11 @@ void	do_expand(char **arg, int *index, char state, char **env)
 			break ;
 		if ((*arg)[i + j] == '$')
 		{
-			rm_char(arg, i + j);
-			i += expand_env(arg, i + j, env);
+			if (check_ifs((*arg)[i + j + 1]) != -1)
+			{
+				rm_char(arg, i + j);
+				i += expand_env(arg, i + j, env) - 1;
+			}
 			if (!state)
 			{	
 				i += quot_in_expand(arg, (*arg) + (*index), (*index));

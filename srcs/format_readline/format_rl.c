@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/08 13:25:42 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/11 16:16:33 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,30 +57,36 @@ int		to_next_quote(char *arg, char quot)
 void	check_expand(char **arg, char **env)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	while ((*arg)[i])
 	{
-		if ((*arg)[i] == '<' && (*arg)[i + 1] == '<')
-			i += skip_heredoc(*arg, i);
+		j = i;
 		if ((*arg)[i] == '\"')
 			do_expand(arg, &i, '\"', env);
 		else if ((*arg)[i] == '\'')
 			i += to_next_quote((*arg) + i + 1, '\'') + 1;
 		else if ((*arg)[i] == '$')
+		{
 			do_expand(arg, &i, 0, env);
+			while (j < i)
+			{
+				(*arg)[j] = check_ifs((*arg)[j]);
+				j++;
+			}
+		}
 		i++;
 		if (i >= (int)ft_strlen(*arg))
 			break ;
 	}
 }
 
-void	format_rl(char **arg, char **env)
+void	format_rl(char **arg)
 {
 	size_t	i;
 	
 	i = 0;
-	check_expand(arg, env);
 	while ((*arg)[i])
 	{
 		if ((*arg)[i] == -2)

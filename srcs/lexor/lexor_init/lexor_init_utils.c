@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   link_list_utils2.c                                 :+:      :+:    :+:   */
+/*   lexor_init_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:17:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:54:58 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/11 16:04:19 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <check_builtins.h>
-#include <expand.h>
 #include <lexor.h>
 #include <minishell.h>
 
-void	lexor_lstadd_back(t_f_lexor **lst, t_f_lexor *new)
+void	ft_initadd_back(t_init **lst, t_init *new)
 {
-	t_f_lexor	*tmp;
+	t_init	*tmp;
 
 	if (!lst || !new)
 		return ;
@@ -25,12 +24,12 @@ void	lexor_lstadd_back(t_f_lexor **lst, t_f_lexor *new)
 		*lst = new;
 	else
 	{
-		tmp = lexor_lstlast(*lst);
+		tmp = ft_initlast(*lst);
 		tmp->next = new;
 	}
 }
 
-t_f_lexor	*lexor_lstlast(t_f_lexor *lst)
+t_init	*ft_initlast(t_init *lst)
 {
 	while (lst != NULL)
 	{
@@ -41,9 +40,9 @@ t_f_lexor	*lexor_lstlast(t_f_lexor *lst)
 	return (NULL);
 }
 
-void	lexor_lstclear(t_f_lexor **lst)
+void	ft_initclear(t_init **lst)
 {
-	t_f_lexor	*tmp;
+	t_init	*tmp;
 
 	if (!lst)
 		return ;

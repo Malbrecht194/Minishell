@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   link_list_utils.c                                  :+:      :+:    :+:   */
+/*   lexor_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 15:32:36 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:54:58 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:29:42 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <check_builtins.h>
-#include <expand.h>
 #include <lexor.h>
+#include <expand.h>
 #include <minishell.h>
 
 int	check_type(char *arg)
@@ -33,7 +33,7 @@ int	check_type(char *arg)
 	else if (!is_ifs(arg[i]))
 		return (ARG);
 	else
-		return (0);
+		return (-1);
 }
 
 int	open_fd(char *f_name, int type)

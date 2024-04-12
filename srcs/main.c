@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:41:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:19:08 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/12 09:35:24 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	main(int ac, char **av, char **envp)
 	{
 		minish->prompt = get_prompt(minish->env);
 		rl_buff = readline(minish->prompt);
-		add_history(rl_buff);
+		if (rl_buff && *rl_buff)
+			add_history(rl_buff);
 		check_args(minish, rl_buff);
 		free(minish->prompt);
 	}

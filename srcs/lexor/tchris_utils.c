@@ -6,80 +6,55 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:29:04 by malbrech          #+#    #+#             */
-/*   Updated: 2024/04/05 15:54:58 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:26:40 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <lexor.h>
 
-//Creer un chris vide
-//------Penser a changer ce que j'ai besoin quand je creer un chris-----------//
-t_chris	*ft_chrisnew(char **cmd)
+t_chris	*ft_chrisnew(void)
 {
 	t_chris	*new;
 
-	new = (t_chris *)malloc(sizeof(*new));
+	new = (t_chris *)ft_calloc(sizeof(t_chris), 1);
 	if (!new)
 		return (NULL);
-	new->cmd = cmd;
-	new->fd_in = NULL;
-	new->fd_out = NULL;
-	new->redirection = NULL;
-	new->pid = NULL;
-	new->pipe = NULL;
-	new->next = NULL;
+	new->fd_in = STDIN_FILENO;
+	new->fd_out = STDOUT_FILENO;
 	return (new);
 }
 
-//Clear mon chris
 void	ft_chrisclear(t_chris **chris)
 {
-	if (!chris)
+	if (!chris || !(*chris))
 		return ;
-	if (!(*chris))
-		return ;
+	if ((*chris)->cmd)
+		ft_free_2d_array((void **)(*chris)->cmd);
 	ft_chrisclear(&(*chris)->next);
 	free(*chris);
 	*chris = NULL;
 }
 
-//Renvoie le dernier node de chris
 t_chris	*ft_chrislast(t_chris *chris)
 {
-	t_chris	*tmp;
-
-	tmp = chris;
-	while (tmp)
-	{
-		if (tmp->next == NULL)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
+	if (!chris->next)
+		return (chris);
+	else
+		return (ft_chrislast(chris->next));
 }
 
-//Renvoie l'avant dernier chris
-t_chris	*ft_chris_before_last(t_chris *chris)
-{
-	while (chris && chris->next && chris->next->next != NULL)
-		chris = chris->next;
-	return (chris);
-}
-
-//Ajoute un node a la fin de chris
 void	ft_chrisadd_back(t_chris **chris, t_chris *new)
 {
 	t_chris	*tmp;
 
-	if (chris)
+	if (!chris || !new)
+		return ;
+	else if (!(*chris))
+		*chris = new;
+	else
 	{
-		if (*chris == NULL)
-			*chris = new;
-		else
-		{
-			tmp = ft_chrislast(*(chris));
-			tmp->next = new;
-		}
+		tmp = ft_chrislast(*chris);
+		tmp->next = new;
 	}
 }

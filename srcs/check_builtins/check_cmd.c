@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:06:12 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/08 13:19:42 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/12 11:04:11 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,4 @@ int	is_builtins(char *cmd)
 		return (NO_BUILTINS);
 	else
 		return (i);
-}
-
-void	check_cmd(t_minishell *minish)
-{
-	t_chris	*tmp;
-	int		builtins;
-
-	tmp = minish->cmd;
-	while (tmp)
-	{
-		builtins = is_builtins(tmp->cmd[0]);
-		if (builtins == NO_BUILTINS)
-			tmp->cmd[0] = test_access(tmp->cmd[0], minish->env);
-		tmp = tmp->next;
-	}
-	
-	while (minish->cmd)
-	{
-		printf("%s\n", minish->cmd_line->cmd[0]);
-		minish->cmd = minish->cmd_line->next;
-	}
 }

@@ -5,28 +5,30 @@ FLAGS = -Wall -Wextra -Werror -g
 #=================== NAME ===================#
 NAME = minishell
 #============ MINISHELL SOURCES =============#
-SRCS = get_prompt.c \
-	main.c \
-	check_args.c \
-	link_list.c \
-	link_list_utils.c \
-	link_list_utils2.c \
-	access.c \
+SRCS = main.c \
 	utils.c \
-	builtins/echo.c \
-	builtins/env.c \
-	builtins/pwd.c \
-	builtins/exit.c \
+	access.c \
+	get_prompt.c \
+	check_args.c \
 	builtins/cd.c \
-	builtins/export.c \
+	builtins/pwd.c \
+	builtins/env.c \
+	builtins/exit.c \
+	builtins/echo.c \
 	builtins/unset.c \
+	builtins/export.c \
 	format_readline/format_rl.c \
 	format_readline/expand_env.c \
-	format_readline/utils_expand.c 
-# check_builtins/check_cmd.c\
-# check_builtins/exec_builtins.c
-
-
+	format_readline/utils_expand.c \
+	lexor/lexor.c \
+	lexor/lexor_utils.c \
+	lexor/tchris_utils.c \
+	lexor/lexor_init/lexor_init.c \
+	lexor/lexor_init/lexor_init_utils.c \
+	check_builtins/exec_cmd.c \
+	check_builtins/check_cmd.c \
+	check_builtins/exec_utils.c \
+	check_builtins/exec_builtins.c
 #============ TRANSFORM .c TO .o ============#
 LIBFT = libft/libft.a
 OBJ_DIR = obj/

@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:38:09 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:26:08 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:21:10 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ int	ft_echo(int ac, char **av, char ***env)
 		nl = check_flags(av[i]);
 		if (o_nl == 1 && nl == 1)
 			continue ;
-		printf("%s", av[i]);
+		ft_printf("%s", av[i]);
 		if (av[i + 1])
-			printf(" ");
+			ft_printf(" ");
 		o_nl = nl;
 	}
 	if (ac >= 1 && !check_flags(av[1]))
-		printf("\n");
+		ft_printf("\n");
 	return (0);
 }

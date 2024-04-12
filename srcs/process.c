@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 18:40:57 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:19:12 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:45:43 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	process(t_pipex *pipe_struct)
 	if (dup2(pipe_struct->cmd.in, STDIN_FILENO) == -1)
 	{
 		free_2d_array(pipe_struct->cmd.envp);
-		close(pipe_struct->cmd.in);
+		try_close(pipe_struct->cmd.in);
 		// error_handler(DUP_ERROR);
 	}
 	if (dup2(pipe_struct->cmd.out, STDOUT_FILENO) == -1)
 	{
 		free_2d_array(pipe_struct->cmd.envp);
-		close(pipe_struct->cmd.out);
+		try_close(pipe_struct->cmd.out);
 		// error_handler(DUP_ERROR);
 	}
 	if (execve(pipe_struct->cmd.command, pipe_struct->cmd.flags,\

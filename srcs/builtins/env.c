@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:10:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:26:08 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/09 11:03:20 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_env(int ac, char **av, char ***envp)
 	(void)ac;
 	(void)av;
 	i = 0;
-	while (envp[i])
+	while ((*envp)[i])
 		printf("%s\n", (*envp)[i++]);
 	return (0);
 }

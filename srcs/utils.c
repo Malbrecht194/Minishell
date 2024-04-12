@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:24:29 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:57:36 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,9 @@ char	**dup_array(char **array)
 	return (n_array);
 }
 
-char	*sub_and_trim(char *str, int start, size_t len, char *set)
+int	try_close(int fd)
 {
-	char	*tmp;
-	char	*final;
-
-	tmp = ft_substr(str, start, len);
-	if (!tmp)
-		return (NULL);
-	final = ft_strtrim(tmp, set);
-	free(tmp);
-	if (!final)
-		return (NULL);
-	return (final);
+	if (fd > 2)
+		return (close(fd));
+	return (-1);
 }
