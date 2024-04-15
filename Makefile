@@ -8,6 +8,7 @@ NAME = minishell
 SRCS = main.c \
 	utils.c \
 	access.c \
+	signals.c \
 	get_prompt.c \
 	check_args.c \
 	builtins/cd.c \

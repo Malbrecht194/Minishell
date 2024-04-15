@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:45:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/15 09:38:49 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/04/15 09:44:25 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <signal.h>
+# include <signals.h>
 # include <sys/wait.h>
 # include <term.h>
 # include <stdio.h>
