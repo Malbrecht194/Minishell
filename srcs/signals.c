@@ -6,43 +6,48 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:31:31 by malbrech          #+#    #+#             */
-/*   Updated: 2024/04/12 14:45:13 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:38:28 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include <signals.h>
 
-void	sigint_handler_in_process(int sig)
+void	suppress_output(void)
 {
-	(void) sig;
-	printf("\n");
+	struct termios	termios_p;
+
+	if (tcgetattr(0, &termios_p) != 0)
+		perror("Minishell: tcgetattr");
+	termios_p.c_lflag &= ~ECHOCTL;
+	if (tcsetattr(0, 0, &termios_p) != 0)
+		perror("Minishell: tcsetattr");
 }
 
-void	sigquit_handler_in_process(int sig)
+/* Cette fonction est un gestionnaire de signal pour SIGINT, qui est envoyé lorsque l'utilisateur presse Ctrl+C.
+Elle écrit un caractère de nouvelle ligne (\n) sur la sortie standard (stdout), puis utilise la bibliothèque readline pour réinitialiser la ligne d'entrée et redisplay.*/
+void	handler_sigint(int sig)
 {
-	(void) sig;
-	printf("Quit: %d\n", sig);
-}
-
-void	sigint_handler_nonl(int sig)
-{
+	(void)sig;
 	rl_on_new_line();
+	rl_redisplay();
+	write(1, "^C", 2);
+	rl_on_new_line();
+	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_redisplay();
-	(void) sig;
 }
 
-void	sigint_handler(int sig)
+/*Cette fonction est un gestionnaire de signal pour SIGQUIT, qui est envoyé lorsque l'utilisateur presse Ctrl+\.
+Elle utilise simplement rl_redisplay() pour réafficher la ligne d'entrée.*/
+void	handler_sigquit(int sig)
 {
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
+	(void)sig;
 	rl_redisplay();
-	(void) sig;
 }
 
-void	signals(void)
+void	signals_init(void)
 {
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	suppress_output();
+	signal(SIGINT, handler_sigint);
+	signal(SIGQUIT, handler_sigquit);
 }

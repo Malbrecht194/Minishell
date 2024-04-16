@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.h                                          :+:      :+:    :+:   */
+/*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/12 14:48:56 by malbrech          #+#    #+#             */
-/*   Updated: 2024/04/16 14:38:13 by malbrech         ###   ########.fr       */
+/*   Created: 2024/04/16 11:54:56 by malbrech          #+#    #+#             */
+/*   Updated: 2024/04/16 11:56:08 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNALS_H
-# define SIGNALS_H
+#ifndef HEREDOC_H
+# define HEREDOC_H
 
 # include <minishell.h>
-# include <termios.h>
 
-/*================================= FUNCTIONS ================================*/
-void		signals_init(void);
-void	handler_sigquit(int sig);
-void	handler_sigint(int sig);
-void	suppress_output(void);
-// void		handler_sigint_heredoc(int sig);
+/*================================ STRUCTURES ================================*/
+
+/*================================ FONCTIONS =================================*/
 
 
 
-#endif
+#endif  

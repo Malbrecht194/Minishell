@@ -6,11 +6,12 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:41:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/12 14:47:15 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:52:13 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <signals.h>
 
 int	main(int ac, char **av, char **envp)
 {
@@ -25,7 +26,7 @@ int	main(int ac, char **av, char **envp)
 	minish->env = dup_array(envp);
 	if (!minish->env)
 		exit(1); //error
-	signals();
+	signals_init();
 	rl_buff = "";
 	while (rl_buff)
 	{

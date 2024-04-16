@@ -7,6 +7,7 @@ NAME = minishell
 #============ MINISHELL SOURCES =============#
 SRCS = get_prompt.c \
 	main.c \
+	signals.c\
 	check_args.c \
 	link_list.c \
 	link_list_utils.c \
