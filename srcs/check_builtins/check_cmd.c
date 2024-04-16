@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:06:12 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/12 11:04:11 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/15 19:23:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	is_builtins(char *cmd)
 	int		i;
 
 	i = 0;
+	if (!cmd)
+		return (-1);
 	builtins[FT_CD] = "cd";
 	builtins[FT_ECHO] = "echo";
 	builtins[FT_ENV] = "env";

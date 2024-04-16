@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/11 17:57:36 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/16 14:09:13 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,27 @@ int	try_close(int fd)
 	if (fd > 2)
 		return (close(fd));
 	return (-1);
+}
+
+void	free_minish(t_minishell *minishell)
+{
+	if (!minishell)
+		return ;
+	if (minishell->cmd_line)
+		ft_chrisclear(&minishell->cmd_line);
+	if (minishell->env)
+		ft_free_2d_array((void **)minishell->env);
+	if (minishell->prompt)
+		free(minishell->prompt);
+	free(minishell);
+	clear_history();
+}
+
+void	close_all_fd()
+{
+	int	i;
+	
+	i = 2;
+	while (++i < 1024)
+		try_close(i);
 }

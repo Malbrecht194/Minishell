@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:26 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:26:08 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:29:53 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ void	change_env(int to_del, char ***env)
 	int		env_size;
 	char	**e_tmp;
 
-	i = 0;
+	i = to_del;
 	e_tmp = *env;
 	env_size = ft_array_len((void **)e_tmp);
-	while (i < to_del)
-		i++;
 	free(e_tmp[i]);
 	while (i < env_size)
 	{
@@ -48,8 +46,8 @@ void	change_env(int to_del, char ***env)
 
 int	check_env(char **env, char *av)
 {
-	int		i;
-	int		av_len;
+	int	i;
+	int	av_len;
 
 	i = 0;
 	av_len = ft_strlen(av);
@@ -62,24 +60,26 @@ int	check_env(char **env, char *av)
 	return (0);
 }
 
-int	ft_unset(int ac, char **av, char ***env)
+int	ft_unset(int ac, char **av, t_chris *cmd, t_minishell *minish)
 {
 	int	i;
 	int	tmp;
 
-	(void)ac;
 	i = 0;
+	(void)cmd;
+	if (ac == 1)
+		return (0);
 	while (av[++i])
 	{
-		tmp = check_env((*env), av[i]);
+		tmp = check_env(minish->env, av[i]);
 		if (!tmp)
 		{
 			i++;
 			continue ;
 		}
-		change_env(tmp, env);
+		change_env(tmp, &minish->env);
 	}
-	remake_env(env);
+	remake_env(&minish->env);
 	return (0);
 }
 

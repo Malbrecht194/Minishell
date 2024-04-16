@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:54:21 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/12 10:04:38 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/16 10:49:28 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	check_rl_args(char *rl)
 	int			type;
 	int			state;
 
-	i = 0;
-	i += skip_ifs(rl);
+	i = skip_ifs(rl);
 	if (rl[i] == '|')
 		return (0);
 	while (rl[i])
@@ -35,7 +34,9 @@ int	check_rl_args(char *rl)
 		else if (type == HEREDOC || type == OUT_A)
 			state = 2;
 		j = i + skip_ifs(&rl[i + state]);
-		if (state && (rl[j + state] == '<' || rl[j + state] == '>' || rl[j + state] == '|'))
+		if (state && (((type == INFILE || type == OUT_T || type == HEREDOC
+			|| type == OUT_A) && (rl[j + state] == '<' || rl[j + state] == '>'))
+				|| (type == PIPE && rl[j + state] == '|')))
 			return (0);
 		if (skip_ifs(rl + ++i))
 			i += skip_ifs(rl + i);
@@ -61,7 +62,6 @@ void	check_ambigous(char *str, t_init *init)
 int	creat_arg(char *str, char **env, t_init *init)
 {
 	int		i;
-	char	*n_str;
 
 	i = 0;
 	if (!str[i])
@@ -72,24 +72,24 @@ int	creat_arg(char *str, char **env, t_init *init)
 	while (str[i] && !is_ifs(str[i]) && str[i] != '|' 
 			&& str[i] != '<' && str[i] != '>')
 			i++;
-	n_str = ft_substr(str, 0, i);
-	if (!n_str)
+	init->str = ft_substr(str, 0, i);
+	if (!init->str)
 	{
 		init->error = 1;
 		return (0);
 	}
 	if (init->type != HEREDOC)
-		check_expand(&n_str, env);
+		check_expand(&init->str, env);
 	if (!(init->type == ARG || init->type == HEREDOC))
-		check_ambigous(n_str, init);
-	init->str = n_str;
+		check_ambigous(init->str, init);
 	return (i);
 }
 
 t_init	*init_lexor(char *rl_args, char **env)
 {
-	int			i;
-	int			j;
+	int		i;
+	int		j;
+	int		k;
 	t_init	*init;
 
 	if (!rl_args || !*rl_args)
@@ -104,12 +104,13 @@ t_init	*init_lexor(char *rl_args, char **env)
 			j++;
 	else if (init->type == HEREDOC || init->type == OUT_A)
 		j += 2;
+	k = j;
 	if (!(init->type == PIPE || init->type == -1))
 	{
 		i += skip_ifs(rl_args + i + j);
-		if (creat_arg(&rl_args[i + j], env, init) == -1)
-			return (NULL);
 		j += creat_arg(&rl_args[i + j], env, init);
+		if (j - k < 0)
+			return (NULL);
 	}
 	ft_initadd_back(&init, init_lexor(rl_args + i + j, env));
 	return (init);

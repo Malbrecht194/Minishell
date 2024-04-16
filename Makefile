@@ -7,7 +7,6 @@ NAME = minishell
 #============ MINISHELL SOURCES =============#
 SRCS = main.c \
 	utils.c \
-	access.c \
 	get_prompt.c \
 	check_args.c \
 	builtins/cd.c \
@@ -16,7 +15,9 @@ SRCS = main.c \
 	builtins/exit.c \
 	builtins/echo.c \
 	builtins/unset.c \
-	builtins/export.c \
+	builtins/export/export.c \
+	builtins/export/export_utils.c\
+	builtins/export/export_utils_2.c\
 	format_readline/format_rl.c \
 	format_readline/expand_env.c \
 	format_readline/utils_expand.c \
@@ -25,6 +26,7 @@ SRCS = main.c \
 	lexor/tchris_utils.c \
 	lexor/lexor_init/lexor_init.c \
 	lexor/lexor_init/lexor_init_utils.c \
+	check_builtins/access.c \
 	check_builtins/exec_cmd.c \
 	check_builtins/check_cmd.c \
 	check_builtins/exec_utils.c \

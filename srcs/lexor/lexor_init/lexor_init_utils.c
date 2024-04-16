@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:17:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/11 16:04:19 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/15 20:26:41 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	ft_initclear(t_init **lst)
 	while (*lst != NULL)
 	{
 		tmp = (*lst)->next;
+		if ((*lst)->str)
+			free((*lst)->str);
 		free(*lst);
 		*lst = tmp;
 	}

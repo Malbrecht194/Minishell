@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/11 17:45:43 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/15 21:22:25 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,15 @@ void	arg_format(t_init *lst, t_chris **node)
 	a_size = ft_array_len((void **)(*node)->cmd);
 	array = ft_calloc(sizeof(char *), a_size + 2);
 	if (!array)
-	{
-		free (lst->str);
 		return ; //error
-	}
 	while ((*node)->cmd && (*node)->cmd[i])
 	{
 		array[i] = (*node)->cmd[i];
 		i++;
 	}
-	array[i] = lst->str;
+	array[i] = ft_strdup(lst->str);
+	if (!array[i])
+		return ; //error
 	if ((*node)->cmd)
 		free((*node)->cmd);
 	(*node)->cmd = array;
@@ -86,9 +85,29 @@ t_chris	*creat_chris(t_init *lst, t_chris **node)
 	return (*node);
 }
 
+void	last_cmd_check(t_chris *chris)
+{
+	int		i;
+	t_chris	*tmp;
+	
+	tmp = chris;
+	while (tmp)
+	{
+		i = 0;
+		while (tmp->cmd[i])
+		{
+			delete_quote(&tmp->cmd[i]);
+			if (ft_count_word(tmp->cmd[i], -1) > 1)
+				add_to_array(&tmp->cmd, tmp->cmd[i], &i);
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
+
 t_chris	*chris_lexor(char *rl_args, char **env)
 {
-	t_chris		*c_lst;
+	t_chris	*c_lst;
 	t_init	*lst;
 
 	if (!check_rl_args(rl_args))
@@ -97,5 +116,6 @@ t_chris	*chris_lexor(char *rl_args, char **env)
 	c_lst = creat_chris(lst, NULL);
 	ft_initclear(&lst);
 	free(rl_args);
+	last_cmd_check(c_lst);
 	return (c_lst);
 }

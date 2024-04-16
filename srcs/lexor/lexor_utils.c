@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 15:32:36 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/11 17:29:42 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/15 21:39:06 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,32 @@ int	open_fd(char *f_name, int type)
 	else if (type == INFILE)
 		fd = open(f_name, O_RDONLY);
 	return (fd);
+}
+
+void	add_to_array(char ***args, char *arg, int *index)
+{
+	int		i;
+	int		j;
+	char	**add;
+	char	**n_args;
+	
+	i = -1;
+	j = 0;
+	add = ft_split(arg, -1);
+	if (!add)
+		return ;
+	n_args = ft_calloc(ft_array_len((void **)add) + ft_array_len((void **)(*args)), sizeof(char *));
+	if (n_args)
+	{
+		while (++i < (*index))
+			n_args[i] = (*args)[i];
+		while (add[j])
+			n_args[i++] = add[j++];
+		while (args[i++])
+			n_args[i] = (*args)[i];
+		free(*args);
+		*args = n_args;
+		(*index) += j - 1;
+	}
+	free(add);
 }

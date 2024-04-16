@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:14:56 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 16:10:40 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/15 14:54:47 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_multi_join(int n_to_free, char *join_to, ...)
 	char	*final;
 	int		i;
 
-	i = 0;
+	i = 1;
 	va_start(va_to_join, join_to);
 	final = ft_strdup(join_to);
 	if (!final)

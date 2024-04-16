@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:05:22 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/12 14:55:41 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:38:53 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,30 +55,27 @@ void	replace_opwd(char ***env)
 	free(tmp);
 }
 
-int	ft_cd(int ac, char **av, char ***env)
+int	ft_cd(int ac, char **av, t_chris *cmd, t_minishell *minish)
 {
 	char	*to_move;
 	int		cd_state;
 	int		state;
 
+	(void) cmd;
 	state = 0;
+	if (ac == 1 || !ft_strncmp(av[1], "-", 2))
+		state++;
 	if (ac == 1)
-	{
-		to_move = ft_strdup(ft_getenv("HOME", *env));
-		state++;
-	}
+		to_move = ft_strdup(ft_getenv("HOME", minish->env));
 	else if (!ft_strncmp(av[1], "-", 2))
-	{
-		to_move = ft_strdup(ft_getenv("OLDPWD", *env));
-		state++;
-	}
+		to_move = ft_strdup(ft_getenv("OLDPWD", minish->env));
 	else
 		to_move = av[1];
 	if (!to_move)
 		return (1);
-	replace_opwd(env);
+	replace_opwd(&minish->env);
 	cd_state = chdir(to_move);
-	replace_pwd(env);
+	replace_pwd(&minish->env);
 	if (state)
 		free(to_move);
 	return (cd_state);

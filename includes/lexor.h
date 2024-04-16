@@ -6,15 +6,15 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 10:37:38 by malbrech          #+#    #+#             */
-/*   Updated: 2024/04/11 17:46:18 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/16 14:20:20 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXOR_H
 # define LEXOR_H
 
+# include <fcntl.h>
 # include <minishell.h>
-
 /*================================ STRUCTURES ================================*/
 enum				e_lexor
 {
@@ -61,5 +61,6 @@ t_chris				*ft_chrislast(t_chris *chris);
 void				ft_chrisclear(t_chris **chris);
 t_chris				*ft_chrisnew(void);
 void				close_all(int fd[2]);
+void				add_to_array(char ***args, char *arg, int *index);
 
 #endif

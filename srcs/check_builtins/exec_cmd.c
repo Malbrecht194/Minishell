@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/12 13:00:32 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/16 14:29:17 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	fork_exec(t_minishell *minish, t_chris *lst, int pipe_fd[2])
 	{
 		if (pipe_fd)
 			try_close(pipe_fd[READ_FD]);
+		if (lst->next)
+			try_close(lst->next->fd_in);
 		if (builtins == NO_BUILTINS)
 			exec_cmd(minish, lst);
 		else
@@ -107,7 +109,10 @@ void	exec_loop(t_minishell *minish, t_chris *lst)
 			fork_exec(minish, cmd, pipe_fd);
 		}
 		else
+		{
 			fork_exec(minish, cmd, NULL);
+			close_all(pipe_fd);
+		}
 		cmd = cmd->next;
 	}
 	wait_loop(minish, &lst);
@@ -120,6 +125,8 @@ void	exec_all_cmd(t_minishell *minish)
 
 	lst = minish->cmd_line;
 	builtins = is_builtins(lst->cmd[0]);
+	if (builtins == -1)
+		return ;
 	if (count_cmd(lst) == 1)
 	{
 		if (builtins == NO_BUILTINS)
