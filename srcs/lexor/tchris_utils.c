@@ -6,12 +6,12 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:29:04 by malbrech          #+#    #+#             */
-/*   Updated: 2024/04/16 14:15:39 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/17 11:36:28 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
 #include <lexor.h>
+#include <minishell.h>
 
 t_chris	*ft_chrisnew(void)
 {
@@ -28,14 +28,17 @@ t_chris	*ft_chrisnew(void)
 void	ft_chrisclear(t_chris **chris)
 {
 	t_chris	*tmp;
-	
+
 	if (!chris || !(*chris))
 		return ;
-	while (*chris != NULL)
+	while ((*chris))
 	{
 		tmp = (*chris)->next;
 		if ((*chris)->cmd)
-			ft_free_2d_array((void **)(*chris)->cmd);
+			ft_free_2d_array((void **)(*chris)->cmd,
+				ft_array_len((void **)(*chris)->cmd));
+		try_close((*chris)->fd_in);
+		try_close((*chris)->fd_out);
 		free(*chris);
 		*chris = tmp;
 	}

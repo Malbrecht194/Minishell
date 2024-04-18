@@ -30,7 +30,9 @@ SRCS = main.c \
 	check_builtins/exec_cmd.c \
 	check_builtins/check_cmd.c \
 	check_builtins/exec_utils.c \
-	check_builtins/exec_builtins.c
+	check_builtins/exec_builtins.c \
+	error/error.c \
+	error/error_utils.c
 #============ TRANSFORM .c TO .o ============#
 LIBFT = libft/libft.a
 OBJ_DIR = obj/

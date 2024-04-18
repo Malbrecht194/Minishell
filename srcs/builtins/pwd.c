@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:14 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/16 13:36:43 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/17 13:01:19 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int	ft_pwd(int ac, char **av, t_chris *cmd, t_minishell *minish)
 	(void)minish;
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		pwd = "no pwd found...";
+	{
+		ft_printf_fd(cmd->fd_out, "no pwd found...\n", pwd);
+		return (1);
+	}
 	ft_printf_fd(cmd->fd_out, "%s\n", pwd);
 	free(pwd);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/15 21:22:25 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:05:59 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,52 +15,59 @@
 #include <lexor.h>
 #include <minishell.h>
 
-void	arg_format(t_init *lst, t_chris **node)
+int	arg_format(t_chris **f_chris, t_init *lst, t_chris *node)
 {
 	int			i;
 	char		**array;
-	size_t		a_size;
 
 	i = 0;
-	a_size = ft_array_len((void **)(*node)->cmd);
-	array = ft_calloc(sizeof(char *), a_size + 2);
+	array = ft_calloc(sizeof(char *), ft_array_len((void **)node->cmd) + 2);
 	if (!array)
-		return ; //error
-	while ((*node)->cmd && (*node)->cmd[i])
 	{
-		array[i] = (*node)->cmd[i];
+		ft_chrisclear(f_chris);
+		return (0);
+	}
+	while (node->cmd && node->cmd[i])
+	{
+		array[i] = node->cmd[i];
 		i++;
 	}
 	array[i] = ft_strdup(lst->str);
 	if (!array[i])
-		return ; //error
-	if ((*node)->cmd)
-		free((*node)->cmd);
-	(*node)->cmd = array;
+	{
+		ft_chrisclear(f_chris);
+		return (0);
+	}
+	if (node->cmd)
+		free(node->cmd);
+	node->cmd = array;
+	return (1);
 }
 
-void	select_in_out(t_init *lst, t_chris **node)
+void	select_in_out(t_init *lst, t_chris *node)
 {
 	int	*fd;	
 
 	fd = NULL;
-	if ((*node)->error)
+	if (!check_ambigous(lst->str))
+		node->error = 1;
+	if (node->error)
 		return ;
 	if (lst->type == OUT_A || lst->type == OUT_T)
-		fd = &(*node)->fd_out;
+		fd = &node->fd_out;
 	else if (lst->type == INFILE)
-		fd = &(*node)->fd_in;
+		fd = &node->fd_in;
 	if ((*fd))
 		try_close((*fd));
 	(*fd) = open_fd(lst->str, lst->type);
 	if ((*fd) == -1)
 	{	
-		(*node)->error = 1; //error
-		//failed to open file
+		node->error = 1;
+		error_handle(FAIL_OPEN, NULL, NULL, NULL);
 	}
 }
 
-t_chris	*creat_chris(t_init *lst, t_chris **node)
+t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node)
 {
 	t_chris	*n_node;
 	
@@ -71,51 +78,89 @@ t_chris	*creat_chris(t_init *lst, t_chris **node)
 	{
 		n_node = ft_chrisnew();
 		if (!n_node)
+		{
+			ft_chrisclear(f_chris);
 			return (NULL);
-		return (creat_chris(lst, &n_node));
+		}
+		if (!f_chris)
+			creat_chris(&n_node, lst, n_node);
+		else
+			creat_chris(f_chris, lst, n_node);
+		return (n_node);
 	}
 	else if (lst->type == ARG)
-		arg_format(lst, node);
+	{
+		if (!arg_format(f_chris, lst, node))
+			return (NULL);
+	}
 	else if (lst->type == OUT_A || lst->type == OUT_T || lst->type == INFILE)
 		select_in_out(lst, node);
 	if (lst->type == PIPE)
-		(*node)->next = creat_chris(lst->next, NULL);
+		ft_chrisadd_back(&node, creat_chris(f_chris, lst->next, NULL));
 	else
-		creat_chris(lst->next, node);
-	return (*node);
+		creat_chris(f_chris, lst->next, node);
+	return (node);
 }
 
 void	last_cmd_check(t_chris *chris)
 {
 	int		i;
+	int		j;
+	char	*new_arr;
 	t_chris	*tmp;
-	
+
+	if (!chris)
+		return ;
 	tmp = chris;
+	new_arr = NULL;
 	while (tmp)
 	{
 		i = 0;
+		j = 0;
 		while (tmp->cmd[i])
 		{
 			delete_quote(&tmp->cmd[i]);
 			if (ft_count_word(tmp->cmd[i], -1) > 1)
-				add_to_array(&tmp->cmd, tmp->cmd[i], &i);
+			{
+				new_arr = ft_strdup(tmp->cmd[i]);
+				if (!new_arr)
+				{
+					ft_chrisclear(&chris);
+					return ;
+				}
+				free(tmp->cmd[i]);
+				j = add_to_array(&tmp->cmd, new_arr, i);
+				if (j == 0)
+				{
+					ft_chrisclear(&chris);
+					return ;
+				}
+				i += j;
+			}
 			i++;
 		}
 		tmp = tmp->next;
 	}
 }
 
-t_chris	*chris_lexor(char *rl_args, char **env)
+t_chris	*chris_lexor(char *rl_args, t_minishell *minish)
 {
 	t_chris	*c_lst;
 	t_init	*lst;
 
-	if (!check_rl_args(rl_args))
-		return (NULL); //error
-	lst = init_lexor(rl_args, env);
-	c_lst = creat_chris(lst, NULL);
-	ft_initclear(&lst);
+	if (!check_rl_args(rl_args, minish))
+		return (NULL);
+	lst = init_lexor(NULL, rl_args, minish);
 	free(rl_args);
+	if (!lst)
+	{
+		error_handle(MALLOC_ERROR, minish, NULL, NULL);
+		return (NULL);
+	}
+	c_lst = creat_chris(NULL, lst, NULL);
+	ft_initclear(&lst);
 	last_cmd_check(c_lst);
+	if (!c_lst)
+		error_handle(MALLOC_ERROR, minish, NULL, NULL);
 	return (c_lst);
 }

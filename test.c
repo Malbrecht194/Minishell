@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:47:25 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/08 14:13:02 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/18 21:02:24 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,10 @@
 
 int	main(int ac, char **av, char **env)
 {
-	int		test;
-	int		*test_2;
-	pid_t	pid;
-
-	test = 0;
-	test_2 = &test;
-	pid = fork();
-
-	if (!pid)
-	{
-		*test_2 = 1;
-		exit(EXIT_SUCCESS);
-	}
-	else
-		wait(NULL);
-	printf("%d\n", test);
+	(void)ac;
+	(void)av;
+	(void)env;
+	printf("TEEEEEEEEEEEEST\n");
 	
 	// char	**dup_env;
 	// char	*tmp;

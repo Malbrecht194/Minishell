@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:10:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/16 13:37:21 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/17 10:14:20 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	*ft_getenv(char *to_get, char **env)
 	int		i;
 
 	i = 0;
+	if (!to_get || !env || !*env)
+		return (NULL);
 	while (env[i] && ft_strncmp(to_get, env[i], ft_strlen(to_get)))
 		i++;
 	if (env[i] && !ft_strncmp(to_get, env[i], ft_strlen(to_get))

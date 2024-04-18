@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:08:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/11 09:26:47 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:14:45 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,20 @@ char	**get_path(char **env)
 	return (split_path);
 }
 
-char	*test_access(char *command, char **env)
+char	*test_access(char *command, t_minishell *minish)
 {
 	char	**exe_path;
 	char	*tmp_path;
 
-	if (access(command, F_OK | X_OK) == 0)
+	if (ft_strchr(command, '/'))
 		return (command);
-	exe_path = get_path(env);
+	exe_path = get_path(minish->env);
 	if (!exe_path)
-		return (NULL);
+		error_handle(NO_CMD, minish, command, exit);
 	tmp_path = check_access(exe_path, command);
-	ft_free_2d_array((void **)exe_path);
+	ft_free_2d_array((void **)exe_path, ft_array_len((void **)exe_path));
 	if (!tmp_path)
-		return (NULL);
-	free(command);
+		error_handle(NO_CMD, minish, command, exit);
 	return (tmp_path);
 }
 

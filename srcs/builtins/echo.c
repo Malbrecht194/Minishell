@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:38:09 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/16 13:37:41 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/17 13:16:09 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,20 @@
 int	check_flags(char *av)
 {
 	int	i;
+	int	state;
 
 	i = 0;
+	state = 0;
 	if (!av)
 		return (0);
 	if (av[i] == '-' && av[i + 1] == 'n')
+	{
+		state = 1;
 		i++;
+	}
 	while (av[i] == 'n')
 		i++;
-	if (av[i] == 0)
+	if (state && av[i] == 0)
 		return (1);
 	else
 		return (0);

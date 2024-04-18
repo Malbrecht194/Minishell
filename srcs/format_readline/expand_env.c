@@ -6,14 +6,14 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:29:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/15 12:47:32 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/18 13:52:04 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <expand.h>
 #include <minishell.h>
 
-int	quot_in_expand(char **arg, char *to_check, int index)
+int	quote_in_expand(char **arg, char *to_check, int index)
 {
 	int		i;
 	char	minus_two[2];
@@ -34,14 +34,14 @@ int	quot_in_expand(char **arg, char *to_check, int index)
 				return (0);
 			free(*arg);
 			*arg = tmp;
-			return (quot_in_expand(arg, (*arg) + index + i + 2, index + i + 2) + 1);
+			return (quote_in_expand(arg, (*arg) + index + i + 2, index + i + 2) + 1);
 		}
 		i++;
 	}
 	return (0);
 }
 
-void	do_expand(char **arg, int *index, char state, char **env)
+void	do_expand(char **arg, int *index, char state, t_minishell *minish)
 {
 	size_t	i;
 	size_t	j;
@@ -56,14 +56,28 @@ void	do_expand(char **arg, int *index, char state, char **env)
 			break ;
 		if ((*arg)[i + j] == '$')
 		{
-			if (ft_isalnum((*arg)[i + j + 1]) || (*arg)[i + j + 1] == '_')
+			if (ft_isalnum((*arg)[i + j + 1]) || (*arg)[i + j + 1] == '_'
+				|| (*arg)[i + j + 1] == '\"' || (*arg)[i + j + 1] == '\''
+				|| (*arg)[i + j + 1] == '?')
 			{
+				if (state && (*arg)[i + j + 1] == '\"' && (*arg)[i + j - 1] == '\"')
+				{
+					*index = i + j;
+					return ;
+				}
 				rm_char(arg, i + j);
-				i += expand_env(arg, i + j, env) - 1;
+				if (!state && ((*arg)[i + j] == '\"' || (*arg)[i + j] == '\''))
+				{
+					rm_char(arg, i + j + to_next_quote((*arg) + i + j + 1,
+						(*arg)[i + j]) + 1);
+					rm_char(arg, i + j);
+					return ;
+				}
+				i += expand_env(arg, i + j, minish) - 1;
 			}
 			if (!state)
 			{	
-				i += quot_in_expand(arg, (*arg) + (*index), (*index));
+				i += quote_in_expand(arg, (*arg) + (*index), (*index));
 				break ;
 			}
 		}
@@ -73,12 +87,13 @@ void	do_expand(char **arg, int *index, char state, char **env)
 	*index = i + j;
 }
 
-int	expand_env(char **arg, int index, char **env)
+int	expand_env(char **arg, int index, t_minishell *minish)
 {
-	int		len;
-	char	*b_expand;
-	char	*s_env;
-	char	*tmp;
+	int			len;
+	size_t		size;
+	char		*b_expand;
+	char		*s_env;
+	char		*tmp;
 
 	len = env_len(&(*arg)[(index)]);
 	b_expand = ft_substr((*arg), 0, index);
@@ -88,13 +103,19 @@ int	expand_env(char **arg, int index, char **env)
 		ft_multi_free(2, b_expand, s_env);
 		return (0);
 	}
-	tmp = ft_getenv(s_env, env);
+	if ((*arg)[(index)] == '?')
+		tmp = ft_itoa(minish->last_error);
+	else
+		tmp = ft_getenv(s_env, minish->env);
 	if (!tmp)
 		tmp = "";
 	free(s_env);
 	b_expand = join_and_free(b_expand, tmp, 1, 0);
 	b_expand = join_and_free(b_expand, (*arg) + len + index, 1, 0);
+	size = ft_strlen(tmp);
+	if ((*arg)[(index)] == '?' && tmp && *tmp)
+		free(tmp);
 	free(*arg);
 	*arg = b_expand;
-	return (ft_strlen(tmp));
+	return (size);
 }

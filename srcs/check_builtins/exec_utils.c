@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:33:07 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/16 14:06:36 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:36:05 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@
 int	full_dup(int n_in, int n_out)
 {
 	if (dup2(n_in, STDIN_FILENO) == -1 || dup2(n_out, STDOUT_FILENO) == -1)
+	{
+		try_close(n_in);
+		try_close(n_out);
 		return (0);
+	}
 	return (1);
 }
 

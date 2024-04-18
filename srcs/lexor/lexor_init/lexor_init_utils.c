@@ -6,12 +6,13 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:17:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/15 20:26:41 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/18 14:10:15 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <check_builtins.h>
 #include <lexor.h>
+#include <expand.h>
 #include <minishell.h>
 
 void	ft_initadd_back(t_init **lst, t_init *new)
@@ -55,4 +56,25 @@ void	ft_initclear(t_init **lst)
 		*lst = tmp;
 	}
 	*lst = NULL;
+}
+
+int	check_quote(char *arg, int index, t_minishell *minish)
+{
+	static int	next_index;
+	static int	state = 0;
+	
+	if (arg[index] == '\'' || arg[index] == '\"')
+	{
+		next_index = index + to_next_quote(arg + index + 1, arg[index]);
+		if (!state && next_index - index < 0)
+		{
+			error_handle(NO_END_QUOTE, minish, NULL, NULL);
+			return (0);
+		}
+		if (!state)
+			state = arg[index];
+		else if (state && index >= next_index && state == arg[index])
+			state = 0;
+	}
+	return (1);
 }

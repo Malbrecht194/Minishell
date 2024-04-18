@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:57:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/16 14:02:33 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/17 11:35:24 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	new_env(char ***env, char *av, int b_count, int *error)
 	int		i_env;
 	char	*env_name;
 
-	env_name = ft_substr(av, 0, b_count - 2);
+	env_name = ft_substr(av, 0, b_count - 1);
 	if (!env_name)
 	{
 		*error = 1;
@@ -104,11 +104,11 @@ int	no_arg(t_chris *cmd, t_minishell *minish)
 		change_env(check_env(n_arg, "_"), &n_arg);
 	if (declare_x(&n_arg, 0))
 	{
-		ft_free_2d_array((void **)n_arg);
+		ft_free_2d_array((void **)n_arg, ft_array_len((void **)n_arg));
 		return (1);
 	}
 	print_array(cmd->fd_out, n_arg);
-	ft_free_2d_array((void **)n_arg);
+	ft_free_2d_array((void **)n_arg, ft_array_len((void **)n_arg));
 	return (0);
 }
 

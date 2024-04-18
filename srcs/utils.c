@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/16 14:09:13 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/17 11:34:17 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**dup_array(char **array)
 		n_array[i] = ft_strdup(array[i]);
 		if (!n_array[i])
 		{
-			ft_free_2d_array((void **)n_array);
+			ft_free_2d_array((void **)n_array, len + 1);
 			return (NULL);
 		}
 		i++;
@@ -58,12 +58,15 @@ int	try_close(int fd)
 
 void	free_minish(t_minishell *minishell)
 {
+	void	**env;
+	
+	env = (void **)minishell->env;
 	if (!minishell)
 		return ;
 	if (minishell->cmd_line)
 		ft_chrisclear(&minishell->cmd_line);
 	if (minishell->env)
-		ft_free_2d_array((void **)minishell->env);
+		ft_free_2d_array(env, ft_array_len((void **)minishell->env));
 	if (minishell->prompt)
 		free(minishell->prompt);
 	free(minishell);

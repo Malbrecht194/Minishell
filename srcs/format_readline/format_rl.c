@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/15 20:33:52 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/18 13:52:04 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,20 @@ void	delete_quote(char **arg)
 	}
 }
 
-int		to_next_quote(char *arg, char quot)
+int		to_next_quote(char *arg, char quote)
 {
 	int		i;
 
 	i = 0;
-	while (arg[i] && arg[i] != quot)
+	while (arg[i] && arg[i] != quote)
 		i++;
-	if (arg[i] != quot)
+	if (arg[i] != quote)
 		return (-1);
 	else
 		return (i);
 }
 
-void	check_expand(char **arg, char **env)
+void	check_expand(char **arg, t_minishell *minish)
 {
 	int	i;
 	int	j;
@@ -64,12 +64,12 @@ void	check_expand(char **arg, char **env)
 	{
 		j = i;
 		if ((*arg)[i] == '\"')
-			do_expand(arg, &i, '\"', env);
+			do_expand(arg, &i, '\"', minish);
 		else if ((*arg)[i] == '\'')
 			i += to_next_quote((*arg) + i + 1, '\'') + 1;
 		else if ((*arg)[i] == '$')
 		{
-			do_expand(arg, &i, 0, env);
+			do_expand(arg, &i, 0, minish);
 			while (j < i)
 			{
 				(*arg)[j] = check_ifs((*arg)[j]);

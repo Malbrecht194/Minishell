@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/16 14:29:17 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/18 21:07:52 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,70 +17,78 @@
 
 void	exec_cmd(t_minishell *minish, t_chris *cmd)
 {
-	char	*command;
-
-	// char	*tmp = "";
-	// while (tmp)
-	// {
-	// 	tmp = get_next_line(cmd->fd_in);
-	// 	printf("fd %d : %s", i, tmp);
-	// 	free(tmp);
-	// }
+	char		*command;
+	struct stat	s_stat;
+	
 	command = cmd->cmd[0];
-	cmd->cmd[0] = test_access(cmd->cmd[0], minish->env);
+	stat(cmd->cmd[0], &s_stat);
+	cmd->cmd[0] = test_access(cmd->cmd[0], minish);
 	if (!cmd->cmd[0])
 	{
 		cmd->cmd[0] = command;
-		ft_free_2d_array((void **)cmd->cmd);
-		exit(127);
+		error_handle(NO_F_OR_DIR, minish, command, exit);
 	}
-	if (cmd->error || !full_dup(cmd->fd_in, cmd->fd_out))
-	{
-		try_close(cmd->fd_in);
-		try_close(cmd->fd_out);
-		exit(1);
-	}
+	else if (cmd->error || !full_dup(cmd->fd_in, cmd->fd_out))
+		error_handle(DUP_ERROR, minish, NULL, exit);
 	try_close(cmd->fd_in);
 	try_close(cmd->fd_out);
-	if (execve(cmd->cmd[0], cmd->cmd, minish->env) == -1)
-		exit(1);
+	execve(cmd->cmd[0], cmd->cmd, minish->env);
+	if (errno == ENOENT)
+		error_handle(NO_F_OR_DIR, minish, cmd->cmd[0], exit);
+	else if (errno == EACCES && (s_stat.st_mode & __S_IFMT) == __S_IFDIR)
+		error_handle(IS_DIR, minish, cmd->cmd[0], exit);
+	else if (errno == EACCES)
+		error_handle(NO_PERM, minish, cmd->cmd[0], exit);
 }
 
-void	fork_exec(t_minishell *minish, t_chris *lst, int pipe_fd[2])
+int	fork_exec(t_minishell *minish, t_chris *lst)
 {
-	int		builtins;
+	int	builtins;
+	int	error;
 
 	builtins = is_builtins(lst->cmd[0]);
-	// printf("fd_in : %d , fd_out : %d\n", lst->fd_in, lst->fd_out);
+	error = 0;
 	lst->pid = fork();
 	if (lst->pid == -1)
-		return ;
+		return (0);
 	if (!lst->pid)
 	{
-		if (pipe_fd)
-			try_close(pipe_fd[READ_FD]);
 		if (lst->next)
 			try_close(lst->next->fd_in);
 		if (builtins == NO_BUILTINS)
 			exec_cmd(minish, lst);
 		else
-			exit(exec_builtins(minish, lst, builtins));
+		{
+			error = exec_builtins(minish, lst, builtins);
+			try_close(lst->fd_out);
+			exit(error);
+		}
 	}
-	if (pipe_fd)
-		try_close(pipe_fd[WRITE_FD]);
+	try_close(lst->fd_out);
 	try_close(lst->fd_in);
+	return (1);
 }
 
 void	wait_loop(t_minishell *minish, t_chris **lst)
 {
 	t_chris	*tmp;
-	
+	int		wait_ret;
+
 	tmp = *lst;
 	while (tmp)
 	{
-		waitpid(tmp->pid, &minish->last_error, 0);
 		try_close(tmp->fd_in);
 		try_close(tmp->fd_out);
+		if (!tmp->pid || tmp->pid == -1)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
+		waitpid(tmp->pid, &wait_ret, 0);
+		if (WIFEXITED(wait_ret))
+			minish->last_error = WEXITSTATUS(wait_ret);
+		else if (WIFSIGNALED(wait_ret))
+			minish->last_error = WTERMSIG(wait_ret) + 128;
 		tmp = tmp->next;
 	}
 	ft_chrisclear(lst);
@@ -97,7 +105,10 @@ void	exec_loop(t_minishell *minish, t_chris *lst)
 		if (cmd->next)
 		{
 			if (pipe(pipe_fd) == -1)
-				return ; //error
+			{
+				error_handle(PIPE_ERROR, minish, NULL, NULL);
+				break ;
+			}
 			if (cmd->fd_out == STDOUT_FILENO)
 				cmd->fd_out = pipe_fd[WRITE_FD];
 			else
@@ -106,12 +117,11 @@ void	exec_loop(t_minishell *minish, t_chris *lst)
 				cmd->next->fd_in = pipe_fd[READ_FD];
 			else
 				try_close(pipe_fd[READ_FD]);
-			fork_exec(minish, cmd, pipe_fd);
 		}
-		else
+		if (!fork_exec(minish, cmd))
 		{
-			fork_exec(minish, cmd, NULL);
-			close_all(pipe_fd);
+			error_handle(FORK_ERROR, minish, NULL, NULL);
+			break ;
 		}
 		cmd = cmd->next;
 	}
@@ -130,14 +140,10 @@ void	exec_all_cmd(t_minishell *minish)
 	if (count_cmd(lst) == 1)
 	{
 		if (builtins == NO_BUILTINS)
-		{
-			fork_exec(minish, lst, NULL);
-			waitpid(lst->pid, &minish->last_error, 0);
-		}
+			fork_exec(minish, lst);
 		else
 			minish->last_error = exec_builtins(minish, lst, builtins);
-		try_close(lst->fd_in);
-		try_close(lst->fd_out);
+		wait_loop(minish, &lst);
 	}
 	else
 		exec_loop(minish, lst);

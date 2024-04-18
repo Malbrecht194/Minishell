@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:54:21 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/16 10:49:28 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/18 14:03:50 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,24 @@
 #include <lexor.h>
 #include <minishell.h>
 
-int	check_rl_args(char *rl)
+int	check_rl_args(char *rl, t_minishell *minish)
 {
-	size_t		i;
-	int			j;
-	int			type;
-	int			state;
+	size_t	i;
+	int		j;
+	int		type;
+	int		state;
 
 	i = skip_ifs(rl);
 	if (rl[i] == '|')
+	{
+		error_handle(SYNTAX_ERROR, minish, &rl[i], NULL);
 		return (0);
+	}
 	while (rl[i])
 	{
 		state = 0;
+		if (!check_quote(rl, i, minish))
+			return (0);
 		type = check_type(&rl[i]);
 		if (type == INFILE || type == OUT_T || type == PIPE)
 			state = 1;
@@ -35,16 +40,21 @@ int	check_rl_args(char *rl)
 			state = 2;
 		j = i + skip_ifs(&rl[i + state]);
 		if (state && (((type == INFILE || type == OUT_T || type == HEREDOC
-			|| type == OUT_A) && (rl[j + state] == '<' || rl[j + state] == '>'))
-				|| (type == PIPE && rl[j + state] == '|')))
+						|| type == OUT_A) && (rl[j + state] == '<'
+						|| rl[j + state] == '>' || rl[j + state] == 0))
+						|| (type == PIPE && (rl[j + state] == '|'
+						|| rl[j + state] == 0))))
+		{
+			error_handle(SYNTAX_ERROR, minish, &rl[j + state], NULL);
 			return (0);
+		}
 		if (skip_ifs(rl + ++i))
 			i += skip_ifs(rl + i);
 	}
 	return (1);
 }
 
-void	check_ambigous(char *str, t_init *init)
+int	check_ambigous(char *str)
 {
 	int	i;
 
@@ -53,15 +63,16 @@ void	check_ambigous(char *str, t_init *init)
 	{
 		if (check_ifs(str[i++]) == -1)
 		{
-			//ambigous redirect
-			init->error = 1;
+			error_handle(AMBIGOUS_REDIR, NULL, NULL, NULL);
+			return (0);
 		}
 	}
+	return (1);
 }
 
-int	creat_arg(char *str, char **env, t_init *init)
+int	creat_arg(t_init **f_init, char *str, t_minishell *minish, t_init *init)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (!str[i])
@@ -69,23 +80,21 @@ int	creat_arg(char *str, char **env, t_init *init)
 		free(init);
 		return (-1);
 	}
-	while (str[i] && !is_ifs(str[i]) && str[i] != '|' 
-			&& str[i] != '<' && str[i] != '>')
-			i++;
+	while (str[i] && !is_ifs(str[i]) && str[i] != '|' && str[i] != '<'
+		&& str[i] != '>')
+		i++;
 	init->str = ft_substr(str, 0, i);
 	if (!init->str)
 	{
-		init->error = 1;
-		return (0);
+		ft_initclear(f_init);
+		return (-2);
 	}
 	if (init->type != HEREDOC)
-		check_expand(&init->str, env);
-	if (!(init->type == ARG || init->type == HEREDOC))
-		check_ambigous(init->str, init);
+		check_expand(&init->str, minish);
 	return (i);
 }
 
-t_init	*init_lexor(char *rl_args, char **env)
+t_init	*init_lexor(t_init **f_init, char *rl_args, t_minishell *minish)
 {
 	int		i;
 	int		j;
@@ -98,20 +107,26 @@ t_init	*init_lexor(char *rl_args, char **env)
 	j = 0;
 	init = ft_calloc(sizeof(t_init), 1);
 	if (!init)
+	{
+		ft_initclear(f_init);
 		return (NULL);
+	}
 	init->type = check_type(rl_args + i);
 	if (init->type == INFILE || init->type == OUT_T || init->type == PIPE)
-			j++;
+		j++;
 	else if (init->type == HEREDOC || init->type == OUT_A)
 		j += 2;
 	k = j;
 	if (!(init->type == PIPE || init->type == -1))
 	{
 		i += skip_ifs(rl_args + i + j);
-		j += creat_arg(&rl_args[i + j], env, init);
+		j += creat_arg(f_init, &rl_args[i + j], minish, init);
 		if (j - k < 0)
 			return (NULL);
 	}
-	ft_initadd_back(&init, init_lexor(rl_args + i + j, env));
+	if (!f_init)
+		ft_initadd_back(&init, init_lexor(&init, rl_args + i + j, minish));
+	else
+		ft_initadd_back(&init, init_lexor(f_init, rl_args + i + j, minish));
 	return (init);
 }

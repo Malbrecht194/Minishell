@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:05:22 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/16 13:38:53 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/16 17:20:06 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_cd(int ac, char **av, t_chris *cmd, t_minishell *minish)
 	replace_pwd(&minish->env);
 	if (state)
 		free(to_move);
-	return (cd_state);
+	return (ft_abs(cd_state));
 }
 
 // int	main(int ac, char **av, char **envp)
