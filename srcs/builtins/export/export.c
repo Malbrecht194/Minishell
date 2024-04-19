@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:57:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/17 11:35:24 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/19 08:35:34 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,22 +114,31 @@ int	no_arg(t_chris *cmd, t_minishell *minish)
 
 int	ft_export(int ac, char **av, t_chris *cmd, t_minishell *minish)
 {
-	int	error;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	int		error;
+	char	*err[2];
 
 	i = 0;
 	j = -1;
 	error = 0;
+	err[0] = "export";
 	while (av[++i])
 	{
-		if (ft_isdigit(av[i][0]))
+		err[1] = av[i];
+		if (ft_isdigit(av[i][0]) || av[i][0] == '=')
+		{
+			error_handle(NOT_VALID_ID, minish, err, NULL);
 			return (1);
+		}
 		while (!(av[i][++j] == '='
 			|| (av[i][j] == '+' && av[i][j + 1] == '=')) && av[i][j])
 		{
 			if (!ft_isalnum(av[i][j]) && av[i][j] != '_')
+			{
+				error_handle(NOT_VALID_ID, minish, err, NULL);
 				return (1);
+			}
 		}
 	}
 	if (ac == 1)
@@ -138,4 +147,3 @@ int	ft_export(int ac, char **av, t_chris *cmd, t_minishell *minish)
 		error = export_type(av, &minish->env);
 	return (error);
 }
-

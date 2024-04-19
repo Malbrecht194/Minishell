@@ -5,6 +5,7 @@
 		"check_builtins.h": "c",
 		"expand.h": "c",
 		"error.h": "c",
-		"errno.h": "c"
+		"errno.h": "c",
+		"builtins.h": "c"
 	}
 }

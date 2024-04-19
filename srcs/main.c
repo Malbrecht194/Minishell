@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:41:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/17 18:45:49 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/19 10:41:03 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ int	main(int ac, char **av, char **envp)
 {
 	t_minishell	*minish;
 
-	if (ac != 1 || av[1])
-		error_handle(TOO_MUCH_ARG, NULL, NULL, exit);
+	(void)ac;
+	(void)av;
+	/*if (ac != 1 || av[1])
+		error_handle(TOO_MUCH_ARG, NULL, NULL, exit);*/
 	minish = ft_calloc(sizeof(t_minishell), 1);
 	if (!minish)
 		error_handle(FAIL_STRUCT, NULL, NULL, exit);

@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:10:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/17 10:14:20 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/19 14:33:45 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ int	ft_env(int ac, char **av, t_chris *cmd, t_minishell *minish)
 {
 	int	i;
 
-	(void)ac;
 	(void)av;
 	i = 0;
+	if (ac > 1)
+		return (1);
 	while (minish->env[i])
 		ft_printf_fd(cmd->fd_out, "%s\n", minish->env[i++]);
 	return (0);

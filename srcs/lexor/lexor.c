@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/18 16:05:59 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:18:47 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void	last_cmd_check(t_chris *chris)
 		j = 0;
 		while (tmp->cmd[i])
 		{
-			delete_quote(&tmp->cmd[i]);
 			if (ft_count_word(tmp->cmd[i], -1) > 1)
 			{
 				new_arr = ft_strdup(tmp->cmd[i]);

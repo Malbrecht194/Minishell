@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 09:44:39 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/18 16:35:06 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/19 14:13:52 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,20 @@ typedef enum e_errcode
 	FAIL_STRUCT,
 	NO_END_QUOTE,
 	SYNTAX_ERROR,
-	MALLOC_ERROR,
 	AMBIGOUS_REDIR,
 	FAIL_OPEN,
+	MALLOC_ERROR,
 	PIPE_ERROR,
 	FORK_ERROR,
 	NO_F_OR_DIR,
 	DUP_ERROR,
 	NO_CMD,
 	NO_PERM,
-	IS_DIR
+	IS_DIR,
+	NOT_VALID_ID,
+	TOO_MANY_ARGS,
+	NO_F_O_D_CD,
+	NUM_ARG_REQUIRED,
 }				t_err_code;
 
 /*
@@ -59,16 +63,20 @@ typedef struct s_err_struct
 # define MS_NO_END_QUOTE "there's a quote unclosed"
 # define MS_SYNTAX_ERROR "syntax error near unexpected token"
 # define MS_MALLOC_ERROR "failed to use malloc()"
-# define MS_AMBIGOUS_REDIR "ambigous redirect"
+# define MS_AMBIGOUS_REDIR "ambiguous redirect"
 # define MS_PIPE_ERROR "failed to creat a pipe"
 # define MS_FORK_ERROR "failed to use fork()"
 # define MS_NO_CMD "command not found"
-# define MS_IS_DIR "is a directory"
 # define MS_DUP_ERROR "failed to use dup2()"
+# define MS_NOT_VALID_ID "not a valid identifier"
+# define MS_TOO_MANY_ARGS "too many arguments"
+# define MS_NUM_ARG_REQUIRED "numeric argument required"
 
 void			error_handle(t_err_code error, void *minish, void *arg,
 					void (*exit)(int));
 void			print_error(t_err_struct s_error, void *minish);
 void			check_exec_error(t_err_code error, void *minish);
+t_err_struct	other_error(t_err_code error);
+t_err_struct	builtins_error(t_err_code error, void *arg);
 
 #endif

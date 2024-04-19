@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:54:21 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/18 14:03:50 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:23:25 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	check_rl_args(char *rl, t_minishell *minish)
 	i = skip_ifs(rl);
 	if (rl[i] == '|')
 	{
+		minish->last_error = 2;
 		error_handle(SYNTAX_ERROR, minish, &rl[i], NULL);
 		return (0);
 	}
@@ -33,6 +34,8 @@ int	check_rl_args(char *rl, t_minishell *minish)
 		state = 0;
 		if (!check_quote(rl, i, minish))
 			return (0);
+		if (rl[i] == '\'' || rl[i] == '\"')
+			i += to_next_quote(rl + i + 1, rl[i]) + 1;
 		type = check_type(&rl[i]);
 		if (type == INFILE || type == OUT_T || type == PIPE)
 			state = 1;
@@ -40,12 +43,16 @@ int	check_rl_args(char *rl, t_minishell *minish)
 			state = 2;
 		j = i + skip_ifs(&rl[i + state]);
 		if (state && (((type == INFILE || type == OUT_T || type == HEREDOC
-						|| type == OUT_A) && (rl[j + state] == '<'
-						|| rl[j + state] == '>' || rl[j + state] == 0))
-						|| (type == PIPE && (rl[j + state] == '|'
-						|| rl[j + state] == 0))))
+						|| type == OUT_A) && (rl[j + state] == '<' || rl[j
+						+ state] == '>' || rl[j + state] == '|' || rl[j + state] == 0)) || (type == PIPE
+					&& (rl[j + state] == '|' || rl[j + state] == 0))))
 		{
-			error_handle(SYNTAX_ERROR, minish, &rl[j + state], NULL);
+			minish->last_error = 2;
+			if ((type == INFILE || type == OUT_T || type == HEREDOC
+					|| type == OUT_A) && rl[j + state] == 0)
+				error_handle(SYNTAX_ERROR, minish, "newline", NULL);
+			else
+				error_handle(SYNTAX_ERROR, minish, &rl[j + state], NULL);
 			return (0);
 		}
 		if (skip_ifs(rl + ++i))
@@ -90,7 +97,10 @@ int	creat_arg(t_init **f_init, char *str, t_minishell *minish, t_init *init)
 		return (-2);
 	}
 	if (init->type != HEREDOC)
+	{
 		check_expand(&init->str, minish);
+		delete_quote(&init->str);
+	}
 	return (i);
 }
 
@@ -101,9 +111,9 @@ t_init	*init_lexor(t_init **f_init, char *rl_args, t_minishell *minish)
 	int		k;
 	t_init	*init;
 
-	if (!rl_args || !*rl_args)
-		return (NULL);
 	i = skip_ifs(rl_args);
+	if (!rl_args || !rl_args[i])
+		return (NULL);
 	j = 0;
 	init = ft_calloc(sizeof(t_init), 1);
 	if (!init)

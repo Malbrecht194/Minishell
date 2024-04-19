@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:58:31 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/18 17:24:08 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/19 09:27:42 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ t_err_struct	exec_error(t_err_code error, void *arg)
 	t_err_struct	s_error;
 
 	if (error == NO_F_OR_DIR)
-		s_error.err_msg = strerror(errno);
+		s_error.err_msg = strerror(ENOENT);
 	else if (error == DUP_ERROR)
 		s_error.err_msg = MS_DUP_ERROR;
 	else if (error == NO_CMD)
 		s_error.err_msg = MS_NO_CMD;
 	else if (error == NO_PERM)
-		s_error.err_msg = strerror(errno);
+		s_error.err_msg = strerror(EACCES);
 	else if (error == IS_DIR)
-		s_error.err_msg = MS_IS_DIR;
+		s_error.err_msg = strerror(EISDIR);
 	if (error == NO_F_OR_DIR || error == NO_CMD)
 		s_error.exit_code = 127;
 	else if (error == NO_PERM || error == IS_DIR)
@@ -89,16 +89,14 @@ void	error_handle(t_err_code error, void *minish, void *arg,
 		s_error = ms_init_err(error);
 	else if (error == NO_END_QUOTE || error == SYNTAX_ERROR)
 		s_error = line_error(error, arg);
-	else if (error == MALLOC_ERROR)
-		s_error.err_msg = MS_MALLOC_ERROR;
 	else if (error == AMBIGOUS_REDIR || error == FAIL_OPEN)
 		s_error = open_error(error, arg);
-	else if (error == PIPE_ERROR)
-		s_error.err_msg = MS_PIPE_ERROR;
-	else if (error == FORK_ERROR)
-		s_error.err_msg = MS_FORK_ERROR;
+	else if (MALLOC_ERROR <= error && error <= FORK_ERROR)
+		s_error = other_error(error);
 	else if (NO_F_OR_DIR <= error && error <= IS_DIR)
 		s_error = exec_error(error, arg);
+	else if (NOT_VALID_ID <= error && error <= NUM_ARG_REQUIRED)
+		s_error = builtins_error(error, arg);
 	s_error.code = error;
 	print_error(s_error, minish);
 	check_exec_error(error, minish);

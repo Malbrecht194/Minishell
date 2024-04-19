@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:05:22 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/16 17:20:06 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/19 09:06:29 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,35 +61,35 @@ int	ft_cd(int ac, char **av, t_chris *cmd, t_minishell *minish)
 	int		cd_state;
 	int		state;
 
-	(void) cmd;
 	state = 0;
+	if (ac > 2)
+	{
+		error_handle(TOO_MANY_ARGS, minish, av[0], NULL);
+		return (1);
+	}
 	if (ac == 1 || !ft_strncmp(av[1], "-", 2))
 		state++;
 	if (ac == 1)
 		to_move = ft_strdup(ft_getenv("HOME", minish->env));
 	else if (!ft_strncmp(av[1], "-", 2))
+	{
 		to_move = ft_strdup(ft_getenv("OLDPWD", minish->env));
+		ft_printf_fd(cmd->fd_out, "%s\n", to_move);
+	}
 	else
 		to_move = av[1];
 	if (!to_move)
 		return (1);
 	replace_opwd(&minish->env);
 	cd_state = chdir(to_move);
+	if (cd_state == -1)
+	{
+		error_handle(NO_F_O_D_CD, minish, av, NULL);
+		return (1);
+	}
 	replace_pwd(&minish->env);
 	if (state)
 		free(to_move);
 	return (ft_abs(cd_state));
 }
 
-// int	main(int ac, char **av, char **envp)
-// {
-// 	char	**dup_env;
-
-// 	dup_env = dup_array(envp);
-// 	printf("CPWD : %s, OPWD : %s\n", ft_getenv("PWD", dup_env),
-		// ft_getenv("OLDPWD", dup_env));
-// 	ft_cd(ac, av, &dup_env);
-// 	printf("NEW CPWD : %s, NEW OPWD : %s\n", ft_getenv("PWD", dup_env),
-		// ft_getenv("OLDPWD", dup_env));
-// 	ft_free_2d_array((void **)dup_env);
-// }

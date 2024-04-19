@@ -6,14 +6,14 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:29:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/18 13:52:04 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/19 13:32:36 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <expand.h>
 #include <minishell.h>
 
-int	quote_in_expand(char **arg, char *to_check, int index)
+int	quote_in_expand(char **arg, char *to_check, int index, int end_of_exp)
 {
 	int		i;
 	char	minus_two[2];
@@ -23,7 +23,7 @@ int	quote_in_expand(char **arg, char *to_check, int index)
 	minus_two[0] = -2;
 	minus_two[1] = 0;
 	tmp = NULL;
-	while (to_check[i])
+	while (to_check[i] && i < end_of_exp)
 	{
 		if (to_check[i] == '\'' || to_check[i] == '\"')
 		{
@@ -34,7 +34,7 @@ int	quote_in_expand(char **arg, char *to_check, int index)
 				return (0);
 			free(*arg);
 			*arg = tmp;
-			return (quote_in_expand(arg, (*arg) + index + i + 2, index + i + 2) + 1);
+			return (quote_in_expand(arg, (*arg) + index + i + 2, index + i + 2, end_of_exp) + 1);
 		}
 		i++;
 	}
@@ -45,9 +45,11 @@ void	do_expand(char **arg, int *index, char state, t_minishell *minish)
 {
 	size_t	i;
 	size_t	j;
+	size_t	exp_size;
 	
-	i = *index;
 	j = 0;
+	i = *index;
+	exp_size = 0;
 	if (state)
 		j++;
 	while ((*arg)[i + j] && (*arg)[i + j] != state)
@@ -73,11 +75,12 @@ void	do_expand(char **arg, int *index, char state, t_minishell *minish)
 					rm_char(arg, i + j);
 					return ;
 				}
-				i += expand_env(arg, i + j, minish) - 1;
+				exp_size = expand_env(arg, i + j, minish);
+				i += exp_size - 1;
 			}
 			if (!state)
 			{	
-				i += quote_in_expand(arg, (*arg) + (*index), (*index));
+				i += quote_in_expand(arg, (*arg) + (*index), (*index), exp_size);
 				break ;
 			}
 		}
