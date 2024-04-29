@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/18 21:07:52 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/24 13:35:32 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,28 @@
 #include <check_builtins.h>
 #include <expand.h>
 #include <lexor.h>
+#include <builtins.h>
 
 void	exec_cmd(t_minishell *minish, t_chris *cmd)
 {
 	char		*command;
 	struct stat	s_stat;
-	
+
 	command = cmd->cmd[0];
 	stat(cmd->cmd[0], &s_stat);
 	cmd->cmd[0] = test_access(cmd->cmd[0], minish);
 	if (!cmd->cmd[0])
 	{
 		cmd->cmd[0] = command;
-		error_handle(NO_F_OR_DIR, minish, command, exit);
+		error_handle(NO_F_OR_DIR, minish, cmd->cmd[0], exit);
 	}
 	else if (cmd->error || !full_dup(cmd->fd_in, cmd->fd_out))
-		error_handle(DUP_ERROR, minish, NULL, exit);
+	{
+		if (cmd->error == 1)
+			error_handle(JUST_EXIT, minish, NULL, exit);
+		else
+			error_handle(DUP_ERROR, minish, NULL, exit);
+	}
 	try_close(cmd->fd_in);
 	try_close(cmd->fd_out);
 	execve(cmd->cmd[0], cmd->cmd, minish->env);
@@ -85,7 +91,9 @@ void	wait_loop(t_minishell *minish, t_chris **lst)
 			continue ;
 		}
 		waitpid(tmp->pid, &wait_ret, 0);
-		if (WIFEXITED(wait_ret))
+		if (tmp->error)
+			minish->last_error = 1;
+		else if (WIFEXITED(wait_ret))
 			minish->last_error = WEXITSTATUS(wait_ret);
 		else if (WIFSIGNALED(wait_ret))
 			minish->last_error = WTERMSIG(wait_ret) + 128;

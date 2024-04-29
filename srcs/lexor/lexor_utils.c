@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 15:32:36 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/17 19:37:32 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/20 18:47:45 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,16 @@ int	add_to_array(char ***args, char *arg, int index)
 	free(add);
 	*args = n_args;
 	return (j - 1);
+}
+
+void	remove_to_array(char ***args, int index)
+{
+	int	i;
+	int	arr_len;
+
+	i = index - 1;
+	arr_len = ft_array_len((void **)(*args));
+	free((*args)[index]);
+	while (++i < arr_len)
+		(*args)[i] = (*args)[i + 1];
 }

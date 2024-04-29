@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:54:21 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/19 13:23:25 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/24 13:20:25 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,16 @@ int	check_rl_args(char *rl, t_minishell *minish)
 	return (1);
 }
 
-int	check_ambigous(char *str)
+int	check_ambigous(char *str, t_minishell *minish)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (check_ifs(str[i++]) == -1)
+		if (is_ifs(str[i++]))
 		{
-			error_handle(AMBIGOUS_REDIR, NULL, NULL, NULL);
+			error_handle(AMBIGOUS_REDIR, minish, NULL, NULL);
 			return (0);
 		}
 	}
@@ -89,7 +89,11 @@ int	creat_arg(t_init **f_init, char *str, t_minishell *minish, t_init *init)
 	}
 	while (str[i] && !is_ifs(str[i]) && str[i] != '|' && str[i] != '<'
 		&& str[i] != '>')
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			i += to_next_quote(str + i + 1, str[i]) + 1;
 		i++;
+	}
 	init->str = ft_substr(str, 0, i);
 	if (!init->str)
 	{

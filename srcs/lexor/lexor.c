@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/19 13:18:47 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/23 12:03:57 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ int	arg_format(t_chris **f_chris, t_init *lst, t_chris *node)
 	return (1);
 }
 
-void	select_in_out(t_init *lst, t_chris *node)
+void	select_in_out(t_init *lst, t_chris *node, t_minishell *minish)
 {
 	int	*fd;	
 
 	fd = NULL;
-	if (!check_ambigous(lst->str))
+	if (!check_ambigous(lst->str, minish))
 		node->error = 1;
 	if (node->error)
 		return ;
@@ -63,11 +63,11 @@ void	select_in_out(t_init *lst, t_chris *node)
 	if ((*fd) == -1)
 	{	
 		node->error = 1;
-		error_handle(FAIL_OPEN, NULL, NULL, NULL);
+		error_handle(FAIL_OPEN, minish, lst->str, NULL);
 	}
 }
 
-t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node)
+t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node, t_minishell *minish)
 {
 	t_chris	*n_node;
 	
@@ -83,9 +83,9 @@ t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node)
 			return (NULL);
 		}
 		if (!f_chris)
-			creat_chris(&n_node, lst, n_node);
+			creat_chris(&n_node, lst, n_node, minish);
 		else
-			creat_chris(f_chris, lst, n_node);
+			creat_chris(f_chris, lst, n_node, minish);
 		return (n_node);
 	}
 	else if (lst->type == ARG)
@@ -94,11 +94,11 @@ t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node)
 			return (NULL);
 	}
 	else if (lst->type == OUT_A || lst->type == OUT_T || lst->type == INFILE)
-		select_in_out(lst, node);
+		select_in_out(lst, node, minish);
 	if (lst->type == PIPE)
-		ft_chrisadd_back(&node, creat_chris(f_chris, lst->next, NULL));
+		ft_chrisadd_back(&node, creat_chris(f_chris, lst->next, NULL, minish));
 	else
-		creat_chris(f_chris, lst->next, node);
+		creat_chris(f_chris, lst->next, node, minish);
 	return (node);
 }
 
@@ -117,6 +117,8 @@ void	last_cmd_check(t_chris *chris)
 	{
 		i = 0;
 		j = 0;
+		if (!*tmp->cmd[0])
+			remove_to_array(&tmp->cmd, 0);
 		while (tmp->cmd[i])
 		{
 			if (ft_count_word(tmp->cmd[i], -1) > 1)
@@ -156,7 +158,7 @@ t_chris	*chris_lexor(char *rl_args, t_minishell *minish)
 		error_handle(MALLOC_ERROR, minish, NULL, NULL);
 		return (NULL);
 	}
-	c_lst = creat_chris(NULL, lst, NULL);
+	c_lst = creat_chris(NULL, lst, NULL, minish);
 	ft_initclear(&lst);
 	last_cmd_check(c_lst);
 	if (!c_lst)

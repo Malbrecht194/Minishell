@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:22:28 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/16 13:51:09 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/23 12:36:08 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	exec_builtins(t_minishell *minish, t_chris *cmd, int b_num)
 	size_t	array_len;
 	int		(*builtins[8])(int, char **, t_chris *, t_minishell *);
 
-	if (!cmd)
+	if (!cmd || cmd->error)
 		return (1);
 	array_len = ft_array_len((void **)(cmd->cmd));
 	builtins[FT_CD] = ft_cd;

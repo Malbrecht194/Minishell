@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:57:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/19 08:35:34 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/20 18:20:17 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,19 +120,18 @@ int	ft_export(int ac, char **av, t_chris *cmd, t_minishell *minish)
 	char	*err[2];
 
 	i = 0;
-	j = -1;
 	error = 0;
 	err[0] = "export";
 	while (av[++i])
 	{
+		j = -1;
 		err[1] = av[i];
 		if (ft_isdigit(av[i][0]) || av[i][0] == '=')
 		{
 			error_handle(NOT_VALID_ID, minish, err, NULL);
 			return (1);
 		}
-		while (!(av[i][++j] == '='
-			|| (av[i][j] == '+' && av[i][j + 1] == '=')) && av[i][j])
+		while (!(av[i][++j] == '=' || (av[i][j] == '+' && av[i][j + 1] == '=')) && av[i][j])
 		{
 			if (!ft_isalnum(av[i][j]) && av[i][j] != '_')
 			{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:25:43 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/19 16:32:29 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/24 13:34:36 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	ft_exit(int ac, char **av, t_chris *cmd, t_minishell *minish)
 	(void)cmd;
 	err_ret = 2;
 	tmp = av[1];
-	ft_printf_fd(1, "exit\n");
+	if (!minish->cmd_line->next)
+		ft_printf_fd(1, "exit\n");
 	if (!av[1])
 		err_ret = minish->last_error;
 	while (*tmp && check_ifs(*tmp) == -1)

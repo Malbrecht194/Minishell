@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:26 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/17 12:59:36 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/20 17:47:43 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 void	remake_env(t_minishell *minish)
 {
 	char	**e_tmp;
-	int		i;
 
-	i = 0;
 	e_tmp = dup_array(minish->env);
 	if (!e_tmp)
 		return ;

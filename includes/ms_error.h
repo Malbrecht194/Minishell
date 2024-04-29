@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_error.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 09:44:39 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/19 14:13:52 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/23 12:21:17 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef enum e_errcode
 	TOO_MANY_ARGS,
 	NO_F_O_D_CD,
 	NUM_ARG_REQUIRED,
+	JUST_EXIT
 }				t_err_code;
 
 /*

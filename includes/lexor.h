@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 10:37:38 by malbrech          #+#    #+#             */
-/*   Updated: 2024/04/18 14:01:49 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/22 22:19:03 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ enum	e_lexor
 t_chris	*chris_lexor(char *rl_args, t_minishell *minish);
 int		check_rl_args(char *rl, t_minishell *minish);
 t_init	*init_lexor(t_init **f_init, char *rl_args, t_minishell *minish);
-int		check_ambigous(char *str);
+int		check_ambigous(char *str, t_minishell *minish);
 int	check_quote(char *arg, int index, t_minishell *minish);
 int		check_type(char *arg);
 int		open_fd(char *f_name, int type);
@@ -45,5 +45,6 @@ void	ft_chrisclear(t_chris **chris);
 t_chris	*ft_chrisnew(void);
 void	close_all(int fd[2]);
 int	add_to_array(char ***args, char *arg, int index);
+void	remove_to_array(char ***args, int index);
 
 #endif
