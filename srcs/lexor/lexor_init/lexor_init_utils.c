@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:17:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/18 14:10:15 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/30 13:14:37 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,31 @@ int	check_quote(char *arg, int index, t_minishell *minish)
 			state = 0;
 	}
 	return (1);
+}
+
+t_init	*check_init_args(t_init *first, t_init *prev, t_init *node, t_minishell *minish)
+{
+	t_init	*tmp;
+
+	if (node)
+		tmp = node->next;
+	if (!prev && !node)
+		return (NULL);
+	else if (!node)
+		return (first);
+	if (node->type == ARG && !node->str[0])
+	{
+		if (prev)
+			prev->next = tmp;
+		if (node->str)
+			free(node->str);
+		free(node);
+		minish->last_error = 0;
+		return (check_init_args(first, prev, tmp, minish));
+	}
+	if (!first)
+		first = node;
+	if (node->type != HEREDOC && node->type != PIPE)
+		delete_quote(&node->str);
+	return (check_init_args(first, node, tmp, minish));
 }

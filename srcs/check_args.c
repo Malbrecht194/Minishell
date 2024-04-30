@@ -26,3 +26,4 @@ void	check_args(t_minishell *minish, char *rl_args)
 		return ;
 	exec_all_cmd(minish);
 }
+

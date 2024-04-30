@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:05:22 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/19 09:06:29 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/30 13:35:26 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_cd(int ac, char **av, t_chris *cmd, t_minishell *minish)
 		state++;
 	if (ac == 1)
 		to_move = ft_strdup(ft_getenv("HOME", minish->env));
-	else if (!ft_strncmp(av[1], "-", 2))
+	else if (!ft_strncmp(av[1], "-", 2) && ft_getenv("OLDPWD", minish->env))
 	{
 		to_move = ft_strdup(ft_getenv("OLDPWD", minish->env));
 		ft_printf_fd(cmd->fd_out, "%s\n", to_move);
@@ -82,14 +82,14 @@ int	ft_cd(int ac, char **av, t_chris *cmd, t_minishell *minish)
 		return (1);
 	replace_opwd(&minish->env);
 	cd_state = chdir(to_move);
+	if (state)
+		free(to_move);
 	if (cd_state == -1)
 	{
 		error_handle(NO_F_O_D_CD, minish, av, NULL);
 		return (1);
 	}
 	replace_pwd(&minish->env);
-	if (state)
-		free(to_move);
 	return (ft_abs(cd_state));
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/24 13:35:32 by xeo              ###   ########.fr       */
+/*   Updated: 2024/04/29 18:45:17 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	exec_cmd(t_minishell *minish, t_chris *cmd)
 	char		*command;
 	struct stat	s_stat;
 
-	command = cmd->cmd[0];
 	stat(cmd->cmd[0], &s_stat);
+	command = cmd->cmd[0];
 	cmd->cmd[0] = test_access(cmd->cmd[0], minish);
 	if (!cmd->cmd[0])
 	{
@@ -67,6 +67,7 @@ int	fork_exec(t_minishell *minish, t_chris *lst)
 		{
 			error = exec_builtins(minish, lst, builtins);
 			try_close(lst->fd_out);
+			free_minish(minish);
 			exit(error);
 		}
 	}

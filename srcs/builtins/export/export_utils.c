@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_export_utils.c                                 :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:29:29 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/15 16:44:48 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/30 13:28:42 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,18 @@ int	declare_x(char ***envp, int i)
 	if (!(*envp)[i])
 		return (0);
 	size = env_size((*envp)[i]) + 1;
-	if (size == -1 || size == -2)
-		return (declare_x(envp, i + 1));
+	if (size == 0 || size == -1)
+		size = ft_strlen((*envp)[i]);
 	n_env = ft_substr((*envp)[i], 0, size);
 	if (!n_env)
 		return (1);
 	n_env = join_and_free("declare -x ", n_env, 0, 1);
-	n_env = join_and_free(n_env, "\"", 1, 0);
-	n_env = join_and_free(n_env, (*envp)[i] + size, 1, 0);
-	n_env = join_and_free(n_env, "\"", 1, 0);
+	if (env_size((*envp)[i]) != -1 && env_size((*envp)[i]) != -2)
+	{
+		n_env = join_and_free(n_env, "\"", 1, 0);
+		n_env = join_and_free(n_env, (*envp)[i] + size, 1, 0);
+		n_env = join_and_free(n_env, "\"", 1, 0);
+	}
 	if (!n_env)
 		return (1);
 	free((*envp)[i]);

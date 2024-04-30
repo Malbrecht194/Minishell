@@ -6,11 +6,12 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:41:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/19 10:41:03 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/30 10:27:01 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <builtins.h>
 
 void	rl_loop(t_minishell *minish)
 {
@@ -33,7 +34,8 @@ void	rl_loop(t_minishell *minish)
 		minish->prompt = NULL;
 		minish->cmd_line = NULL;
 	}
-	free_minish(minish);
+	ft_printf_fd(1, "exit\n");
+	ft_exit(1, NULL, NULL, minish);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -42,8 +44,8 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	/*if (ac != 1 || av[1])
-		error_handle(TOO_MUCH_ARG, NULL, NULL, exit);*/
+	if (ac != 1 || av[1])
+		error_handle(TOO_MUCH_ARG, NULL, NULL, exit);
 	minish = ft_calloc(sizeof(t_minishell), 1);
 	if (!minish)
 		error_handle(FAIL_STRUCT, NULL, NULL, exit);

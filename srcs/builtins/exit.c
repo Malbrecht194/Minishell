@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:25:43 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/24 13:34:36 by xeo              ###   ########.fr       */
+/*   Updated: 2024/04/30 11:35:27 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	check_exit_arg(char *arg, t_minishell *minish, int ac)
 	}
 	if (ac > 2)
 	{
-		error_handle(TOO_MANY_ARGS, minish, arg, NULL);
+		error_handle(TOO_MANY_ARGS, minish, "exit", NULL);
 		return (-1);
 	}
 	return (ret);
@@ -81,16 +81,20 @@ int	ft_exit(int ac, char **av, t_chris *cmd, t_minishell *minish)
 
 	(void)cmd;
 	err_ret = 2;
-	tmp = av[1];
-	if (!minish->cmd_line->next)
+	if (ac > 1)
+		tmp = av[1];
+	if (minish->cmd_line && !minish->cmd_line->next)
 		ft_printf_fd(1, "exit\n");
-	if (!av[1])
+	if (ac == 1)
 		err_ret = minish->last_error;
-	while (*tmp && check_ifs(*tmp) == -1)
-		tmp++;
-	err_ret = check_exit_arg(tmp, minish, ac);
-	if (err_ret == -1)
-		return (1);
+	else
+	{
+		while (tmp && *tmp && check_ifs(*tmp) == -1)
+			tmp++;
+		err_ret = check_exit_arg(tmp, minish, ac);
+		if (err_ret == -1)
+			return (1);
+	}
 	free_minish(minish);
 	exit(err_ret);
 }

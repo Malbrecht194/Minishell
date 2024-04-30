@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:57:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/20 18:20:17 by xeo              ###   ########.fr       */
+/*   Updated: 2024/04/29 16:56:51 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,10 @@ void	new_env(char ***env, char *av, int b_count, int *error)
 	if (!i_env)
 	{
 		if (no_env(av, env))
-		{
 			*error = 1;
-			return ;
-		}
 	}
 	else if (replace_env(av, &((*env)[i_env])))
-	{
 		*error = 1;
-		return ;
-	}
 }
 
 void	cat_env(char ***env, char *av, int b_count, int *error)
@@ -81,14 +75,14 @@ int	export_type(char **av, char ***env)
 	while (av[++i])
 	{
 		content = check_export_type(av[i]);
-		if (!content)
-			continue ;
-		else if (content == -1)
+		if (content == -1)
 			error = 1;
 		else if (content < 0)
 			cat_env(env, av[i], ft_abs(content), &error);
 		else if (content > 0)
 			new_env(env, av[i], content, &error);
+		else if (!content)
+			new_env(env, av[i], ft_strlen(av[i]) + 1, &error);
 	}
 	return (error);
 }
@@ -126,7 +120,7 @@ int	ft_export(int ac, char **av, t_chris *cmd, t_minishell *minish)
 	{
 		j = -1;
 		err[1] = av[i];
-		if (ft_isdigit(av[i][0]) || av[i][0] == '=')
+		if (!av[i][0] || ft_isdigit(av[i][0]) || av[i][0] == '=')
 		{
 			error_handle(NOT_VALID_ID, minish, err, NULL);
 			return (1);

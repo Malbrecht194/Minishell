@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:08:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/18 17:14:45 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/29 10:29:52 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	*test_access(char *command, t_minishell *minish)
 	char	**exe_path;
 	char	*tmp_path;
 
+	if (!command[0])
+		error_handle(NO_CMD, minish, command, exit);
 	if (ft_strchr(command, '/'))
 		return (command);
 	exe_path = get_path(minish->env);

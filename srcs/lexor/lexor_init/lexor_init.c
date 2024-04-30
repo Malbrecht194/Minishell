@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:54:21 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/24 13:20:25 by xeo              ###   ########.fr       */
+/*   Updated: 2024/04/30 13:06:29 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int	check_rl_args(char *rl, t_minishell *minish)
 	int		state;
 
 	i = skip_ifs(rl);
+	if (!rl[i])
+	{
+		free(rl);
+		return (0);
+	}
 	if (rl[i] == '|')
 	{
 		minish->last_error = 2;
@@ -101,10 +106,7 @@ int	creat_arg(t_init **f_init, char *str, t_minishell *minish, t_init *init)
 		return (-2);
 	}
 	if (init->type != HEREDOC)
-	{
 		check_expand(&init->str, minish);
-		delete_quote(&init->str);
-	}
 	return (i);
 }
 

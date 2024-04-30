@@ -6,13 +6,14 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:33:07 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/18 16:36:05 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/29 11:25:20 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <check_builtins.h>
 #include <lexor.h>
+#include <expand.h>
 
 int	full_dup(int n_in, int n_out)
 {

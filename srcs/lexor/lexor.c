@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/23 12:03:57 by xeo              ###   ########.fr       */
+/*   Updated: 2024/04/30 13:19:29 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,7 @@ void	last_cmd_check(t_chris *chris)
 	{
 		i = 0;
 		j = 0;
-		if (!*tmp->cmd[0])
-			remove_to_array(&tmp->cmd, 0);
-		while (tmp->cmd[i])
+		while (tmp->cmd && tmp->cmd[i])
 		{
 			if (ft_count_word(tmp->cmd[i], -1) > 1)
 			{
@@ -158,10 +156,15 @@ t_chris	*chris_lexor(char *rl_args, t_minishell *minish)
 		error_handle(MALLOC_ERROR, minish, NULL, NULL);
 		return (NULL);
 	}
+	lst = check_init_args(NULL, NULL, lst, minish);
+	if (!lst)
+		return (NULL);
 	c_lst = creat_chris(NULL, lst, NULL, minish);
 	ft_initclear(&lst);
 	last_cmd_check(c_lst);
 	if (!c_lst)
 		error_handle(MALLOC_ERROR, minish, NULL, NULL);
+	if (!c_lst->cmd)
+		ft_chrisclear(&c_lst);
 	return (c_lst);
 }

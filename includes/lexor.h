@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 10:37:38 by malbrech          #+#    #+#             */
-/*   Updated: 2024/04/22 22:19:03 by xeo              ###   ########.fr       */
+/*   Updated: 2024/04/30 13:12:31 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ t_chris	*ft_chrisnew(void);
 void	close_all(int fd[2]);
 int	add_to_array(char ***args, char *arg, int index);
 void	remove_to_array(char ***args, int index);
+t_init	*check_init_args(t_init *first, t_init *prev, t_init *node, t_minishell *minish);
 
 #endif
