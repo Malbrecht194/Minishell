@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:10:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:26:08 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/29 16:38:29 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	*ft_getenv(char *to_get, char **env)
 	int		i;
 
 	i = 0;
+	if (!to_get || !env || !*env)
+		return (NULL);
 	while (env[i] && ft_strncmp(to_get, env[i], ft_strlen(to_get)))
 		i++;
 	if (env[i] && !ft_strncmp(to_get, env[i], ft_strlen(to_get))
@@ -44,14 +46,20 @@ char	*ft_getenv(char *to_get, char **env)
 		return (NULL);
 }
 
-int	ft_env(int ac, char **av, char ***envp)
+int	ft_env(int ac, char **av, t_chris *cmd, t_minishell *minish)
 {
 	int	i;
 
-	(void)ac;
-	(void)av;
-	i = 0;
-	while (envp[i])
-		printf("%s\n", (*envp)[i++]);
+	i = -1;
+	if (ac > 1)
+	{
+		error_handle(TOO_MANY_ARGS, minish, av[0], NULL);
+		return (1);
+	}
+	while (minish->env[++i])
+	{
+		if (ft_strchr(minish->env[i], '='))
+			ft_printf_fd(cmd->fd_out, "%s\n", minish->env[i]);
+	}
 	return (0);
 }

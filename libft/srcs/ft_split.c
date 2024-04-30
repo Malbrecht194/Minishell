@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:16:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 16:10:40 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/22 20:56:25 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 #include <stdio.h>
 
-static void	free_all(char **buff)
+static void	free_all(char **buff, int size)
 {
 	int	i;
 
 	i = 0;
-	while (buff[i])
+	while (i < size)
 	{
 		free(buff[i]);
 		i++;
@@ -32,6 +32,8 @@ int	ft_count_word(char const *s, char sep)
 	int	count;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i] == sep)
 		i++;
 	if ((s[i] == 0))
@@ -83,7 +85,7 @@ static char	**split_format(char **buff, char const *s, char sep)
 		buff[g] = ft_substr(s, i, count);
 		if (!buff[g])
 		{
-			free_all(buff);
+			free_all(buff, g);
 			return (NULL);
 		}
 		i += count;

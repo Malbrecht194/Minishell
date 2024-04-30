@@ -3,6 +3,13 @@
 		"minishell.h": "c",
 		"signals.h": "c",
 		"termios.h": "c",
-		"heredoc.h": "c"
-	}
+		"heredoc.h": "c",
+		"lexor.h": "c",
+		"check_builtins.h": "c",
+		"expand.h": "c",
+		"error.h": "c",
+		"errno.h": "c",
+		"builtins.h": "c"
+	},
+	"cmake.configureOnOpen": true
 }

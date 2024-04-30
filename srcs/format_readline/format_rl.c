@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/08 13:25:42 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/18 22:39:13 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,82 +15,109 @@
 
 void	delete_quote(char **arg)
 {
-	int		i;
-	int		to_quote;
-	int		state;
-	char	quote;
+	int	i;
+	int	state;
 	
 	i = 0;
-	state = 0;
 	while ((*arg)[i])
 	{
-		quote = -3;
+		state = 1;
 		if ((*arg)[i] == -2)
+		{
 			rm_char(arg, i);
+			state = 1;
+		}
 		else if ((*arg)[i] == '\'' || (*arg)[i] == '\"')
 		{
-			if (state++ % 2 == 0)
-				quote = (*arg)[i];
-			to_quote = to_next_quote((*arg) + i + 1, quote);
-			if (to_quote == -1)
-				to_quote = 0;
 			rm_char(arg, i);
-			i += to_quote - 1;
+			state = 0;
 		}
-		i++;
+		i += state;
 	}
 }
 
-int		to_next_quote(char *arg, char quot)
+int		to_next_quote(char *arg, char quote)
 {
 	int		i;
 
 	i = 0;
-	while (arg[i] && arg[i] != quot)
+	while (arg[i] && arg[i] != quote)
 		i++;
-	if (arg[i] != quot)
+	if (arg[i] != quote)
 		return (-1);
 	else
 		return (i);
 }
 
-void	check_expand(char **arg, char **env)
+void	check_expand(char **arg, t_minishell *minish)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	while ((*arg)[i])
 	{
-		if ((*arg)[i] == '<' && (*arg)[i + 1] == '<')
-			i += skip_heredoc(*arg, i);
+		j = i;
 		if ((*arg)[i] == '\"')
-			do_expand(arg, &i, '\"', env);
+			do_expand(arg, &i, '\"', minish);
 		else if ((*arg)[i] == '\'')
 			i += to_next_quote((*arg) + i + 1, '\'') + 1;
 		else if ((*arg)[i] == '$')
-			do_expand(arg, &i, 0, env);
+		{
+			do_expand(arg, &i, 0, minish);
+			while (j < i)
+			{
+				(*arg)[j] = check_ifs((*arg)[j]);
+				j++;
+			}
+		}
 		i++;
 		if (i >= (int)ft_strlen(*arg))
 			break ;
 	}
 }
 
-void	format_rl(char **arg, char **env)
+int	check_arg_quotes(char **arg, int index, char quote)
+{
+	int		i;
+	char	minus_two[2];
+	char	*tmp;
+
+	i = 0;
+	minus_two[0] = -2;
+	minus_two[1] = 0;
+	tmp = NULL;
+	while ((*arg)[index + i] && (*arg)[index + i] != quote)
+	{
+		if ((*arg)[index + i] == '\'' || (*arg)[index + i] == '\"')
+		{
+			tmp = ft_substr(*arg, 0, index + i);
+			tmp = join_and_free(tmp, minus_two, 1, 0);
+			tmp = join_and_free(tmp, (*arg) + index + i, 1, 0);
+			if (!tmp)
+				return (0);
+			free(*arg);
+			*arg = tmp;
+			return (check_arg_quotes(arg, index + i + 2, quote) + i + 2);
+		}
+		i++;
+	}
+	return (i);
+}
+
+void	format_rl(char **arg)
 {
 	size_t	i;
 	
 	i = 0;
-	check_expand(arg, env);
 	while ((*arg)[i])
 	{
-		if ((*arg)[i] == -2)
-			i++;
-		else if ((*arg)[i] == '\"' || (*arg)[i] == '\'')
+		if ((*arg)[i] == '\"' || (*arg)[i] == '\'')
 		{
 			if (to_next_quote((*arg) + i + 1, (*arg)[i]) == -1)
 				return ; //error
 			else
-				i += to_next_quote((*arg) + i + 1, (*arg)[i]) + 1;
+				i += check_arg_quotes(arg, i + 1, (*arg)[i]) + 1;
 		}
 		(*arg)[i] = check_ifs((*arg)[i]);
 		if (i >= ft_strlen(*arg))

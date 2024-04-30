@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:05:22 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:26:08 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/30 13:35:26 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	replace_pwd(char ***env)
 	int		i_env;
 	char	*tmp;
 	char	*pwd;
-	
+
 	if (!ft_getenv("PWD", *env))
 		return ;
 	i_env = check_env(*env, "PWD");
@@ -35,58 +35,61 @@ void	replace_pwd(char ***env)
 
 void	replace_opwd(char ***env)
 {
-	int		i_env;
 	char	*tmp;
-	int		cwd;
 	char	*pwd;
+	int		s_pwd;
 
-	i_env = 0;
-	cwd = 0;
+	s_pwd = 0;
 	if (!ft_getenv("OLDPWD", *env))
 		return ;
-	pwd = ft_getenv("PWD", *env);
-	if (!pwd)
-	{
-		pwd = getcwd(NULL, cwd++);
-		if (!pwd)
-			return ;
-	}
-	i_env = check_env(*env, "OLDPWD");
+	if (ft_getenv("PWD", *env))
+		pwd = ft_getenv("PWD", *env);
+	else
+		pwd = getcwd(NULL, s_pwd++);
 	tmp = ft_strjoin("OLDPWD=", pwd);
 	if (!tmp)
-		return;
-	if (cwd == 1)
+		return ;
+	if (pwd && s_pwd)
 		free(pwd);
-	replace_env(tmp, &(*env)[i_env]);
+	replace_env(tmp, &(*env)[check_env(*env, "OLDPWD")]);
 	free(tmp);
 }
 
-int	ft_cd(int ac, char **av, char ***env)
+int	ft_cd(int ac, char **av, t_chris *cmd, t_minishell *minish)
 {
 	char	*to_move;
 	int		cd_state;
-	
-	replace_opwd(env);
-	if (ac == 1)
+	int		state;
+
+	state = 0;
+	if (ac > 2)
 	{
-		to_move = ft_getenv("HOME", *env);
-		if (!to_move)
-			return (1);
+		error_handle(TOO_MANY_ARGS, minish, av[0], NULL);
+		return (1);
+	}
+	if (ac == 1 || !ft_strncmp(av[1], "-", 2))
+		state++;
+	if (ac == 1)
+		to_move = ft_strdup(ft_getenv("HOME", minish->env));
+	else if (!ft_strncmp(av[1], "-", 2) && ft_getenv("OLDPWD", minish->env))
+	{
+		to_move = ft_strdup(ft_getenv("OLDPWD", minish->env));
+		ft_printf_fd(cmd->fd_out, "%s\n", to_move);
 	}
 	else
 		to_move = av[1];
+	if (!to_move)
+		return (1);
+	replace_opwd(&minish->env);
 	cd_state = chdir(to_move);
-	replace_pwd(env);
-	return (cd_state);
+	if (state)
+		free(to_move);
+	if (cd_state == -1)
+	{
+		error_handle(NO_F_O_D_CD, minish, av, NULL);
+		return (1);
+	}
+	replace_pwd(&minish->env);
+	return (ft_abs(cd_state));
 }
 
-// int	main(int ac, char **av, char **envp)
-// {
-// 	char	**dup_env;
-	
-// 	dup_env = dup_array(envp);
-// 	printf("CPWD : %s, OPWD : %s\n", ft_getenv("PWD", dup_env), ft_getenv("OLDPWD", dup_env));
-// 	ft_cd(ac, av, &dup_env);
-// 	printf("NEW CPWD : %s, NEW OPWD : %s\n", ft_getenv("PWD", dup_env), ft_getenv("OLDPWD", dup_env));
-// 	ft_free_2d_array((void **)dup_env);
-// }

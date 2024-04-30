@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 15:24:29 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/17 11:34:17 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**dup_array(char **array)
 		n_array[i] = ft_strdup(array[i]);
 		if (!n_array[i])
 		{
-			ft_free_2d_array((void **)n_array);
+			ft_free_2d_array((void **)n_array, len + 1);
 			return (NULL);
 		}
 		i++;
@@ -49,17 +49,35 @@ char	**dup_array(char **array)
 	return (n_array);
 }
 
-char	*sub_and_trim(char *str, int start, size_t len, char *set)
+int	try_close(int fd)
 {
-	char	*tmp;
-	char	*final;
+	if (fd > 2)
+		return (close(fd));
+	return (-1);
+}
 
-	tmp = ft_substr(str, start, len);
-	if (!tmp)
-		return (NULL);
-	final = ft_strtrim(tmp, set);
-	free(tmp);
-	if (!final)
-		return (NULL);
-	return (final);
+void	free_minish(t_minishell *minishell)
+{
+	void	**env;
+	
+	env = (void **)minishell->env;
+	if (!minishell)
+		return ;
+	if (minishell->cmd_line)
+		ft_chrisclear(&minishell->cmd_line);
+	if (minishell->env)
+		ft_free_2d_array(env, ft_array_len((void **)minishell->env));
+	if (minishell->prompt)
+		free(minishell->prompt);
+	free(minishell);
+	clear_history();
+}
+
+void	close_all_fd()
+{
+	int	i;
+	
+	i = 2;
+	while (++i < 1024)
+		try_close(i);
 }

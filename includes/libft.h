@@ -6,15 +6,15 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:50:38 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/05 16:12:28 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/17 11:32:06 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <get_next_line.h>
 # include <ft_printf.h>
+# include <get_next_line.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -58,13 +58,14 @@ void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int nb, int fd);
 char				**ft_split(char const *s, char sep);
 int					ft_count_word(char const *s, char sep);
-void				ft_free_2d_array(void **array);
+void				ft_free_2d_array(void **array, size_t size);
 int					ft_atoi_base(char *base, char *to_convert);
 int					ft_abs(int to_check);
 size_t				ft_array_len(void **array);
 char				*ft_unsplit(char **tab_to_unsplit, char sep);
 char				*join_and_free(char *s1, char *s2, int f_s1, int f_s2);
 void				ft_multi_free(int n_to_free, ...);
+char				*ft_multi_join(int n_to_free, char *join_to, ...);
 
 /*=================== BONUS PART ===================*/
 /*=========BONUS STRUCT=========*/
