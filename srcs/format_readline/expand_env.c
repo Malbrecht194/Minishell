@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:29:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/19 13:32:36 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/30 15:47:47 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	expand_env(char **arg, int index, t_minishell *minish)
 	char		*s_env;
 	char		*tmp;
 
-	len = env_len(&(*arg)[(index)]);
+	len = env_len(&(*arg)[index]);
 	b_expand = ft_substr((*arg), 0, index);
 	s_env = ft_substr((*arg), index, len);
 	if (!b_expand || !s_env)
@@ -106,7 +106,7 @@ int	expand_env(char **arg, int index, t_minishell *minish)
 		ft_multi_free(2, b_expand, s_env);
 		return (0);
 	}
-	if ((*arg)[(index)] == '?')
+	if ((*arg)[index] == '?')
 		tmp = ft_itoa(minish->last_error);
 	else
 		tmp = ft_getenv(s_env, minish->env);
@@ -116,7 +116,7 @@ int	expand_env(char **arg, int index, t_minishell *minish)
 	b_expand = join_and_free(b_expand, tmp, 1, 0);
 	b_expand = join_and_free(b_expand, (*arg) + len + index, 1, 0);
 	size = ft_strlen(tmp);
-	if ((*arg)[(index)] == '?' && tmp && *tmp)
+	if ((*arg)[index] == '?' && tmp)
 		free(tmp);
 	free(*arg);
 	*arg = b_expand;

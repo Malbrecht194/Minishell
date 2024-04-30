@@ -7,5 +7,6 @@
 		"error.h": "c",
 		"errno.h": "c",
 		"builtins.h": "c"
-	}
+	},
+	"cmake.configureOnOpen": true
 }
