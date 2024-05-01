@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/30 15:44:20 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 19:00:15 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,21 @@ void	select_in_out(t_init *lst, t_chris *node, t_minishell *minish)
 		fd = &node->fd_out;
 	else if (lst->type == INFILE)
 		fd = &node->fd_in;
-	if ((*fd))
-		try_close((*fd));
-	(*fd) = open_fd(lst->str, lst->type);
+	// if ((*fd))
+	// 	try_close((*fd));
+	(*fd) = open_fd(lst->str, lst->type, minish);
 	if ((*fd) == -1)
-	{	
+	{
 		node->error = 1;
 		error_handle(FAIL_OPEN, minish, lst->str, NULL);
 	}
 }
 
-t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node, t_minishell *minish)
+t_chris	*creat_chris(t_chris **f_chris, \
+	t_init *lst, t_chris *node, t_minishell *minish)
 {
 	t_chris	*n_node;
-	
+
 	n_node = NULL;
 	if (!lst)
 		return (NULL);
@@ -93,7 +94,8 @@ t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node, t_minishell 
 		if (!arg_format(f_chris, lst, node))
 			return (NULL);
 	}
-	else if (lst->type == OUT_A || lst->type == OUT_T || lst->type == INFILE)
+	else if (lst->type == OUT_A || lst->type == OUT_T || lst->type == INFILE \
+		|| lst->type == HEREDOC)
 		select_in_out(lst, node, minish);
 	if (lst->type == PIPE)
 		ft_chrisadd_back(&node, creat_chris(f_chris, lst->next, NULL, minish));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:29:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/30 15:47:47 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 14:44:06 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	quote_in_expand(char **arg, char *to_check, int index, int end_of_exp)
 				return (0);
 			free(*arg);
 			*arg = tmp;
-			return (quote_in_expand(arg, (*arg) + index + i + 2, index + i + 2, end_of_exp) + 1);
+			return (quote_in_expand(arg, (*arg) + index + i + 2, \
+				index + i + 2, end_of_exp) + 1);
 		}
 		i++;
 	}
@@ -46,7 +47,7 @@ void	do_expand(char **arg, int *index, char state, t_minishell *minish)
 	size_t	i;
 	size_t	j;
 	size_t	exp_size;
-	
+
 	j = 0;
 	i = *index;
 	exp_size = 0;

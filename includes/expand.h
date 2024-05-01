@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:47:35 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/29 11:24:49 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 14:41:56 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	check_expand(char **arg, t_minishell *minish);
 int		to_next_quote(char *arg, char quote);
 void	delete_quote(char **arg);
 int		quote_in_expand(char **arg, char *to_check, int index, int end_of_exp);
-int	expand_env(char **arg, int index, t_minishell *minish);
+int		expand_env(char **arg, int index, t_minishell *minish);
 char	check_ifs(char a_char);
 size_t	env_len(char *env);
 void	rm_char(char **arg, int index);

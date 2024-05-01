@@ -6,14 +6,12 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:21 by malbrech          #+#    #+#             */
-/*   Updated: 2024/05/01 12:17:22 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/01 19:24:54 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <heredoc.h>
-#define BUFF_SIZE 1024
+#include <lexor.h>
 
-// Fonction pour générer un nom de fichier aléatoire
 char	*rand_path(void)
 {
 	char	buff[16];
@@ -26,7 +24,7 @@ char	*rand_path(void)
 	path = NULL;
 	fd = open("/dev/random", O_RDONLY, 0644);
 	if (fd == -1)
-		printf("Message d'erreur");
+		perror("/dev/random");
 	r = read(fd, buff, 16);
 	if (r == -1)
 		printf("Message d'erreur");
@@ -37,48 +35,64 @@ char	*rand_path(void)
 	return (path);
 }
 
-// Fonction pour remplacer les variables par leurs valeurs
-char	*expand_variables(const char *line)
+static void	add_heredoc_name(t_minishell *minish, char *filename)
 {
-	return (strdup(line));
+	char	**buff;
+	int		i;
+	int		len;
+
+	len = ft_array_len((void **)minish->heredocs);
+	buff = minish->heredocs;
+	minish->heredocs = ft_calloc(sizeof(char **), len + 2);
+	i = 0;
+	while (i < len)
+	{
+		minish->heredocs[i] = buff[i];
+		i++;
+	}
+	minish->heredocs[i] = filename;
+	free(buff);
 }
 
-void	heredoc(const char *delimiter)
+static void	heredoc_rl(char *delimiter, int fd)
 {
-	char	buffer[BUFFER_SIZE];
+	char	*buffer;
+
+	while (1)
+	{
+		buffer = readline("> ");
+		if (buffer == NULL)
+		{
+			ft_putstr_fd("here-document delimited by end-of-file (wanted `", 2);
+			ft_putstr_fd(delimiter, 2);
+			ft_putstr_fd("')\n", 2);
+			break ;
+		}
+		if (ft_strcmp(buffer, delimiter) == 0)
+		{
+			free(buffer);
+			break ;
+		}
+		write(fd, buffer, ft_strlen(buffer));
+		free(buffer);
+	}
+}
+
+int	heredoc(char *delimiter, t_minishell *minish)
+{
 	char	*filename;
 	int		fd;
 	int		i;
-	size_t	bytes_read;
 
 	i = 0;
 	filename = rand_path();
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		perror("Erreur lors de l'ouverture du fichier de sortie");
+		perror("Heredoc");
 		exit(EXIT_FAILURE);
 	}
-	printf("Entrez du texte (terminer avec %s)\n", delimiter);
-	bytes_read = read(STDIN_FILENO, &buffer[i], 1);
-	while ((bytes_read) > 0)
-	{
-		if (strncmp(buffer, delimiter, strlen(delimiter)) == 0)
-			break ;
-		write(fd, buffer, strlen(buffer));
-
-		if (i >= BUFF_SIZE - 1)
-		{
-			printf("Erreur: Dépassement de capacité du buffer\n");
-			exit(EXIT_FAILURE);
-		}
-	}
-	close(fd);
-	printf("Le texte a été écrit dans le fichier '%s'.\n", filename);
-}
-
-int	main(void)
-{
-	heredoc("FIN\n");
-	return (0);
+	add_heredoc_name(minish, filename);
+	heredoc_rl(delimiter, fd);
+	return (fd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:08:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/29 10:29:52 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 19:31:30 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,3 @@ char	*test_access(char *command, t_minishell *minish)
 		error_handle(NO_CMD, minish, command, exit);
 	return (tmp_path);
 }
-

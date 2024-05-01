@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:29:29 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/30 13:28:42 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 19:31:40 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	check_export_type(char *arg)
 {
 	int	i;
-	
+
 	i = 0;
 	if (arg[0] == '=' || (arg[0] == '+' && arg[1] == '='))
 		return (-1);
@@ -44,7 +44,6 @@ int	env_size(char *env)
 		return (-2);
 	return (i);
 }
-
 
 void	swap_string(char **a, char **b)
 {

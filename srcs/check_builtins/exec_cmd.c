@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/29 18:45:17 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 14:40:11 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void	exec_cmd(t_minishell *minish, t_chris *cmd)
 		else
 			error_handle(DUP_ERROR, minish, NULL, exit);
 	}
-	try_close(cmd->fd_in);
-	try_close(cmd->fd_out);
-	execve(cmd->cmd[0], cmd->cmd, minish->env);
+	close_and_execve(&minish, &cmd);
 	if (errno == ENOENT)
 		error_handle(NO_F_OR_DIR, minish, cmd->cmd[0], exit);
 	else if (errno == EACCES && (s_stat.st_mode & __S_IFMT) == __S_IFDIR)
@@ -118,14 +116,7 @@ void	exec_loop(t_minishell *minish, t_chris *lst)
 				error_handle(PIPE_ERROR, minish, NULL, NULL);
 				break ;
 			}
-			if (cmd->fd_out == STDOUT_FILENO)
-				cmd->fd_out = pipe_fd[WRITE_FD];
-			else
-				try_close(pipe_fd[WRITE_FD]);
-			if (cmd->next->fd_in == STDIN_FILENO)
-				cmd->next->fd_in = pipe_fd[READ_FD];
-			else
-				try_close(pipe_fd[READ_FD]);
+			check_cmd_for_loop(&cmd, pipe_fd);
 		}
 		if (!fork_exec(minish, cmd))
 		{

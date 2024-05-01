@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:06:12 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/15 19:23:49 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 19:31:17 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	is_builtins(char *cmd)
 	builtins[FT_UNSET] = "unset";
 	builtins[FT_EXIT] = "exit";
 	builtins[7] = NULL;
-	while (builtins[i]\
+	while (builtins[i] \
 		&& ft_strncmp(builtins[i], cmd, ft_strlen(builtins[i]) + 1))
 		i++;
 	if (!builtins[i])

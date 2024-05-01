@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:33:07 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/29 11:25:20 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 14:40:36 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,23 @@ void	close_all(int fd[2])
 {
 	try_close(fd[0]);
 	try_close(fd[1]);
+}
+
+void	close_and_execve(t_minishell **minish, t_chris **cmd)
+{
+	try_close((*cmd)->fd_in);
+	try_close((*cmd)->fd_out);
+	execve((*cmd)->cmd[0], (*cmd)->cmd, (*minish)->env);
+}
+
+void	check_cmd_for_loop(t_chris **cmd, int pipe_fd[2])
+{
+	if ((*cmd)->fd_out == STDOUT_FILENO)
+		(*cmd)->fd_out = pipe_fd[WRITE_FD];
+	else
+		try_close(pipe_fd[WRITE_FD]);
+	if ((*cmd)->next->fd_in == STDIN_FILENO)
+		(*cmd)->next->fd_in = pipe_fd[READ_FD];
+	else
+		try_close(pipe_fd[READ_FD]);
 }

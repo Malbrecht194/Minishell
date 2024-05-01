@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:14:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/30 10:26:12 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 14:43:35 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ void	print_error(t_err_struct s_error, void *minish)
 void	check_exec_error(t_err_code error, void *minish)
 {
 	t_minishell	*minishell;
-	
+
 	minishell = (t_minishell *)minish;
-	if (!((NO_F_OR_DIR <= error && error <= IS_DIR) || error == NUM_ARG_REQUIRED || error == JUST_EXIT))
+	if (!((NO_F_OR_DIR <= error && error <= IS_DIR) || \
+		error == NUM_ARG_REQUIRED || error == JUST_EXIT))
 		return ;
 	free_minish(minishell);
 }

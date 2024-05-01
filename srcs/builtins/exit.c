@@ -6,13 +6,24 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:25:43 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/30 17:11:02 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/01 12:38:08 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <builtins.h>
 #include <expand.h>
 #include <minishell.h>
+
+static void	sign_and_skip(char **str, int *i, int *sign)
+{
+	while (*str[(*i)] == ' ' || ('\t' <= *str[*i] && *str[*i] <= '\r'))
+		(*i)++;
+	if (*str[*i] == '-' || *str[*i] == '+')
+	{
+		if (*str[(*i)++] == '-')
+			*sign = 1;
+	}
+}
 
 unsigned char	convert_ret_exit(char *str, t_minishell *minish)
 {
@@ -25,13 +36,7 @@ unsigned char	convert_ret_exit(char *str, t_minishell *minish)
 	nbr = 0;
 	while (str[i])
 	{
-		while (str[i] == ' ' || ('\t' <= str[i] && str[i] <= '\r'))
-			i++;
-		if (str[i] == '-' || str[i] == '+')
-		{
-			if (str[i++] == '-')
-				sign = 1;
-		}
+		sign_and_skip(&str, &i, &sign);
 		while (str[i] >= '0' && str[i] <= '9')
 			nbr = nbr * 10 + (str[i++] - '0');
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 07:51:27 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/19 14:11:46 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 14:43:14 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_err_struct	other_error(t_err_code error)
 t_err_struct	builtins_error(t_err_code error, void *arg)
 {
 	t_err_struct	s_error;
-	char	**args;
+	char			**args;
 
 	args = (char **)arg;
 	if (error == NOT_VALID_ID)

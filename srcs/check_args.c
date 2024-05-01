@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:42:44 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/17 20:34:38 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 19:28:45 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,3 @@ void	check_args(t_minishell *minish, char *rl_args)
 		return ;
 	exec_all_cmd(minish);
 }
-

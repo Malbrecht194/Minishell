@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/17 11:34:17 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 14:45:50 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	try_close(int fd)
 void	free_minish(t_minishell *minishell)
 {
 	void	**env;
-	
+
 	env = (void **)minishell->env;
 	if (!minishell)
 		return ;
@@ -71,13 +71,4 @@ void	free_minish(t_minishell *minishell)
 		free(minishell->prompt);
 	free(minishell);
 	clear_history();
-}
-
-void	close_all_fd()
-{
-	int	i;
-	
-	i = 2;
-	while (++i < 1024)
-		try_close(i);
 }

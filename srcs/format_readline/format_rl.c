@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format_rl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/18 22:39:13 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 14:50:51 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	delete_quote(char **arg)
 {
 	int	i;
 	int	state;
-	
+
 	i = 0;
 	while ((*arg)[i])
 	{
@@ -36,7 +36,7 @@ void	delete_quote(char **arg)
 	}
 }
 
-int		to_next_quote(char *arg, char quote)
+int	to_next_quote(char *arg, char quote)
 {
 	int		i;
 
@@ -108,14 +108,14 @@ int	check_arg_quotes(char **arg, int index, char quote)
 void	format_rl(char **arg)
 {
 	size_t	i;
-	
+
 	i = 0;
 	while ((*arg)[i])
 	{
 		if ((*arg)[i] == '\"' || (*arg)[i] == '\'')
 		{
 			if (to_next_quote((*arg) + i + 1, (*arg)[i]) == -1)
-				return ; //error
+				return ;
 			else
 				i += check_arg_quotes(arg, i + 1, (*arg)[i]) + 1;
 		}

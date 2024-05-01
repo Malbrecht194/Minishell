@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:41:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/30 17:01:49 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:24:33 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	rl_loop(t_minishell *minish)
 			free(minish->prompt);
 		minish->prompt = NULL;
 		minish->cmd_line = NULL;
+		minish->heredocs = NULL;
 	}
 	ft_printf_fd(1, "exit\n");
 	ft_exit(1, NULL, NULL, minish);
@@ -43,13 +44,13 @@ int	main(int ac, char **av, char **envp)
 {
 	t_minishell	*minish;
 
-	(void)ac;
-	(void)av;
 	if (ac != 1 || av[1])
 		error_handle(TOO_MUCH_ARG, NULL, NULL, exit);
 	minish = ft_calloc(sizeof(t_minishell), 1);
 	if (!minish)
 		error_handle(FAIL_STRUCT, NULL, NULL, exit);
+	minish->heredocs = NULL;
 	minish->env = dup_array(envp);
+	signals_init();
 	rl_loop(minish);
 }

@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:45:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/30 17:03:17 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:05:07 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_minishell
 	char			*prompt;
 	char			**env;
 	int				last_error;
+	char			**heredocs;
 }					t_minishell;
 
 typedef struct s_chris

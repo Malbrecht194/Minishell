@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:26 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/29 18:42:48 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 12:41:11 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	check_env(char **env, char *av)
 	av_len = ft_strlen(av);
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], av, av_len) && (env[i][av_len] == '=' || !env[i][av_len]))
+		if (!ft_strncmp(env[i], av, av_len) && \
+			(env[i][av_len] == '=' || !env[i][av_len]))
 			return (i);
 		i++;
 	}
