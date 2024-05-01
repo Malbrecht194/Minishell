@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:05:22 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 19:32:36 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/01 20:10:08 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,34 +55,38 @@ void	replace_opwd(char ***env)
 	free(tmp);
 }
 
+char	*find_to_move(int ac, char *av, char **env, int fd)
+{
+	char	*to_move;
+
+	if (ac == 1)
+		to_move = ft_strdup(ft_getenv("HOME", env));
+	else if (!ft_strncmp(av, "-", 2) && ft_getenv("OLDPWD", env))
+	{
+		to_move = ft_strdup(ft_getenv("OLDPWD", env));
+		ft_printf_fd(fd, "%s\n", to_move);
+	}
+	else
+		to_move = av;
+	return (to_move);
+}
+
 int	ft_cd(int ac, char **av, t_chris *cmd, t_minishell *minish)
 {
 	char	*to_move;
 	int		cd_state;
-	int		state;
 
-	state = 0;
 	if (ac > 2)
 	{
 		error_handle(TOO_MANY_ARGS, minish, av[0], NULL);
 		return (1);
 	}
-	if (ac == 1 || !ft_strncmp(av[1], "-", 2))
-		state++;
-	if (ac == 1)
-		to_move = ft_strdup(ft_getenv("HOME", minish->env));
-	else if (!ft_strncmp(av[1], "-", 2) && ft_getenv("OLDPWD", minish->env))
-	{
-		to_move = ft_strdup(ft_getenv("OLDPWD", minish->env));
-		ft_printf_fd(cmd->fd_out, "%s\n", to_move);
-	}
-	else
-		to_move = av[1];
+	to_move = find_to_move(ac, av[1], minish->env, cmd->fd_out);
 	if (!to_move)
 		return (1);
 	replace_opwd(&minish->env);
 	cd_state = chdir(to_move);
-	if (state)
+	if (ac == 1 || !ft_strncmp(av[1], "-", 2))
 		free(to_move);
 	if (cd_state == -1)
 	{
