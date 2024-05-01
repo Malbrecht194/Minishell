@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:21 by malbrech          #+#    #+#             */
-/*   Updated: 2024/05/01 19:51:29 by xeo              ###   ########.fr       */
+/*   Updated: 2024/05/01 20:20:35 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ static void	add_heredoc_name(t_minishell *minish, char *filename)
 
 	len = ft_array_len((void **)minish->heredocs);
 	buff = minish->heredocs;
-	minish->heredocs = ft_calloc(sizeof(char **), len + 2);
+	minish->heredocs = ft_calloc(sizeof(char *), len + 2);
+	if (minish->heredocs == NULL)
+		error_handle(MALLOC_ERROR, minish, NULL, NULL);
 	i = 0;
 	while (i < len)
 	{
