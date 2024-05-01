@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:21 by malbrech          #+#    #+#             */
-/*   Updated: 2024/05/01 19:24:54 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/01 19:51:29 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,7 @@ int	heredoc(char *delimiter, t_minishell *minish)
 {
 	char	*filename;
 	int		fd;
-	int		i;
 
-	i = 0;
 	filename = rand_path();
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)

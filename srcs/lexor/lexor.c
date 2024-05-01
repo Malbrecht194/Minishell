@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 19:00:15 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/01 19:55:58 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ void	select_in_out(t_init *lst, t_chris *node, t_minishell *minish)
 		return ;
 	if (lst->type == OUT_A || lst->type == OUT_T)
 		fd = &node->fd_out;
-	else if (lst->type == INFILE)
+	else if (lst->type == INFILE || lst->type == HEREDOC)
 		fd = &node->fd_in;
-	// if ((*fd))
-	// 	try_close((*fd));
 	(*fd) = open_fd(lst->str, lst->type, minish);
 	if ((*fd) == -1)
 	{
