@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:25:43 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/30 11:35:27 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/04/30 17:11:02 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	check_exit_arg(char *arg, t_minishell *minish, int ac)
 		{
 			if (arg[i] && !ft_isdigit(arg[i]))
 				error_handle(NUM_ARG_REQUIRED, minish, "exit", exit);
-		}	
+		}
 		ret = convert_ret_exit(arg, minish);
 	}
 	if (ac > 2)

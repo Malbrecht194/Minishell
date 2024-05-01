@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:21 by malbrech          #+#    #+#             */
-/*   Updated: 2024/04/18 15:15:10 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/01 12:17:22 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	heredoc(const char *delimiter)
 	char	*filename;
 	int		fd;
 	int		i;
-	ssize_t	bytes_read;
+	size_t	bytes_read;
 
 	i = 0;
 	filename = rand_path();
@@ -82,20 +82,3 @@ int	main(void)
 	heredoc("FIN\n");
 	return (0);
 }
-
-// void	generate_random_filename(char *filename)
-// {
-// 	char	*charset;
-// 	int		length;
-// 	int		i;
-
-// 	charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-// 	length = 15;
-// 	i = 0;
-// 	while (i < length)
-// 	{
-// 		filename[i] = charset[rand() % (sizeof(charset) - 1)];
-// 		i++;
-// 	}
-// 	filename[length] = '\0';
-// }
