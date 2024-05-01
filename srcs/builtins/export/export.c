@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:57:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/29 16:56:51 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/01 11:35:06 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	new_env(char ***env, char *av, int b_count, int *error)
 		if (no_env(av, env))
 			*error = 1;
 	}
+	else if (!ft_strchr(av, '='))
+		return ;
 	else if (replace_env(av, &((*env)[i_env])))
 		*error = 1;
 }
