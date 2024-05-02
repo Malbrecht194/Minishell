@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:47:25 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/18 21:02:24 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/02 18:26:13 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	(void)env;
-	printf("TEEEEEEEEEEEEST\n");
+	char	test;
+	test = -1;
+	printf("%d\n", test);
 	
 	// char	**dup_env;
 	// char	*tmp;
@@ -51,7 +53,7 @@ int	main(int ac, char **av, char **env)
 	// 	i++;
 	// }
 	// free(tmp);
-	// ft_free_2d_array((void **)dup_env);
+	// ft_free_2d_array(dup_env);
 	// char	*test[4];
 	
 	// test[0] = "/usr/bin/cat";

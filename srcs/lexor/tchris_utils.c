@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:29:04 by malbrech          #+#    #+#             */
-/*   Updated: 2024/04/17 11:36:28 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/02 18:26:13 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	ft_chrisclear(t_chris **chris)
 	{
 		tmp = (*chris)->next;
 		if ((*chris)->cmd)
-			ft_free_2d_array((void **)(*chris)->cmd,
-				ft_array_len((void **)(*chris)->cmd));
+			ft_free_2d_array((*chris)->cmd,
+				ft_array_len((*chris)->cmd));
 		try_close((*chris)->fd_in);
 		try_close((*chris)->fd_out);
 		free(*chris);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 19:55:58 by xeo              ###   ########.fr       */
+/*   Updated: 2024/05/14 16:57:35 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	arg_format(t_chris **f_chris, t_init *lst, t_chris *node)
 	char		**array;
 
 	i = 0;
-	array = ft_calloc(sizeof(char *), ft_array_len((void **)node->cmd) + 2);
+	array = ft_calloc(sizeof(char *), ft_array_len(node->cmd) + 2);
 	if (!array)
 	{
 		ft_chrisclear(f_chris);
@@ -102,32 +102,6 @@ t_chris	*creat_chris(t_chris **f_chris, \
 	return (node);
 }
 
-void	last_cmd_check(t_chris *chris, t_chris *node)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	if (!chris || !node)
-		return ;
-	while (node->cmd && node->cmd[i])
-	{
-		if (ft_count_word(node->cmd[i], -1) > 1)
-		{
-			j = add_to_array(&node->cmd, node->cmd[i], i);
-			if (j == 0)
-			{
-				ft_chrisclear(&chris);
-				return ;
-			}
-			i += j;
-		}
-		i++;
-	}
-	last_cmd_check(chris, node->next);
-}
-
 t_chris	*chris_lexor(char *rl_args, t_minishell *minish)
 {
 	t_chris	*c_lst;
@@ -147,7 +121,6 @@ t_chris	*chris_lexor(char *rl_args, t_minishell *minish)
 		return (NULL);
 	c_lst = creat_chris(NULL, lst, NULL, minish);
 	ft_initclear(&lst);
-	last_cmd_check(c_lst, c_lst);
 	if (!c_lst)
 		error_handle(MALLOC_ERROR, minish, NULL, NULL);
 	if (!c_lst->cmd)

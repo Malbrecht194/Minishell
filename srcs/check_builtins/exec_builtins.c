@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:22:28 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/29 11:26:32 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/02 18:26:13 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	exec_builtins(t_minishell *minish, t_chris *cmd, int b_num)
 
 	if (!cmd || cmd->error)
 		return (1);
-	array_len = ft_array_len((void **)(cmd->cmd));
+	array_len = ft_array_len((cmd->cmd));
 	builtins[FT_CD] = ft_cd;
 	builtins[FT_ECHO] = ft_echo;
 	builtins[FT_ENV] = ft_env;

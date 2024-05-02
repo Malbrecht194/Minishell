@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 16:30:06 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:58:12 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**dup_array(char **array)
 	if (!array || !*array)
 		return (NULL);
 	i = 0;
-	len = ft_array_len((void **)array);
+	len = ft_array_len(array);
 	n_array = ft_calloc(sizeof(char *), len + 1);
 	if (!n_array)
 		return (NULL);
@@ -41,7 +41,7 @@ char	**dup_array(char **array)
 		n_array[i] = ft_strdup(array[i]);
 		if (!n_array[i])
 		{
-			ft_free_2d_array((void **)n_array, len + 1);
+			ft_free_2d_array(n_array, len + 1);
 			return (NULL);
 		}
 		i++;
@@ -79,15 +79,15 @@ void	free_minish(t_minishell *minishell)
 {
 	void	**env;
 
-	env = (void **)minishell->env;
 	if (!minishell)
 		return ;
+	env = (void **)minishell->env;
 	if (minishell->cmd_line)
 		ft_chrisclear(&minishell->cmd_line);
 	if (minishell->heredocs)
 		unlink_free_heredocs(minishell);
 	if (minishell->env)
-		ft_free_2d_array(env, ft_array_len((void **)minishell->env));
+		ft_free_2d_array(minishell->env, ft_array_len(minishell->env));
 	if (minishell->prompt)
 		free(minishell->prompt);
 	free(minishell);

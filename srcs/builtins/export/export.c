@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:57:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 11:35:06 by xeo              ###   ########.fr       */
+/*   Updated: 2024/05/02 18:26:13 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	new_env(char ***env, char *av, int b_count, int *error)
 	}
 	i_env = check_env(*env, env_name);
 	free(env_name);
-	if (!i_env)
+	if (i_env == -1)
 	{
 		if (no_env(av, env))
 			*error = 1;
@@ -52,17 +52,25 @@ void	cat_env(char ***env, char *av, int b_count, int *error)
 	}
 	i_env = check_env(*env, env_name);
 	free (env_name);
-	if (!i_env)
+	if (i_env == -1)
 		new_env(env, av, b_count, error);
 	else
 	{
-		env_name = ft_strjoin((*env)[i_env], av + b_count - 1);
-		if (!env_name || replace_env(env_name, &((*env)[i_env])))
+		if (!ft_strchr((*env)[i_env], '='))
 		{
-			*error = 1;
-			return ;
+			env_name = ft_strjoin((*env)[i_env], "=");
+			env_name = join_and_free(env_name, av + b_count - 1, 1, 0);
 		}
-		free(env_name);
+		else
+			env_name = ft_strjoin((*env)[i_env], av + b_count - 1);
+		if (!(env_name && !replace_env(env_name, &((*env)[i_env]))))
+		{
+			if (env_name)
+				free(env_name);
+			*error = 1;
+		}
+		else
+			free(env_name);
 	}
 }
 
@@ -100,11 +108,11 @@ int	no_arg(t_chris *cmd, t_minishell *minish)
 		change_env(check_env(n_arg, "_"), &n_arg);
 	if (declare_x(&n_arg, 0))
 	{
-		ft_free_2d_array((void **)n_arg, ft_array_len((void **)n_arg));
+		ft_free_2d_array(n_arg, ft_array_len(n_arg));
 		return (1);
 	}
 	print_array(cmd->fd_out, n_arg);
-	ft_free_2d_array((void **)n_arg, ft_array_len((void **)n_arg));
+	ft_free_2d_array(n_arg, ft_array_len(n_arg));
 	return (0);
 }
 

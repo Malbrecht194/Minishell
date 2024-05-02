@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:17:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/02 10:41:21 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/02 18:31:28 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,58 @@ void	ft_initclear(t_init **lst)
 	*lst = NULL;
 }
 
+t_init	*relink_node(t_init *first, t_init *last, t_init *node, t_minishell *minish)
+{
+	char	**arg;
+	char	*str;
+	t_init	*new;
+	int		i;
+
+	i = 0;
+	arg = ft_split(node->str, -1);
+	if (!arg)
+	{
+		ft_initclear(&first);
+		ft_initclear(&last);
+		error_handle(MALLOC_ERROR, minish, NULL, NULL);
+		return (NULL);
+	}
+	free(node->str);
+	node->str = arg[0];
+	if (!arg[1])
+	{
+		free(arg[1]);
+		free(arg);
+		node->next = last;
+		return (first);
+	}
+	new = ft_calloc(sizeof(t_init), 1);
+	if (!new)
+	{
+		ft_free_2d_array(arg, ft_array_len(arg));
+		ft_initclear(&first);
+		ft_initclear(&last);
+		error_handle(MALLOC_ERROR, minish, NULL, NULL);
+		return (NULL);
+	}
+	new->type = ARG;
+	str = ft_unsplit(arg + 1, -1);
+	if (!str)
+	{
+		ft_free_2d_array(arg, ft_array_len(arg));
+		ft_initclear(&first);
+		ft_initclear(&last);
+		error_handle(MALLOC_ERROR, minish, NULL, NULL);
+		return (NULL);
+	}
+	while (arg[++i])
+		free(arg[i]);
+	free(arg);
+	new->str = str;
+	node->next = new;
+	return (relink_node(first, last, new, minish));
+}
+
 t_init	*check_init_args(t_init *first, t_init *prev, t_init *node, t_minishell *minish)
 {
 	t_init	*tmp;
@@ -80,6 +132,8 @@ t_init	*check_init_args(t_init *first, t_init *prev, t_init *node, t_minishell *
 	}
 	if (!first)
 		first = node;
+	if (node->type == ARG && node->str && ft_strchr(node->str, -1))
+		return (check_init_args(first, prev, relink_node(node, node->next, node, minish), minish));
 	if (node->type != HEREDOC && node->type != PIPE)
 		delete_quote(&node->str);
 	return (check_init_args(first, node, tmp, minish));

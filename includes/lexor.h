@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 10:37:38 by malbrech          #+#    #+#             */
-/*   Updated: 2024/05/14 16:53:36 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:55:41 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		add_to_array(char ***args, char *arg, int index);
 void	remove_to_array(char ***args, int index);
 t_init	*check_init_args(t_init *first, t_init *prev, \
 		t_init *node, t_minishell *minish);
+t_init	*relink_node(t_init *first, t_init *last, t_init *node, t_minishell *minish);
 
 /*================================ HEREDOC ================================*/
 

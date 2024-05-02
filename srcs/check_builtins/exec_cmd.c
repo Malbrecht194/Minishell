@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 14:40:11 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:57:24 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	exec_cmd(t_minishell *minish, t_chris *cmd)
 	char		*command;
 	struct stat	s_stat;
 
+	if (cmd->error == 1)
+		error_handle(JUST_EXIT, minish, NULL, exit);
 	stat(cmd->cmd[0], &s_stat);
 	command = cmd->cmd[0];
 	cmd->cmd[0] = test_access(cmd->cmd[0], minish);
@@ -29,13 +31,8 @@ void	exec_cmd(t_minishell *minish, t_chris *cmd)
 		cmd->cmd[0] = command;
 		error_handle(NO_F_OR_DIR, minish, cmd->cmd[0], exit);
 	}
-	else if (cmd->error || !full_dup(cmd->fd_in, cmd->fd_out))
-	{
-		if (cmd->error == 1)
-			error_handle(JUST_EXIT, minish, NULL, exit);
-		else
+	if (!full_dup(cmd->fd_in, cmd->fd_out))
 			error_handle(DUP_ERROR, minish, NULL, exit);
-	}
 	close_and_execve(&minish, &cmd);
 	if (errno == ENOENT)
 		error_handle(NO_F_OR_DIR, minish, cmd->cmd[0], exit);

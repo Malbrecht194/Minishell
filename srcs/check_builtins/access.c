@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:08:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 19:31:30 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:56:23 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*test_access(char *command, t_minishell *minish)
 	if (!exe_path)
 		error_handle(NO_CMD, minish, command, exit);
 	tmp_path = check_access(exe_path, command);
-	ft_free_2d_array((void **)exe_path, ft_array_len((void **)exe_path));
+	ft_free_2d_array(exe_path, ft_array_len(exe_path));
 	if (!tmp_path)
 		error_handle(NO_CMD, minish, command, exit);
 	return (tmp_path);

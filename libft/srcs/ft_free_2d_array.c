@@ -6,21 +6,23 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 10:25:10 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/17 11:39:29 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/02 18:24:36 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-void	ft_free_2d_array(void **array, size_t size)
+void	ft_free_2d_array(void *array, size_t size)
 {
+	void	**args;
 	size_t	i;
 
+	args = array;
 	i = 0;
-	if (!array)
+	if (!args)
 		return ;
 	while (i < size)
-		free(array[i++]);
-	free(array);
-	array = NULL;
+		free(args[i++]);
+	free(args);
+	args = NULL;
 }

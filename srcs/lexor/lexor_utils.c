@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 15:32:36 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 15:58:08 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:57:42 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,45 +52,13 @@ int	open_fd(char *f_name, int type, t_minishell *minish)
 	return (fd);
 }
 
-int	add_to_array(char ***args, char *arg, int index)
-{
-	int		i;
-	int		j;
-	char	**add;
-	char	**n_args;
-
-	i = -1;
-	j = -1;
-	add = ft_split(arg, -1);
-	if (!add)
-		return (0);
-	free(arg);
-	n_args = ft_calloc(ft_array_len((void **)add)
-			+ ft_array_len((void **)(*args)), sizeof(char *));
-	if (!n_args)
-	{
-		ft_free_2d_array((void **)add, ft_array_len((void **)add));
-		return (0);
-	}
-	while (++i < index)
-		n_args[i] = (*args)[i];
-	while (add[++j])
-		n_args[i + j] = add[j];
-	while ((*args)[++i])
-		n_args[i + j] = (*args)[i];
-	free(*args);
-	free(add);
-	*args = n_args;
-	return (j - 1);
-}
-
 void	remove_to_array(char ***args, int index)
 {
 	int	i;
 	int	arr_len;
 
 	i = index - 1;
-	arr_len = ft_array_len((void **)(*args));
+	arr_len = ft_array_len((*args));
 	free((*args)[index]);
 	while (++i < arr_len)
 		(*args)[i] = (*args)[i + 1];

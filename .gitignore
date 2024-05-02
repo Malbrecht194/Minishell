@@ -1,3 +1,6 @@
 .nfs*
 minishell_tester
 noperm
+*.o
+*.a
+minishell

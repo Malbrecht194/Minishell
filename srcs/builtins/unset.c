@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:26 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 12:41:11 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:56:11 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	remake_env(t_minishell *minish)
 	e_tmp = dup_array(minish->env);
 	if (!e_tmp)
 		return ;
-	ft_free_2d_array((void **)minish->env, ft_array_len((void **)minish->env));
+	ft_free_2d_array(minish->env, ft_array_len(minish->env));
 	minish->env = e_tmp;
 	return ;
 }
@@ -31,7 +31,7 @@ void	change_env(int to_del, char ***env)
 	int		env_size;
 
 	i = to_del;
-	env_size = ft_array_len((void **)(*env));
+	env_size = ft_array_len(*env);
 	free((*env)[i]);
 	while (i < env_size)
 	{
@@ -54,7 +54,7 @@ int	check_env(char **env, char *av)
 			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 int	ft_unset(int ac, char **av, t_chris *cmd, t_minishell *minish)
@@ -69,7 +69,7 @@ int	ft_unset(int ac, char **av, t_chris *cmd, t_minishell *minish)
 	while (av[++i])
 	{
 		tmp = check_env(minish->env, av[i]);
-		if (!tmp)
+		if (tmp == -1)
 			continue ;
 		change_env(tmp, &minish->env);
 	}

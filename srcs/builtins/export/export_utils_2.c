@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_export_utils_2.c                               :+:      :+:    :+:   */
+/*   export_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:29:29 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/16 13:44:39 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/02 18:26:13 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	no_env(char *n_env, char ***o_env)
 	int		i;
 
 	i = 0;
-	arg_size = ft_array_len(*(void **)o_env);
+	arg_size = ft_array_len(*o_env);
 	tmp = ft_calloc(sizeof(char *), arg_size + 2);
 	if (!tmp)
 		return (1);
