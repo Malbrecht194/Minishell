@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:54:21 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 11:57:35 by xeo              ###   ########.fr       */
+/*   Updated: 2024/05/02 10:41:31 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	check_rl_args(char *rl, t_minishell *minish)
 	while (rl[i])
 	{
 		state = 0;
-		if (!check_quote(rl, i, minish))
-			return (0);
 		if (rl[i] == '\'' || rl[i] == '\"')
 			i += to_next_quote(rl + i + 1, rl[i]) + 1;
 		type = check_type(&rl[i]);

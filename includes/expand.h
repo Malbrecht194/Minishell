@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:47:35 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 14:41:56 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:50:41 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <lexor.h>
 # define IFS " \t\n"
 
-void	format_rl(char **arg);
+void	format_rl(char **arg, t_minishell *minish);
 void	do_expand(char **arg, int *index, char state, t_minishell *minish);
 void	check_expand(char **arg, t_minishell *minish);
 int		to_next_quote(char *arg, char quote);

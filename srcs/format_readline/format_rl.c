@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 14:50:51 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:53:11 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	check_arg_quotes(char **arg, int index, char quote)
 	return (i);
 }
 
-void	format_rl(char **arg)
+void	format_rl(char **arg, t_minishell *minish)
 {
 	size_t	i;
 
@@ -115,7 +115,12 @@ void	format_rl(char **arg)
 		if ((*arg)[i] == '\"' || (*arg)[i] == '\'')
 		{
 			if (to_next_quote((*arg) + i + 1, (*arg)[i]) == -1)
+			{
+				free(*arg);
+				*arg = NULL;
+				error_handle(NO_END_QUOTE, minish, NULL, NULL);
 				return ;
+			}
 			else
 				i += check_arg_quotes(arg, i + 1, (*arg)[i]) + 1;
 		}
@@ -124,5 +129,4 @@ void	format_rl(char **arg)
 			break ;
 		i++;
 	}
-	return ;
 }
