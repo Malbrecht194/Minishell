@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 16:57:35 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:59:52 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,5 @@ t_chris	*chris_lexor(char *rl_args, t_minishell *minish)
 	ft_initclear(&lst);
 	if (!c_lst)
 		error_handle(MALLOC_ERROR, minish, NULL, NULL);
-	if (!c_lst->cmd)
-		ft_chrisclear(&c_lst);
 	return (c_lst);
 }

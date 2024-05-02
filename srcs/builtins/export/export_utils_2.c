@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:29:29 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/02 18:26:13 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/02 22:59:29 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	no_env(char *n_env, char ***o_env)
 	tmp = ft_calloc(sizeof(char *), arg_size + 2);
 	if (!tmp)
 		return (1);
-	while ((*o_env)[i])
+	while ((*o_env) && (*o_env)[i])
 	{
 		tmp[i] = (*o_env)[i];
 		i++;
@@ -49,7 +49,8 @@ int	no_env(char *n_env, char ***o_env)
 		free(tmp);
 		return (1);
 	}
-	free(*o_env);
+	if (*o_env)
+		free(*o_env);
 	*o_env = tmp;
 	return (0);
 }

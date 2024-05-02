@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 16:57:24 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:59:32 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exec_cmd(t_minishell *minish, t_chris *cmd)
 	char		*command;
 	struct stat	s_stat;
 
-	if (cmd->error == 1)
+	if (cmd->error == 1 || !cmd->cmd)
 		error_handle(JUST_EXIT, minish, NULL, exit);
 	stat(cmd->cmd[0], &s_stat);
 	command = cmd->cmd[0];
@@ -47,7 +47,9 @@ int	fork_exec(t_minishell *minish, t_chris *lst)
 	int	builtins;
 	int	error;
 
-	builtins = is_builtins(lst->cmd[0]);
+	builtins = NO_BUILTINS;
+	if (lst->cmd)
+		builtins = is_builtins(lst->cmd[0]);
 	error = 0;
 	lst->pid = fork();
 	if (lst->pid == -1)
@@ -131,7 +133,9 @@ void	exec_all_cmd(t_minishell *minish)
 	int		builtins;
 
 	lst = minish->cmd_line;
-	builtins = is_builtins(lst->cmd[0]);
+	builtins = NO_BUILTINS;
+	if (lst->cmd)
+		builtins = is_builtins(lst->cmd[0]);
 	if (builtins == -1)
 		return ;
 	if (count_cmd(lst) == 1)

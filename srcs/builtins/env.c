@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:10:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/29 16:38:29 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/02 22:54:16 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	ft_env(int ac, char **av, t_chris *cmd, t_minishell *minish)
 		error_handle(TOO_MANY_ARGS, minish, av[0], NULL);
 		return (1);
 	}
+	if (!minish->env)
+		return (1);
 	while (minish->env[++i])
 	{
 		if (ft_strchr(minish->env[i], '='))

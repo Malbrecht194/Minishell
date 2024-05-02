@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:57:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/02 18:26:13 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/02 23:09:22 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	no_arg(t_chris *cmd, t_minishell *minish)
 	n_arg = sort_env(minish->env);
 	if (!n_arg)
 		return (1);
-	if (check_env(n_arg, "_"))
+	if (check_env(n_arg, "_") != -1)
 		change_env(check_env(n_arg, "_"), &n_arg);
 	if (declare_x(&n_arg, 0))
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor_init_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:17:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/02 18:31:28 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/02 23:58:01 by xeo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,85 @@ void	ft_initclear(t_init **lst)
 	*lst = NULL;
 }
 
+int	tmp_count_word(char const *s, char sep)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] == sep)
+		i++;
+	if ((s[i] == 0))
+		return (0);
+	count = 1;
+	while (s[i])
+	{
+		if ((s[i] == sep) && (s[i + 1] != sep))
+		{
+			count += 1;
+			i++;
+		}
+		else
+			i++;
+	}
+	return (count);
+}
+
+static int	tmp_count_char(char *s, char sep)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while ((s[i] != sep) && s[i])
+	{
+		count++;
+		i++;
+	}
+	return (count);
+}
+
+static char	**tmp_split_format(char **buff, char const *s, char sep)
+{
+	int	i;
+	int	g;
+	int	count;
+
+	i = 0;
+	g = 0;
+	while (s[i])
+	{
+		while (s[i] == sep)
+			i++;
+		if (s[i] == '\0')
+			break ;
+		count = tmp_count_char((char *)s + i, sep);
+		buff[g] = ft_substr(s, i, count);
+		if (!buff[g])
+			return (NULL);
+		i += count;
+		g++;
+	}
+	buff[g] = NULL;
+	return (buff);
+}
+
+char	**tmp_split(char const *s, char sep)
+{
+	char	**buff;
+
+	if (!s)
+		return (NULL);
+	buff = ft_calloc(sizeof(char *), tmp_count_word(s, sep) + 1);
+	if (!buff)
+		return (NULL);
+	buff = tmp_split_format(buff, s, sep);
+	return (buff);
+}
+
 t_init	*relink_node(t_init *first, t_init *last, t_init *node, t_minishell *minish)
 {
 	char	**arg;
@@ -66,7 +145,7 @@ t_init	*relink_node(t_init *first, t_init *last, t_init *node, t_minishell *mini
 	int		i;
 
 	i = 0;
-	arg = ft_split(node->str, -1);
+	arg = tmp_split(node->str, -1);
 	if (!arg)
 	{
 		ft_initclear(&first);

@@ -1,7 +1,7 @@
 #================ COMPILATOR ================#
 CC = cc
 #=================== FLAGS ==================#
-FLAGS = -Wall -Wextra -Werror -g 
+FLAGS = -Wall -Wextra -Werror -gdwarf-4
 #=================== NAME ===================#
 NAME = minishell
 #============ MINISHELL SOURCES =============#

@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:26 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 16:56:11 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:59:25 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	check_env(char **env, char *av)
 	int	av_len;
 
 	i = 0;
+	if (!env)
+		return (-1);
 	av_len = ft_strlen(av);
 	while (env[i])
 	{
