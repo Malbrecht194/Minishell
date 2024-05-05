@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 16:53:11 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:04:35 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ void	check_expand(char **arg, t_minishell *minish)
 	{
 		j = i;
 		if ((*arg)[i] == '\"')
-			do_expand(arg, &i, '\"', minish);
+		{
+			if (do_expand(arg, &i, '\"', minish))
+				check_arg_quotes(arg, j + 1, '\"');
+		}
 		else if ((*arg)[i] == '\'')
 			i += to_next_quote((*arg) + i + 1, '\'') + 1;
 		else if ((*arg)[i] == '$')
@@ -89,7 +92,9 @@ int	check_arg_quotes(char **arg, int index, char quote)
 	tmp = NULL;
 	while ((*arg)[index + i] && (*arg)[index + i] != quote)
 	{
-		if ((*arg)[index + i] == '\'' || (*arg)[index + i] == '\"')
+		if ((*arg)[index + i] == -2)
+			i++;
+		else if ((*arg)[index + i] == '\'' || (*arg)[index + i] == '\"')
 		{
 			tmp = ft_substr(*arg, 0, index + i);
 			tmp = join_and_free(tmp, minus_two, 1, 0);
@@ -118,6 +123,7 @@ void	format_rl(char **arg, t_minishell *minish)
 			{
 				free(*arg);
 				*arg = NULL;
+				minish->last_error = 2;
 				error_handle(NO_END_QUOTE, minish, NULL, NULL);
 				return ;
 			}

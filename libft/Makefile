@@ -1,7 +1,7 @@
 #================ COMPILATOR ================#
 CC = cc
 #=================== FLAGS ==================#
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g 	
 #=================== NAME ===================#
 NAME = libft.a
 #============= MANDATORY SOUCES =============#
@@ -46,7 +46,9 @@ SRCS = ft_isalpha.c \
 	ft_unsplit.c \
 	ft_multi_free.c \
 	ft_multi_join.c \
-	ft_join_and_free.c
+	ft_join_and_free.c \
+	ft_close.c \
+	ft_free.c
 #=============== BONUS SOURCES ==============#
 BONUS = ft_lstnew.c \
 	ft_lstadd_front.c \

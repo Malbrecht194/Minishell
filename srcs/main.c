@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:41:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 16:52:37 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:04:50 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	rl_loop(t_minishell *minish)
 			add_history(rl_buff);
 		check_args(minish, rl_buff);
 		if (minish->prompt)
-			free(minish->prompt);
+			try_free(minish->prompt);
 		minish->prompt = NULL;
 		minish->cmd_line = NULL;
 		minish->heredocs = NULL;

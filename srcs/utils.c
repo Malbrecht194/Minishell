@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 16:58:12 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:05:03 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ void	free_minish(t_minishell *minishell)
 		unlink_free_heredocs(minishell);
 	if (minishell->env)
 		ft_free_2d_array(minishell->env, ft_array_len(minishell->env));
-	if (minishell->prompt)
-		free(minishell->prompt);
-	free(minishell);
+	try_free(minishell->prompt);
+	try_free(minishell);
 	clear_history();
 }

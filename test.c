@@ -6,11 +6,11 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:47:25 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/02 18:26:13 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/05 17:44:33 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "includes/minishell.h"
+#include "includes/minishell.h"
 // #include "includes/expand.h"
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -20,15 +20,22 @@
 # include <stdlib.h>
 # include <unistd.h>
 #include <stdio.h>
+#include "includes/libft.h"
 
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
-	(void)av;
 	(void)env;
-	char	test;
-	test = -1;
-	printf("%d\n", test);
+	(void)av;
+	char	**test;
+	test = malloc(sizeof(char *) * 3);
+	test[0] = "cd";
+	test[1] = "-";
+	test[2] = 0;
+	error_handle(NO_F_O_D_CD, NULL, test, exit);
+	// char	test;
+	// test = -1;
+	// printf("%d\n", test);
 	
 	// char	**dup_env;
 	// char	*tmp;

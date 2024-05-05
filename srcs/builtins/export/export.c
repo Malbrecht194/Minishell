@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:57:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/02 23:09:22 by xeo              ###   ########.fr       */
+/*   Updated: 2024/05/05 13:39:22 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ void	cat_env(char ***env, char *av, int b_count, int *error)
 			env_name = ft_strjoin((*env)[i_env], av + b_count - 1);
 		if (!(env_name && !replace_env(env_name, &((*env)[i_env]))))
 		{
-			if (env_name)
-				free(env_name);
+			try_free(env_name);
 			*error = 1;
 		}
 		else

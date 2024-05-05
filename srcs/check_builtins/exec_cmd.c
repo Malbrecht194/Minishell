@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 16:59:32 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:03:58 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,9 @@ void	wait_loop(t_minishell *minish, t_chris **lst)
 	int		wait_ret;
 
 	tmp = *lst;
+	close_all_fd(minish->cmd_line);
 	while (tmp)
 	{
-		try_close(tmp->fd_in);
-		try_close(tmp->fd_out);
 		if (!tmp->pid || tmp->pid == -1)
 		{
 			tmp = tmp->next;

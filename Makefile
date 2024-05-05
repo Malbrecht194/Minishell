@@ -6,6 +6,7 @@ FLAGS = -Wall -Wextra -Werror -gdwarf-4
 NAME = minishell
 #============ MINISHELL SOURCES =============#
 SRCS = main.c \
+	special_split.c \
 	utils.c \
 	get_prompt.c \
 	signals.c\

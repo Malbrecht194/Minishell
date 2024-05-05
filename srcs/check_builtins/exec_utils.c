@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:33:07 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 14:40:36 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:04:22 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,13 @@ void	check_cmd_for_loop(t_chris **cmd, int pipe_fd[2])
 		(*cmd)->next->fd_in = pipe_fd[READ_FD];
 	else
 		try_close(pipe_fd[READ_FD]);
+}
+void	close_all_fd(t_chris *lst)
+{
+	while (lst)
+	{
+		try_close(lst->fd_in);
+		try_close(lst->fd_out);
+		lst = lst->next;
+	}
 }

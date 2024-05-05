@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 16:59:52 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:04:43 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int	arg_format(t_chris **f_chris, t_init *lst, t_chris *node)
 		ft_chrisclear(f_chris);
 		return (0);
 	}
-	if (node->cmd)
-		free(node->cmd);
+	try_free(node->cmd);
 	node->cmd = array;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:06:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 14:40:54 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:00:58 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ int		exec_builtins(t_minishell *minish, t_chris *cmd, int b_num);
 int		is_builtins(char *cmd);
 size_t	count_cmd(t_chris *lst);
 void	exec_all_cmd(t_minishell *minish);
+void	close_all_fd(t_chris *lst);
 
 #endif

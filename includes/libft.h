@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:50:38 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 16:55:52 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:01:25 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ char				*join_and_free(char *s1, char *s2, int f_s1, int f_s2);
 void				ft_multi_free(int n_to_free, ...);
 char				*ft_multi_join(int n_to_free, char *join_to, ...);
 int					ft_strcmp(char *s1, char *s2);
+int					try_close(int fd);
+void				try_free(void *ptr);
 
 /*=================== BONUS PART ===================*/
 /*=========BONUS STRUCT=========*/
