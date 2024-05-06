@@ -10,7 +10,7 @@ SRCS = main.c \
 	utils.c \
 	get_prompt.c \
 	signals.c\
-	check_args.c \
+	init_args.c \
 	builtins/cd.c \
 	builtins/pwd.c \
 	builtins/env.c \
@@ -25,6 +25,7 @@ SRCS = main.c \
 	format_readline/utils_expand.c \
 	lexor/lexor.c \
 	lexor/lexor_utils.c \
+	lexor/lexor_utils_2.c \
 	lexor/tchris_utils.c \
 	lexor/heredoc.c \
 	lexor/lexor_init/lexor_init.c \

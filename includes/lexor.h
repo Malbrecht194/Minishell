@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 10:37:38 by malbrech          #+#    #+#             */
-/*   Updated: 2024/05/14 16:55:41 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:06:48 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int		open_fd(char *f_name, int type, t_minishell *minish);
 void	ft_initadd_back(t_init **lst, t_init *new);
 t_init	*ft_initlast(t_init *lst);
 void	ft_initclear(t_init **lst);
-
 void	ft_chrisadd_back(t_chris **chris, t_chris *new);
 t_chris	*ft_chrislast(t_chris *chris);
 void	ft_chrisclear(t_chris **chris);
@@ -46,9 +45,12 @@ t_chris	*ft_chrisnew(void);
 void	close_all(int fd[2]);
 int		add_to_array(char ***args, char *arg, int index);
 void	remove_to_array(char ***args, int index);
-t_init	*check_init_args(t_init *first, t_init *prev, \
-		t_init *node, t_minishell *minish);
-t_init	*relink_node(t_init *first, t_init *last, t_init *node, t_minishell *minish);
+t_init	*check_init_args(t_init *first, t_init *prev, t_init *node,
+			t_minishell *minish);
+t_init	*relink_node(t_init *first, t_init *last, t_init *node,
+			t_minishell *minish);
+t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node,
+			t_minishell *minish);
 
 /*================================ HEREDOC ================================*/
 

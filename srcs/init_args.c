@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   init_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:42:44 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 16:51:33 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/06 09:35:25 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <expand.h>
 #include <check_builtins.h>
 
-void	check_args(t_minishell *minish, char *rl_args)
+void	init_args(t_minishell *minish, char *rl_args)
 {
 	if (!rl_args || !*rl_args)
 		return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:29:29 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/02 22:59:29 by xeo              ###   ########.fr       */
+/*   Updated: 2024/05/06 14:20:40 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,29 @@ void	print_array(int fd_out, char **array)
 	i = 0;
 	while (array[i])
 		ft_printf_fd(fd_out, "%s\n", array[i++]);
+}
+
+int	export_error(char *str, t_minishell *minish)
+{
+	char	*error[3];
+	int		i;
+
+	i = -1;
+	error[0] = "export";
+	error[1] = str;
+	error[2] = NULL;
+	if (!str[0] || ft_isdigit(str[0]) || str[0] == '=')
+	{
+		error_handle(NOT_VALID_ID, minish, error, NULL);
+		return (0);
+	}
+	while (!(str[++i] == '=' || (str[i] == '+' && str[i + 1] == '=')) && str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+		{
+			error_handle(NOT_VALID_ID, minish, error, NULL);
+			return (0);
+		}
+	}
+	return (1);
 }

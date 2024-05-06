@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:45:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:01:31 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:08:46 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_f_lex
 char	**mini_split(char const *s, char sep);
 char				*test_access(char *command, t_minishell *minish);
 char				*get_prompt(t_minishell *minish);
-void				check_args(t_minishell *minish, char *rl_args);
+void				init_args(t_minishell *minish, char *rl_args);
 char				**dup_array(char **array);
 void				free_minish(t_minishell *minishell);
 char				*ft_getenv(char *to_get, char **env);

@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:54:21 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/05 14:58:51 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/06 10:56:46 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,6 @@
 #include <expand.h>
 #include <lexor.h>
 #include <minishell.h>
-
-int	check_rl_args(char *rl, t_minishell *minish)
-{
-	size_t	i;
-	int		j;
-	int		type;
-	int		state;
-
-	i = skip_ifs(rl);
-	if (!rl[i])
-	{
-		free(rl);
-		return (0);
-	}
-	if (rl[i] == '|')
-	{
-		minish->last_error = 2;
-		error_handle(SYNTAX_ERROR, minish, &rl[i], NULL);
-		return (0);
-	}
-	while (rl[i])
-	{
-		state = 0;
-		if (rl[i] == '\'' || rl[i] == '\"')
-			i += to_next_quote(rl + i + 1, rl[i]) + 1;
-		type = check_type(&rl[i]);
-		if (type == INFILE || type == OUT_T || type == PIPE)
-			state = 1;
-		else if (type == HEREDOC || type == OUT_A)
-			state = 2;
-		j = i + skip_ifs(&rl[i + state]);
-		if (state && (((type == INFILE || type == OUT_T || type == HEREDOC
-						|| type == OUT_A) && (rl[j + state] == '<' || rl[j
-						+ state] == '>' || rl[j + state] == '|' || rl[j + state] == 0)) || (type == PIPE
-					&& (rl[j + state] == '|' || rl[j + state] == 0))))
-		{
-			minish->last_error = 2;
-			if ((type == INFILE || type == OUT_T || type == HEREDOC
-					|| type == OUT_A) && rl[j + state] == 0)
-				error_handle(SYNTAX_ERROR, minish, "newline", NULL);
-			else
-				error_handle(SYNTAX_ERROR, minish, &rl[j + state], NULL);
-			return (0);
-		}
-		if (skip_ifs(rl + ++i))
-			i += skip_ifs(rl + i);
-	}
-	return (1);
-}
 
 int	check_ambigous(char *str, t_minishell *minish)
 {

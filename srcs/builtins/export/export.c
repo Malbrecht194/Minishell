@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:57:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/05 13:39:22 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/06 14:19:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,28 +73,6 @@ void	cat_env(char ***env, char *av, int b_count, int *error)
 	}
 }
 
-int	export_type(char **av, char ***env)
-{
-	int	i;
-	int	error;
-	int	content;
-
-	i = 0;
-	error = 0;
-	while (av[++i])
-	{
-		content = check_export_type(av[i]);
-		if (content == -1)
-			error = 1;
-		else if (content < 0)
-			cat_env(env, av[i], ft_abs(content), &error);
-		else if (content > 0)
-			new_env(env, av[i], content, &error);
-		else if (!content)
-			new_env(env, av[i], ft_strlen(av[i]) + 1, &error);
-	}
-	return (error);
-}
 
 int	no_arg(t_chris *cmd, t_minishell *minish)
 {
@@ -114,38 +92,42 @@ int	no_arg(t_chris *cmd, t_minishell *minish)
 	ft_free_2d_array(n_arg, ft_array_len(n_arg));
 	return (0);
 }
-
-int	ft_export(int ac, char **av, t_chris *cmd, t_minishell *minish)
+int	export_type(char **av, char ***env, t_minishell *minish)
 {
-	int		i;
-	int		j;
-	int		error;
-	char	*err[2];
+	int	i;
+	int	error;
+	int	content;
 
 	i = 0;
 	error = 0;
-	err[0] = "export";
 	while (av[++i])
 	{
-		j = -1;
-		err[1] = av[i];
-		if (!av[i][0] || ft_isdigit(av[i][0]) || av[i][0] == '=')
+		if (!export_error(av[i], minish))
 		{
-			error_handle(NOT_VALID_ID, minish, err, NULL);
-			return (1);
+			error = 1;
+			continue ;
 		}
-		while (!(av[i][++j] == '=' || (av[i][j] == '+' && av[i][j + 1] == '=')) && av[i][j])
-		{
-			if (!ft_isalnum(av[i][j]) && av[i][j] != '_')
-			{
-				error_handle(NOT_VALID_ID, minish, err, NULL);
-				return (1);
-			}
-		}
+		content = check_export_type(av[i]);
+		if (content == -1)
+			error = 1;
+		else if (content < 0)
+			cat_env(env, av[i], ft_abs(content), &error);
+		else if (content > 0)
+			new_env(env, av[i], content, &error);
+		else if (!content)
+			new_env(env, av[i], ft_strlen(av[i]) + 1, &error);
 	}
+	return (error);
+}
+
+int	ft_export(int ac, char **av, t_chris *cmd, t_minishell *minish)
+{
+	int		error;
+
+	error = 0;
 	if (ac == 1)
 		error = no_arg(cmd, minish);
 	else
-		error = export_type(av, &minish->env);
+		error = export_type(av, &minish->env, minish);
 	return (error);
 }
