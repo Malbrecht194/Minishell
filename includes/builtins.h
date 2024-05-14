@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 09:44:39 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/19 16:18:48 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/14 16:18:43 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		declare_x(char ***envp, int i);
 int		check_export_type(char *arg);
 int		no_env(char *n_env, char ***o_env);
 void	print_array(int fd_out, char **array);
+void	unlink_free_heredocs(t_minishell *minish);
 
 /*============================= BUILTINS PROTOTYPE ===========================*/
 int		ft_echo(int ac, char **av, t_chris *cmd, t_minishell *minish);

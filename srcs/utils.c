@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/01 14:45:50 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:30:06 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,25 @@ int	try_close(int fd)
 	return (-1);
 }
 
+void	unlink_free_heredocs(t_minishell *minishell)
+{
+	char	*name;
+	int		i;
+
+	i = 0;
+	while (minishell->heredocs[i] != 0)
+	{
+		name = minishell->heredocs[i];
+		if (name)
+		{
+			unlink(name);
+			free(name);
+		}
+		i++;
+	}
+	ft_free_2d_array((void **)(minishell->heredocs), i);
+}
+
 void	free_minish(t_minishell *minishell)
 {
 	void	**env;
@@ -65,6 +84,8 @@ void	free_minish(t_minishell *minishell)
 		return ;
 	if (minishell->cmd_line)
 		ft_chrisclear(&minishell->cmd_line);
+	if (minishell->heredocs)
+		unlink_free_heredocs(minishell);
 	if (minishell->env)
 		ft_free_2d_array(env, ft_array_len((void **)minishell->env));
 	if (minishell->prompt)

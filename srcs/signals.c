@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:31:31 by malbrech          #+#    #+#             */
-/*   Updated: 2024/04/16 14:38:28 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:16:03 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	suppress_output(void)
 		perror("Minishell: tcsetattr");
 }
 
-/* Cette fonction est un gestionnaire de signal pour SIGINT, qui est envoyé lorsque l'utilisateur presse Ctrl+C.
-Elle écrit un caractère de nouvelle ligne (\n) sur la sortie standard (stdout), puis utilise la bibliothèque readline pour réinitialiser la ligne d'entrée et redisplay.*/
 void	handler_sigint(int sig)
 {
 	(void)sig;
@@ -37,8 +35,6 @@ void	handler_sigint(int sig)
 	rl_redisplay();
 }
 
-/*Cette fonction est un gestionnaire de signal pour SIGQUIT, qui est envoyé lorsque l'utilisateur presse Ctrl+\.
-Elle utilise simplement rl_redisplay() pour réafficher la ligne d'entrée.*/
 void	handler_sigquit(int sig)
 {
 	(void)sig;
@@ -51,3 +47,9 @@ void	signals_init(void)
 	signal(SIGINT, handler_sigint);
 	signal(SIGQUIT, handler_sigquit);
 }
+// void	handle_sigint_heredoc(int sig)
+// {
+// 	(void)sig;
+// 	write(1, "\n", 1);
+// 	exit(1);
+// }
