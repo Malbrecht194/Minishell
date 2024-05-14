@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:03:58 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:15:01 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	exec_cmd(t_minishell *minish, t_chris *cmd)
 		error_handle(NO_F_OR_DIR, minish, cmd->cmd[0], exit);
 	}
 	if (!full_dup(cmd->fd_in, cmd->fd_out))
-			error_handle(DUP_ERROR, minish, NULL, exit);
+		error_handle(DUP_ERROR, minish, NULL, exit);
 	close_and_execve(&minish, &cmd);
 	if (errno == ENOENT)
 		error_handle(NO_F_OR_DIR, minish, cmd->cmd[0], exit);

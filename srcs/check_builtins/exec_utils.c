@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:33:07 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:04:22 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:16:15 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,3 +67,4 @@ void	close_all_fd(t_chris *lst)
 		lst = lst->next;
 	}
 }
+

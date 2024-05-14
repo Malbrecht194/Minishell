@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:07:53 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:15:38 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ t_chris	*creat_chris_node(t_chris **f_chris, t_init *lst, t_minishell *minish)
 	return (n_node);
 }
 
-t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node, t_minishell *minish)
+t_chris	*creat_chris(t_chris **f_chris, t_init *lst, \
+	t_chris *node, t_minishell *minish)
 {
 	if (!lst)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 10:56:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/06 11:30:13 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/14 14:56:23 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	check_syntax_err(int state, int type, char *rl, t_minishell *minish)
 {
 	if (state && (((type == INFILE || type == OUT_T
 					|| type == HEREDOC || type == OUT_A)
-					&& (rl[state] == '<' || rl[state] == '>'
+				&& (rl[state] == '<' || rl[state] == '>'
 					|| rl[state] == '|' || rl[state] == 0))
-					|| (type == PIPE && (rl[state] == '|' || rl[state] == 0))))
+			|| (type == PIPE && (rl[state] == '|' || rl[state] == 0))))
 	{
 		minish->last_error = 2;
 		if ((type == INFILE || type == OUT_T || type == HEREDOC
@@ -80,7 +80,8 @@ int	check_rl_args(char *rl, t_minishell *minish)
 	return (1);
 }
 
-t_init	*relink_node(t_init *first, t_init *last, t_init *node, t_minishell *minish)
+t_init	*relink_node(t_init *first, t_init *last, \
+	t_init *node, t_minishell *minish)
 {
 	char	**arg;
 	char	*str;

@@ -6,7 +6,6 @@ FLAGS = -Wall -Wextra -Werror -gdwarf-4
 NAME = minishell
 #============ MINISHELL SOURCES =============#
 SRCS = main.c \
-	signals.c \
 	special_split.c \
 	utils.c \
 	get_prompt.c \
@@ -29,7 +28,6 @@ SRCS = main.c \
 	lexor/lexor_utils.c \
 	lexor/lexor_utils_2.c \
 	lexor/tchris_utils.c \
-	lexor/heredoc.c \
 	lexor/lexor_init/lexor_init.c \
 	lexor/lexor_init/lexor_init_utils.c \
 	check_builtins/access.c \
@@ -58,8 +56,8 @@ $(OBJ_DIR)%.o : $(SRCS_DIR)%.c
 	@ mkdir -p $(dir $@)
 	@ $(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME) : $(LIBFT) $(OBJ) $(OBJBUILTINS)
-	@ $(CC) $(FLAGS) -lreadline $(OBJ) $(OBJBUILTINS) $(INCLUDES) $(LIBFT) -o $(NAME)
+$(NAME) : $(LIBFT) $(OBJ)
+	@ $(CC) $(OBJ) $(LIBFT) -o $(NAME) -lreadline
 
 clean :
 	@ $(MAKE) -C libft clean --no-print-directory

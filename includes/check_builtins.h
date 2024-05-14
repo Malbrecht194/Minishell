@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:06:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:00:58 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:14:42 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	close_and_execve(t_minishell **minish, t_chris **cmd);
 void	check_cmd_for_loop(t_chris **cmd, int pipe_fd[2]);
 int		full_dup(int n_stdin, int n_stdout);
 int		exec_builtins(t_minishell *minish, t_chris *cmd, int b_num);
+void	check_cmd_for_loop(t_chris **cmd, int pipe_fd[2]);
 int		is_builtins(char *cmd);
 size_t	count_cmd(t_chris *lst);
 void	exec_all_cmd(t_minishell *minish);

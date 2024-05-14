@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor_init_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:17:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/06 11:22:12 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/14 14:52:56 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	ft_initclear(t_init **lst)
 	*lst = NULL;
 }
 
-t_init	*check_init_args(t_init *first, t_init *prev, t_init *node, t_minishell *minish)
+t_init	*check_init_args(t_init *first, t_init *prev, \
+	t_init *node, t_minishell *minish)
 {
 	t_init	*tmp;
 
@@ -79,7 +80,8 @@ t_init	*check_init_args(t_init *first, t_init *prev, t_init *node, t_minishell *
 	if (!first)
 		first = node;
 	if (node->type == ARG && node->str && ft_strchr(node->str, -1))
-		return (check_init_args(first, prev, relink_node(node, node->next, node, minish), minish));
+		return (check_init_args(first, prev, \
+			relink_node(node, node->next, node, minish), minish));
 	if (node->type != HEREDOC && node->type != PIPE)
 		delete_quote(&node->str);
 	return (check_init_args(first, node, tmp, minish));
