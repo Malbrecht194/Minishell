@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:57:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/06 14:19:49 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/14 14:31:52 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	no_arg(t_chris *cmd, t_minishell *minish)
 	ft_free_2d_array(n_arg, ft_array_len(n_arg));
 	return (0);
 }
+
 int	export_type(char **av, char ***env, t_minishell *minish)
 {
 	int	i;

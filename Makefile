@@ -6,6 +6,7 @@ FLAGS = -Wall -Wextra -Werror -gdwarf-4
 NAME = minishell
 #============ MINISHELL SOURCES =============#
 SRCS = main.c \
+	signals.c \
 	special_split.c \
 	utils.c \
 	get_prompt.c \
@@ -24,6 +25,7 @@ SRCS = main.c \
 	format_readline/expand_env.c \
 	format_readline/utils_expand.c \
 	lexor/lexor.c \
+	lexor/heredoc.c \
 	lexor/lexor_utils.c \
 	lexor/lexor_utils_2.c \
 	lexor/tchris_utils.c \

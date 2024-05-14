@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:41:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:08:38 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:12:38 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ int	main(int ac, char **av, char **envp)
 	if (!minish)
 		error_handle(FAIL_STRUCT, NULL, NULL, exit);
 	minish->heredocs = NULL;
-	signals_init();
 	if (envp && *envp)
 	{
 		minish->env = dup_array(envp);
 		if (!minish->env)
 			error_handle(MALLOC_ERROR, NULL, NULL, exit);
 	}
+	signals_init();
 	rl_loop(minish);
 }

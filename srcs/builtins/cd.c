@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:05:22 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:03:10 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:11:58 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ int	ft_cd(int ac, char **av, t_chris *cmd, t_minishell *minish)
 		error_handle(NO_F_O_D_CD, minish, av, NULL);
 		return (1);
 	}
-	if ((ac == 1 || !ft_strncmp(av[1], "-", 2)) && to_move)
-		free(to_move);
 	replace_pwd(&minish->env);
 	return (ft_abs(cd_state));
 }

@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:31:31 by malbrech          #+#    #+#             */
-/*   Updated: 2024/05/14 16:16:03 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:13:41 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,11 @@ void	handler_sigint(int sig)
 	rl_redisplay();
 }
 
-void	handler_sigquit(int sig)
-{
-	(void)sig;
-	rl_redisplay();
-}
-
 void	signals_init(void)
 {
 	suppress_output();
 	signal(SIGINT, handler_sigint);
-	signal(SIGQUIT, handler_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 }
 // void	handle_sigint_heredoc(int sig)
 // {
