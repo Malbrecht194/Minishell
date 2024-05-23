@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 10:37:38 by malbrech          #+#    #+#             */
-/*   Updated: 2024/05/14 17:06:48 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:32:09 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,7 @@ t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node,
 
 char	*rand_path(void);
 int		heredoc(char *delimiter, t_minishell *minish);
+int		need_expand(char **arg);
+int		open_rand(char **filename);
 
 #endif

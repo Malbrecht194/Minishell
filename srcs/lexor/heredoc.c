@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:21 by malbrech          #+#    #+#             */
-/*   Updated: 2024/05/16 10:30:40 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:33:34 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,21 @@ char	*rand_path(void)
 	return (path);
 }
 
-char	*expand_variables(char *input, t_minishell *minish)
+static void	expand_heredoc(char **input, t_minishell *minish)
 {
-	char	*expanded_line;
-	int		index;
+	size_t	index;
 
-	expanded_line = ft_strdup(input);
-	if (!expanded_line)
-	{
-		error_handle(MALLOC_ERROR, minish, NULL, NULL);
-		return (NULL);
-	}
 	index = 0;
-	while (expanded_line[index])
+	while ((*input)[index])
 	{
-		if (expanded_line[index] == '\'' || \
-			expanded_line[index] == '\"' || expanded_line[index] == '$')
-			do_expand(&expanded_line, &index, 0, minish);
-		else
-			index++;
+		if ((*input)[index] == '$')
+		{
+			rm_char(input, index);
+			index += expand_env(input, index, minish) - 1;
+		}
+		if (index++ > ft_strlen((*input)))
+			break ;
 	}
-	return (expanded_line);
 }
 
 static void	add_heredoc_name(t_minishell *minish, char *filename)
@@ -80,10 +74,9 @@ static void	add_heredoc_name(t_minishell *minish, char *filename)
 	free(buff);
 }
 
-static void	heredoc_rl(char *delimiter, int fd, t_minishell *minish)
+static void	heredoc_rl(char *delimiter, int fd, t_minishell *minish, int need_exp)
 {
 	char	*buffer;
-	char	*expanded_line;
 
 	while (1)
 	{
@@ -100,11 +93,10 @@ static void	heredoc_rl(char *delimiter, int fd, t_minishell *minish)
 			free(buffer);
 			break ;
 		}
-		expanded_line = expand_variables(buffer, minish);
-		write(fd, expanded_line, ft_strlen(expanded_line));
-		write(fd, "\n", 1);
+		if (need_exp)
+			expand_heredoc(&buffer, minish);
+		ft_printf_fd(fd, "%s\n", buffer);
 		free(buffer);
-		free(expanded_line);
 	}
 }
 
@@ -113,14 +105,10 @@ int	heredoc(char *delimiter, t_minishell *minish)
 	char	*filename;
 	int		fd;
 
-	filename = rand_path();
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-	{
-		perror("Heredoc");
-		exit(EXIT_FAILURE);
-	}
+	fd = open_rand(&filename);
 	add_heredoc_name(minish, filename);
-	heredoc_rl(delimiter, fd, minish);
+	heredoc_rl(delimiter, fd, minish, need_expand(&delimiter));
+	close(fd);
+	fd = open(filename, O_RDONLY);
 	return (fd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 15:32:36 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 16:57:42 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:33:57 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,41 @@ void	remove_to_array(char ***args, int index)
 	free((*args)[index]);
 	while (++i < arr_len)
 		(*args)[i] = (*args)[i + 1];
+}
+
+int	need_expand(char **arg)
+{
+	int	i;
+	int	exp;
+	
+	i = 0;
+	exp = 1;
+	while ((*arg)[i])
+	{
+		if ((*arg)[i] == '\'' || (*arg)[i] == '\"')
+		{
+			exp = 0;
+			rm_char(arg, i);
+		}
+		else
+			i++;
+	}
+	return (exp);
+}
+
+int	open_rand(char	**filename)
+{
+	int		fd;
+	char	*path;
+
+	path = rand_path();
+	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		free(path);
+		fd = open_rand(filename);
+	}
+	else
+		*filename = path;
+	return (fd);
 }
