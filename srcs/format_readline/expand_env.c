@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:29:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:04:24 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:58:55 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,18 @@ int	do_expand(char **arg, int *index, char state, t_minishell *minish)
 				|| (*arg)[i + j + 1] == '\"' || (*arg)[i + j + 1] == '\''
 				|| (*arg)[i + j + 1] == '?')
 			{
-				if (state && (*arg)[i + j + 1] == '\"' && (*arg)[i + j - 1] == '\"')
+				if (state && (*arg)[i + j + 1] == '\"' && \
+					(*arg)[i + j - 1] == '\"')
 				{
 					*index = i + j;
 					return (0);
 				}
 				rm_char(arg, i + j);
-				if (!state && ((*arg)[i + j] == '\"' || (*arg)[i + j] == '\''))
+				if (!state && ((*arg)[i + j] == '\"' || \
+					(*arg)[i + j] == '\''))
 				{
 					rm_char(arg, i + j + to_next_quote((*arg) + i + j + 1,
-						(*arg)[i + j]) + 1);
+							(*arg)[i + j]) + 1);
 					rm_char(arg, i + j);
 					return (0);
 				}
@@ -81,7 +83,8 @@ int	do_expand(char **arg, int *index, char state, t_minishell *minish)
 			}
 			if (!state)
 			{
-				i += quote_in_expand(arg, (*arg) + (*index), (*index), exp_size);
+				i += quote_in_expand(arg, (*arg) + (*index), \
+					(*index), exp_size);
 				break ;
 			}
 		}

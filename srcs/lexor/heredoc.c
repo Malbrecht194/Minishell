@@ -6,11 +6,12 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:21 by malbrech          #+#    #+#             */
-/*   Updated: 2024/05/14 16:59:45 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/16 10:30:40 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexor.h>
+#include <expand.h>
 
 char	*rand_path(void)
 {
@@ -35,6 +36,29 @@ char	*rand_path(void)
 	return (path);
 }
 
+char	*expand_variables(char *input, t_minishell *minish)
+{
+	char	*expanded_line;
+	int		index;
+
+	expanded_line = ft_strdup(input);
+	if (!expanded_line)
+	{
+		error_handle(MALLOC_ERROR, minish, NULL, NULL);
+		return (NULL);
+	}
+	index = 0;
+	while (expanded_line[index])
+	{
+		if (expanded_line[index] == '\'' || \
+			expanded_line[index] == '\"' || expanded_line[index] == '$')
+			do_expand(&expanded_line, &index, 0, minish);
+		else
+			index++;
+	}
+	return (expanded_line);
+}
+
 static void	add_heredoc_name(t_minishell *minish, char *filename)
 {
 	char	**buff;
@@ -56,9 +80,10 @@ static void	add_heredoc_name(t_minishell *minish, char *filename)
 	free(buff);
 }
 
-static void	heredoc_rl(char *delimiter, int fd)
+static void	heredoc_rl(char *delimiter, int fd, t_minishell *minish)
 {
 	char	*buffer;
+	char	*expanded_line;
 
 	while (1)
 	{
@@ -75,8 +100,11 @@ static void	heredoc_rl(char *delimiter, int fd)
 			free(buffer);
 			break ;
 		}
-		write(fd, buffer, ft_strlen(buffer));
+		expanded_line = expand_variables(buffer, minish);
+		write(fd, expanded_line, ft_strlen(expanded_line));
+		write(fd, "\n", 1);
 		free(buffer);
+		free(expanded_line);
 	}
 }
 
@@ -93,6 +121,6 @@ int	heredoc(char *delimiter, t_minishell *minish)
 		exit(EXIT_FAILURE);
 	}
 	add_heredoc_name(minish, filename);
-	heredoc_rl(delimiter, fd);
+	heredoc_rl(delimiter, fd, minish);
 	return (fd);
 }

@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:15:01 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/05/16 08:41:36 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <expand.h>
 #include <lexor.h>
 #include <builtins.h>
+#include <signals.h>
 
 void	exec_cmd(t_minishell *minish, t_chris *cmd)
 {
@@ -56,6 +57,7 @@ int	fork_exec(t_minishell *minish, t_chris *lst)
 		return (0);
 	if (!lst->pid)
 	{
+		clear_signals();
 		if (lst->next)
 			try_close(lst->next->fd_in);
 		if (builtins == NO_BUILTINS)
