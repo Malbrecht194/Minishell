@@ -9,7 +9,9 @@
 		"expand.h": "c",
 		"error.h": "c",
 		"errno.h": "c",
-		"builtins.h": "c"
+		"builtins.h": "c",
+		"ioctl.h": "c",
+		"resource.h": "c"
 	},
 	"cmake.configureOnOpen": true
 }

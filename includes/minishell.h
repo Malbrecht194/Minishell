@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:45:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:15:51 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:35:16 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/ioctl.h>
+# include <sys/resource.h>
+# include <sys/time.h>
+# include <sys/types.h>
 # include <term.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -36,6 +40,8 @@
 # define WRITE_FD 1
 
 /*=================================== STRUCT =================================*/
+
+extern int		g_sig;
 
 typedef struct s_minishell
 {

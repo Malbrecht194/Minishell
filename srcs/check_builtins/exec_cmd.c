@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/16 08:41:36 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:06:29 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ int	fork_exec(t_minishell *minish, t_chris *lst)
 	int	error;
 
 	builtins = NO_BUILTINS;
+	signals_init(2);
 	if (lst->cmd)
 		builtins = is_builtins(lst->cmd[0]);
-	error = 0;
 	lst->pid = fork();
 	if (lst->pid == -1)
 		return (0);
 	if (!lst->pid)
 	{
-		clear_signals();
+		signals_init(3);
 		if (lst->next)
 			try_close(lst->next->fd_in);
 		if (builtins == NO_BUILTINS)
@@ -149,4 +149,7 @@ void	exec_all_cmd(t_minishell *minish)
 	}
 	else
 		exec_loop(minish, lst);
+	signals_init(1);
+	if (g_sig == SIGINT)
+		printf("\n");
 }

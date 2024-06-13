@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:21 by malbrech          #+#    #+#             */
-/*   Updated: 2024/05/23 11:33:34 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/13 17:36:36 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lexor.h>
 #include <expand.h>
+#include <signals.h>
 
 char	*rand_path(void)
 {
@@ -74,13 +75,19 @@ static void	add_heredoc_name(t_minishell *minish, char *filename)
 	free(buff);
 }
 
-static void	heredoc_rl(char *delimiter, int fd, t_minishell *minish, int need_exp)
+static void	heredoc_rl(char *delimiter, int fd,
+	t_minishell *minish, int need_exp)
 {
 	char	*buffer;
 
 	while (1)
 	{
 		buffer = readline("> ");
+		if (g_sig == SIGINT)
+		{
+			free(buffer);
+			break ;
+		}
 		if (buffer == NULL)
 		{
 			ft_putstr_fd("here-document delimited by end-of-file (wanted `", 2);
@@ -107,6 +114,8 @@ int	heredoc(char *delimiter, t_minishell *minish)
 
 	fd = open_rand(&filename);
 	add_heredoc_name(minish, filename);
+	g_sig = 0;
+	signals_init(4);
 	heredoc_rl(delimiter, fd, minish, need_expand(&delimiter));
 	close(fd);
 	fd = open(filename, O_RDONLY);
