@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/13 19:06:29 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:30:49 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <lexor.h>
 #include <builtins.h>
 #include <signals.h>
+
+const int ignore = 2;
 
 void	exec_cmd(t_minishell *minish, t_chris *cmd)
 {
@@ -79,8 +81,10 @@ void	wait_loop(t_minishell *minish, t_chris **lst)
 {
 	t_chris	*tmp;
 	int		wait_ret;
+	int		bool;
 
 	tmp = *lst;
+	bool = 0;
 	close_all_fd(minish->cmd_line);
 	while (tmp)
 	{
@@ -96,6 +100,7 @@ void	wait_loop(t_minishell *minish, t_chris **lst)
 			minish->last_error = WEXITSTATUS(wait_ret);
 		else if (WIFSIGNALED(wait_ret))
 			minish->last_error = WTERMSIG(wait_ret) + 128;
+		signal_messages(minish, &bool);
 		tmp = tmp->next;
 	}
 	ft_chrisclear(lst);
@@ -150,6 +155,4 @@ void	exec_all_cmd(t_minishell *minish)
 	else
 		exec_loop(minish, lst);
 	signals_init(1);
-	if (g_sig == SIGINT)
-		printf("\n");
 }

@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:31:31 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/13 19:07:37 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:29:24 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,41 @@ void	handle_sigint_heredoc(int sig)
 	rl_replace_line("", 0);
 }
 
+void	signal_messages(t_minishell *minish, int *bool)
+{
+	if (minish->last_error == 130 && (*bool) == 0)
+	{
+		write(1, "\n", 1);
+		(*bool)++;
+	}
+	else if (minish->last_error == 131 && (*bool) == 0)
+	{
+		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
+		(*bool)++;
+	}
+}
+
 void	signals_init(int sig)
 {
 	if (sig == 1)
 	{
 		signal(SIGINT, &handler_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		return ;
 	}
-	if (sig == 2)
+	else if (sig == 2)
 	{
-		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, SIG_IGN);
-		return ;
+		signal(SIGQUIT, SIG_IGN);
 	}
-	if (sig == 3)
+	else if (sig == 3)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		return ;
 	}
-	if (sig == 4)
+	else if (sig == 4)
 	{
-		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, &handle_sigint_heredoc);
-		return ;
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
 

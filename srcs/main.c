@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:41:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/13 18:44:29 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:06:29 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,5 @@ int	main(int ac, char **av, char **envp)
 	}
 	signals_init(1);
 	rl_loop(minish);
+	signals_init(2);
 }
