@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:15:38 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/18 23:43:04 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ t_chris	*creat_chris(t_chris **f_chris, t_init *lst, \
 		ft_chrisadd_back(&node, creat_chris(f_chris, lst->next, NULL, minish));
 	else
 		creat_chris(f_chris, lst->next, node, minish);
+	if (!f_chris && node)
+		ft_chrisclear(&node);
 	return (node);
 }
 

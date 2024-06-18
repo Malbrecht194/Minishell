@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 10:56:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/18 21:25:21 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/18 23:32:52 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	relink_loop(t_init *first, t_init *last, t_minishell *minish,
 {
 	int		i;
 	t_init	*new;
-	
+
 	i = 0;
 	while (args[++i])
 	{
@@ -95,7 +95,7 @@ static void	relink_loop(t_init *first, t_init *last, t_minishell *minish,
 			ft_initclear(&first);
 			ft_initclear(&last);
 			error_handle(MALLOC_ERROR, minish, NULL, NULL);
-			return;
+			return ;
 		}
 		new->type = ARG;
 		new->str = args[i];

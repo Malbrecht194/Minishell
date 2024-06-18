@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:54:21 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/06 10:56:46 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/19 00:34:57 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,32 @@ int	creat_arg(t_init **f_init, char *str, t_minishell *minish, t_init *init)
 	return (i);
 }
 
+static int	set_init(t_init **f_init, t_init *init, t_minishell *minish, char *str)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	if (init->type == INFILE || init->type == OUT_T || init->type == PIPE)
+		i++;
+	else if (init->type == HEREDOC || init->type == OUT_A)
+		i += 2;
+	j = i;
+	if (!(init->type == PIPE || init->type == -1))
+	{
+		k = skip_ifs(str + i);
+		i += creat_arg(f_init, &str[k + i], minish, init);
+		if (i - j < 0)
+			return (-1);
+	}
+	return (i + k);
+}
+
 t_init	*init_lexor(t_init **f_init, char *rl_args, t_minishell *minish)
 {
 	int		i;
 	int		j;
-	int		k;
 	t_init	*init;
 
 	i = skip_ifs(rl_args);
@@ -77,21 +98,11 @@ t_init	*init_lexor(t_init **f_init, char *rl_args, t_minishell *minish)
 		return (NULL);
 	}
 	init->type = check_type(rl_args + i);
-	if (init->type == INFILE || init->type == OUT_T || init->type == PIPE)
-		j++;
-	else if (init->type == HEREDOC || init->type == OUT_A)
-		j += 2;
-	k = j;
-	if (!(init->type == PIPE || init->type == -1))
-	{
-		i += skip_ifs(rl_args + i + j);
-		j += creat_arg(f_init, &rl_args[i + j], minish, init);
-		if (j - k < 0)
-			return (NULL);
-	}
+	j = set_init(f_init, init, minish, rl_args + i);
 	if (!f_init)
-		ft_initadd_back(&init, init_lexor(&init, rl_args + i + j, minish));
-	else
-		ft_initadd_back(&init, init_lexor(f_init, rl_args + i + j, minish));
+		f_init = &init;
+	ft_initadd_back(&init, init_lexor(f_init, rl_args + i + j, minish));
+	if (!f_init && init)
+		ft_initclear(&init);
 	return (init);
 }
