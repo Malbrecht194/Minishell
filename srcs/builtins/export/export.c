@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:57:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 14:31:52 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:56:51 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,15 @@ void	cat_env(char ***env, char *av, int b_count, int *error)
 	else
 	{
 		if (!ft_strchr((*env)[i_env], '='))
-		{
-			env_name = ft_strjoin((*env)[i_env], "=");
-			env_name = join_and_free(env_name, av + b_count - 1, 1, 0);
-		}
+			env_name = join_and_free(ft_strjoin((*env)[i_env], "="),
+					av + b_count - 1, 1, 0);
 		else
 			env_name = ft_strjoin((*env)[i_env], av + b_count - 1);
 		if (!(env_name && !replace_env(env_name, &((*env)[i_env]))))
-		{
-			try_free(env_name);
 			*error = 1;
-		}
-		else
-			free(env_name);
+		free(env_name);
 	}
 }
-
 
 int	no_arg(t_chris *cmd, t_minishell *minish)
 {

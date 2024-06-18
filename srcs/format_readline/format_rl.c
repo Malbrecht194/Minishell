@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:15:28 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:33:38 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	check_expand(char **arg, t_minishell *minish)
 	i = 0;
 	while ((*arg)[i])
 	{
-		j = i;
+		j = i - 1;
 		if ((*arg)[i] == '\"')
 		{
 			if (do_expand(arg, &i, '\"', minish))
@@ -68,11 +68,8 @@ void	check_expand(char **arg, t_minishell *minish)
 		else if ((*arg)[i] == '$')
 		{
 			do_expand(arg, &i, 0, minish);
-			while (j < i)
-			{
+			while (++j < i)
 				(*arg)[j] = check_ifs((*arg)[j]);
-				j++;
-			}
 		}
 		i++;
 		if (i >= (int)ft_strlen(*arg))
@@ -96,8 +93,7 @@ int	check_arg_quotes(char **arg, int index, char quote)
 			i++;
 		else if ((*arg)[index + i] == '\'' || (*arg)[index + i] == '\"')
 		{
-			tmp = ft_substr(*arg, 0, index + i);
-			tmp = join_and_free(tmp, minus_two, 1, 0);
+			tmp = join_and_free(ft_substr(*arg, 0, index + i), minus_two, 1, 0);
 			tmp = join_and_free(tmp, (*arg) + index + i, 1, 0);
 			if (!tmp)
 				return (0);

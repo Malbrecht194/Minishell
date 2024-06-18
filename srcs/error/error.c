@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:58:31 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/19 09:27:42 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/18 14:30:17 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,15 @@ t_err_struct	open_error(t_err_code error, void *arg)
 		s_error.err_msg = MS_AMBIGOUS_REDIR;
 	else if (error == FAIL_OPEN)
 		s_error.err_msg = strerror(errno);
-	s_error.cmd_name = (char *)arg;
+	else if (error == FAIL_HEREDOC)
+		s_error.err_msg = MS_FAIL_HEREDOC;
+	if (error == AMBIGOUS_REDIR || error == FAIL_OPEN)
+		s_error.cmd_name = (char *)arg;
+	else
+	{
+		s_error.args = (char *)arg;
+		s_error.cmd_name = NULL;
+	}
 	s_error.exit_code = 1;
 	return (s_error);
 }
@@ -89,7 +97,8 @@ void	error_handle(t_err_code error, void *minish, void *arg,
 		s_error = ms_init_err(error);
 	else if (error == NO_END_QUOTE || error == SYNTAX_ERROR)
 		s_error = line_error(error, arg);
-	else if (error == AMBIGOUS_REDIR || error == FAIL_OPEN)
+	else if (error == AMBIGOUS_REDIR || error == FAIL_OPEN
+		|| error == FAIL_HEREDOC)
 		s_error = open_error(error, arg);
 	else if (MALLOC_ERROR <= error && error <= FORK_ERROR)
 		s_error = other_error(error);

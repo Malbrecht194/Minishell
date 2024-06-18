@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:31:31 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/14 15:29:24 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:24:08 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,3 @@ void	signals_init(int sig)
 		signal(SIGQUIT, SIG_IGN);
 	}
 }
-

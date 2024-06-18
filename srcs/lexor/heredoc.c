@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:21 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/13 17:36:36 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:20:03 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,7 @@ static void	heredoc_rl(char *delimiter, int fd,
 		}
 		if (buffer == NULL)
 		{
-			ft_putstr_fd("here-document delimited by end-of-file (wanted `", 2);
-			ft_putstr_fd(delimiter, 2);
-			ft_putstr_fd("')\n", 2);
+			error_handle(FAIL_HEREDOC, minish, delimiter, NULL);
 			break ;
 		}
 		if (ft_strcmp(buffer, delimiter) == 0)

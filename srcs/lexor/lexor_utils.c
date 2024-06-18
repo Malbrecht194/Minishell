@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 15:32:36 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/23 11:33:57 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/18 13:27:40 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	need_expand(char **arg)
 {
 	int	i;
 	int	exp;
-	
+
 	i = 0;
 	exp = 1;
 	while ((*arg)[i])

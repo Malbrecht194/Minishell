@@ -34,6 +34,7 @@ SRCS = main.c \
 	check_builtins/exec_cmd.c \
 	check_builtins/check_cmd.c \
 	check_builtins/exec_utils.c \
+	check_builtins/exec_utils_2.c \
 	check_builtins/exec_builtins.c \
 	error/error.c \
 	error/error_2.c \

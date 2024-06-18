@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_error.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 09:44:39 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/23 12:21:17 by xeo              ###   ########.fr       */
+/*   Updated: 2024/06/18 14:30:00 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef enum e_errcode
 	SYNTAX_ERROR,
 	AMBIGOUS_REDIR,
 	FAIL_OPEN,
+	FAIL_HEREDOC,
 	MALLOC_ERROR,
 	PIPE_ERROR,
 	FORK_ERROR,
@@ -72,6 +73,7 @@ typedef struct s_err_struct
 # define MS_NOT_VALID_ID "not a valid identifier"
 # define MS_TOO_MANY_ARGS "too many arguments"
 # define MS_NUM_ARG_REQUIRED "numeric argument required"
+# define MS_FAIL_HEREDOC "here-document delimited by end-of-file "
 
 void			error_handle(t_err_code error, void *minish, void *arg,
 					void (*exit)(int));
