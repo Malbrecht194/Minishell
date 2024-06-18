@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/13 14:24:26 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:23:58 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,8 @@ void	unlink_free_heredocs(t_minishell *minishell)
 
 void	free_minish(t_minishell *minishell)
 {
-	void	**env;
-
 	if (!minishell)
 		return ;
-	env = (void **)minishell->env;
 	if (minishell->cmd_line)
 		ft_chrisclear(&minishell->cmd_line);
 	if (minishell->heredocs)

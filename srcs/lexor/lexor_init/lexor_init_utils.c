@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor_init_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:17:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 14:52:56 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/18 23:30:22 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_init	*check_init_args(t_init *first, t_init *prev, \
 		first = node;
 	if (node->type == ARG && node->str && ft_strchr(node->str, -1))
 		return (check_init_args(first, prev, \
-			relink_node(node, node->next, node, minish), minish));
+			relink_node(node, node->next, minish), minish));
 	if (node->type != HEREDOC && node->type != PIPE)
 		delete_quote(&node->str);
 	return (check_init_args(first, node, tmp, minish));

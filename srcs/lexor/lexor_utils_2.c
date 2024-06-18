@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexor_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 10:56:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 14:56:23 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:25:21 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@
 
 int	check_syntax_err(int state, int type, char *rl, t_minishell *minish)
 {
-	if (state && (((type == INFILE || type == OUT_T
-					|| type == HEREDOC || type == OUT_A)
-				&& (rl[state] == '<' || rl[state] == '>'
-					|| rl[state] == '|' || rl[state] == 0))
-			|| (type == PIPE && (rl[state] == '|' || rl[state] == 0))))
+	if (state && (((type == INFILE || type == OUT_T || type == HEREDOC
+					|| type == OUT_A) && (rl[state] == '<' || rl[state] == '>'
+					|| rl[state] == '|' || rl[state] == 0)) || (type == PIPE
+				&& (rl[state] == '|' || rl[state] == 0))))
 	{
 		minish->last_error = 2;
 		if ((type == INFILE || type == OUT_T || type == HEREDOC
@@ -80,55 +79,45 @@ int	check_rl_args(char *rl, t_minishell *minish)
 	return (1);
 }
 
-t_init	*relink_node(t_init *first, t_init *last, \
-	t_init *node, t_minishell *minish)
+static void	relink_loop(t_init *first, t_init *last, t_minishell *minish,
+		char **args)
+{
+	int		i;
+	t_init	*new;
+	
+	i = 0;
+	while (args[++i])
+	{
+		new = ft_calloc(sizeof(t_init), 1);
+		if (!new)
+		{
+			ft_free_2d_array(args, ft_array_len(args));
+			ft_initclear(&first);
+			ft_initclear(&last);
+			error_handle(MALLOC_ERROR, minish, NULL, NULL);
+			return;
+		}
+		new->type = ARG;
+		new->str = args[i];
+		ft_initadd_back(&first, new);
+	}
+}
+
+t_init	*relink_node(t_init *first, t_init *last, t_minishell *minish)
 {
 	char	**arg;
-	char	*str;
-	t_init	*new;
-	int		i;
 
-	i = 0;
-	arg = mini_split(node->str, -1);
+	arg = mini_split(first->str, -1);
 	if (!arg)
 	{
 		ft_initclear(&first);
-		ft_initclear(&last);
 		error_handle(MALLOC_ERROR, minish, NULL, NULL);
 		return (NULL);
 	}
-	free(node->str);
-	node->str = arg[0];
-	if (!arg[1])
-	{
-		free(arg[1]);
-		free(arg);
-		node->next = last;
-		return (first);
-	}
-	new = ft_calloc(sizeof(t_init), 1);
-	if (!new)
-	{
-		ft_free_2d_array(arg, ft_array_len(arg));
-		ft_initclear(&first);
-		ft_initclear(&last);
-		error_handle(MALLOC_ERROR, minish, NULL, NULL);
-		return (NULL);
-	}
-	new->type = ARG;
-	str = ft_unsplit(arg + 1, -1);
-	if (!str)
-	{
-		ft_free_2d_array(arg, ft_array_len(arg));
-		ft_initclear(&first);
-		ft_initclear(&last);
-		error_handle(MALLOC_ERROR, minish, NULL, NULL);
-		return (NULL);
-	}
-	while (arg[++i])
-		free(arg[i]);
-	free(arg);
-	new->str = str;
-	node->next = new;
-	return (relink_node(first, last, new, minish));
+	free(first->str);
+	first->str = arg[0];
+	first->next = NULL;
+	relink_loop(first, last, minish, arg);
+	ft_initadd_back(&first, last);
+	return (first);
 }
