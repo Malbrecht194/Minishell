@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:54:21 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/19 12:49:02 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/19 13:33:44 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	creat_arg(t_init **f_init, char *str, t_minishell *minish, t_init *init)
 	return (i);
 }
 
-static int	set_init(t_init **f_init, t_init *init, t_minishell *minish, char *str)
+static int	set_init(t_init **f_init, t_init *init, t_minishell *minish,
+		char *str)
 {
 	int	i;
 	int	j;
