@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:45:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/13 16:35:16 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/19 13:07:45 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ typedef struct s_f_lex
 	int				error;
 	struct s_f_lex	*next;
 }					t_init;
+
+typedef struct s_exp
+{
+	size_t	i;
+	size_t	j;
+	size_t	exp_size;
+}					t_exp;
 
 char				**mini_split(char const *s, char sep);
 char				*test_access(char *command, t_minishell *minish);

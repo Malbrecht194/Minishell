@@ -23,6 +23,7 @@ SRCS = main.c \
 	format_readline/format_rl.c \
 	format_readline/expand_env.c \
 	format_readline/utils_expand.c \
+	format_readline/utils_expand_2.c \
 	lexor/lexor.c \
 	lexor/heredoc.c \
 	lexor/lexor_utils.c \
