@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:54:21 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/19 00:34:57 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/19 12:49:02 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	set_init(t_init **f_init, t_init *init, t_minishell *minish, char *st
 	int	k;
 
 	i = 0;
+	k = 0;
 	if (init->type == INFILE || init->type == OUT_T || init->type == PIPE)
 		i++;
 	else if (init->type == HEREDOC || init->type == OUT_A)
