@@ -6,7 +6,7 @@
 /*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:41:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/14 15:06:29 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:27:46 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,16 @@ void	rl_loop(t_minishell *minish)
 	while (rl_buff)
 	{
 		rl_buff = get_line(minish);
+		if (rl_buff && !(*rl_buff))
+		{
+			free(rl_buff);
+			if (minish->prompt)
+				free(minish->prompt);
+			continue ;
+		}
 		init_args(minish, rl_buff);
 		if (minish->prompt)
-			try_free(minish->prompt);
+			free(minish->prompt);
 		minish->prompt = NULL;
 		minish->cmd_line = NULL;
 		minish->heredocs = NULL;
