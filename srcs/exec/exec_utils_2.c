@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 13:29:30 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/18 13:31:31 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/21 22:53:27 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <exec.h>
 
 void	close_all_fd(t_chris *lst)
 {

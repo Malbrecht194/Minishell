@@ -31,12 +31,12 @@ SRCS = main.c \
 	lexor/tchris_utils.c \
 	lexor/lexor_init/lexor_init.c \
 	lexor/lexor_init/lexor_init_utils.c \
-	check_builtins/access.c \
-	check_builtins/exec_cmd.c \
-	check_builtins/check_cmd.c \
-	check_builtins/exec_utils.c \
-	check_builtins/exec_utils_2.c \
-	check_builtins/exec_builtins.c \
+	exec/access.c \
+	exec/exec_cmd.c \
+	exec/check_cmd.c \
+	exec/exec_utils.c \
+	exec/exec_utils_2.c \
+	exec/exec_builtins.c \
 	error/error.c \
 	error/error_2.c \
 	error/error_utils.c
