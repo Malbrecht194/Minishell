@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:31:31 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/22 00:33:44 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/23 16:16:03 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	handler_sigint(int sig)
 {
-	g_sig = sig;
+	g_sig.signals = sig;
+	*g_sig.error = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -25,7 +26,8 @@ void	handle_sigint_heredoc(int sig)
 {
 	char	c;
 
-	g_sig = sig;
+	g_sig.signals = sig;
+	*g_sig.error = 130;
 	c = '\n';
 	ioctl(0, TIOCSTI, &c);
 	rl_on_new_line();
