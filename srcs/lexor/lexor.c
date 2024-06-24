@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/24 15:19:19 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/24 16:54:46 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	select_in_out(t_init *lst, t_chris *node, t_minishell *minish)
 	else if (lst->type == INFILE || lst->type == HEREDOC)
 		fd = &node->fd_in;
 	if (*fd)
-		try_close(*fd);
+		close(*fd);
 	(*fd) = open_fd(lst->str, lst->type, minish);
 	if ((*fd) == -1)
 	{

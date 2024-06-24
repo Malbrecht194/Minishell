@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:48:56 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/14 15:29:52 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:16:33 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <minishell.h>
 # include <termios.h>
+
 
 /*================================= FUNCTIONS ================================*/
 int			signals_init(int sig);

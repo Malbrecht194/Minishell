@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:45:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/24 15:22:53 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/24 16:53:34 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@
 # define WRITE_FD 1
 
 /*=================================== STRUCT =================================*/
+
+typedef struct s_signals
+{
+	int		signals;
+	int		*error;
+}			t_signals;
 
 typedef struct s_minishell
 {
@@ -74,12 +80,6 @@ typedef struct s_exp
 	size_t			j;
 	size_t			exp_size;
 }					t_exp;
-
-typedef struct s_signals
-{
-	int				signals;
-	int				*error;
-}					t_signals;
 
 extern t_signals	g_sig;
 
