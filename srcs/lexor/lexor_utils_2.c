@@ -6,11 +6,11 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 10:56:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/18 23:32:52 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:20:22 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <check_builtins.h>
+#include <exec.h>
 #include <expand.h>
 #include <lexor.h>
 #include <minishell.h>
@@ -119,5 +119,6 @@ t_init	*relink_node(t_init *first, t_init *last, t_minishell *minish)
 	first->next = NULL;
 	relink_loop(first, last, minish, arg);
 	ft_initadd_back(&first, last);
+	ft_free_2d_array(arg, ft_array_len(arg));
 	return (first);
 }
