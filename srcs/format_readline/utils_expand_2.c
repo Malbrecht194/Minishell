@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expand_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:46:48 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/19 13:40:25 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/25 20:08:08 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,16 @@ void	expand_env_part(char **tmp, char **s_env, char **b_expand)
 	*b_expand = join_and_free(*b_expand, *tmp, 1, 0);
 }
 
-void	init_exp_var(t_exp *exp, char *state, int **index)
+void	init_exp_var(t_exp *exp, int **index)
 {
 	exp->i = **index;
-	exp->j = 0;
+	exp->j = 1;
 	exp->exp_size = 0;
-	if (*state)
-		(exp->j)++;
 }
 
 int	is_first_quote(char ***arg, size_t *i, size_t *j, int **index)
 {
-	if ((**arg)[*i + *j + 1] == '\"' && (**arg)[*i + *j - 1] == '\"')
+	if ((**arg)[*i + *j - 1] == '\"' && (**arg)[*i + *j + 1] == '\"')
 	{
 		**index = *i + *j;
 		return (0);
@@ -40,26 +38,19 @@ int	is_first_quote(char ***arg, size_t *i, size_t *j, int **index)
 	return (1);
 }
 
-int	expand_rm_quote(char ***arg, size_t *i, size_t *j, char *state)
+int	expand_rm_quote(char ***arg, size_t *i, size_t *j)
 {
 	rm_char(*arg, *i + *j);
-	if (!(*state) && ((**arg)[*i + *j] == '\"'
+	if (((**arg)[*i + *j] == '\"'
 		|| (**arg)[*i + *j] == '\''))
-	{
-		rm_char(*arg, *i + *j + to_next_quote((**arg) + *i + *j + 1,
-				(**arg)[*i + *j]) + 1);
-		rm_char(*arg, *i + *j);
 		return (0);
-	}
 	return (1);
 }
 
-int	ft_var_name_is_ok(char ***arg, size_t *i, size_t *j)
+int	ft_var_name_is_ok(char ***arg, size_t i)
 {
-	if (ft_isalnum((**arg)[*i + *j + 1]) || (**arg)[*i + *j + 1] == '_'
-				|| (**arg)[*i + *j + 1] == '\"'
-				|| (**arg)[*i + *j + 1] == '\''
-				|| (**arg)[*i + *j + 1] == '?')
+	if (ft_isalnum((**arg)[i + 1]) || (**arg)[i + 1] == '_'
+				|| (**arg)[i + 1] == '?')
 		return (1);
 	return (0);
 }

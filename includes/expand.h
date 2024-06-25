@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:47:35 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/19 13:32:01 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/25 20:09:15 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # define IFS " \t\n"
 
 void	format_rl(char **arg, t_minishell *minish);
-int		do_expand(char **arg, int *index, char state, t_minishell *minish);
+int		do_simple_expand(char **arg, int *index, t_minishell *minish);
+int		do_quote_expand(char **arg, int *index, t_minishell *minish);
 void	check_expand(char **arg, t_minishell *minish);
 int		to_next_quote(char *arg, char quote);
 void	delete_quote(char **arg);
@@ -32,10 +33,10 @@ int		is_ifs(char a_char);
 int		skip_ifs(char *str);
 int		check_arg_quotes(char **arg, int index, char quote);
 void	expand_env_part(char **tmp, char **s_env, char **b_expand);
-int		expand_rm_quote(char ***arg, size_t *i, size_t *j, char *state);
+int		expand_rm_quote(char ***arg, size_t *i, size_t *j);
 int		is_first_quote(char ***arg, size_t *i, size_t *j, int **index);
-int		ft_var_name_is_ok(char ***arg, size_t *i, size_t *j);
-void	init_exp_var(t_exp *exp, char *state, int **index);
+int		ft_var_name_is_ok(char ***arg, size_t i);
+void	init_exp_var(t_exp *exp, int **index);
 int		no_quote(char *state, t_exp *exp, int **index, char ***arg);
 
 #endif

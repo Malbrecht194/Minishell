@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format_rl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/18 14:33:38 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/25 19:56:32 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ void	check_expand(char **arg, t_minishell *minish)
 		j = i - 1;
 		if ((*arg)[i] == '\"')
 		{
-			if (do_expand(arg, &i, '\"', minish))
+			if (do_quote_expand(arg, &i, minish))
 				check_arg_quotes(arg, j + 1, '\"');
 		}
 		else if ((*arg)[i] == '\'')
 			i += to_next_quote((*arg) + i + 1, '\'') + 1;
 		else if ((*arg)[i] == '$')
 		{
-			do_expand(arg, &i, 0, minish);
+			do_simple_expand(arg, &i, minish);
 			while (++j < i)
 				(*arg)[j] = check_ifs((*arg)[j]);
 		}

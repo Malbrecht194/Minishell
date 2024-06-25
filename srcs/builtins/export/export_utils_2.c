@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:29:29 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/25 18:12:26 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/25 18:20:00 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	print_array(int fd_out, char **array)
 
 	i = 0;
 	while (array[i])
-		ft_printf_fd(fd_out, "%s\n", array[i]);
+		ft_printf_fd(fd_out, "%s\n", array[i++]);
 }
 
 int	export_error(char *str, t_minishell *minish)

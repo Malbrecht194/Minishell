@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:31:31 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/25 17:25:41 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/25 18:44:54 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ void	signals_init(int sig)
 	else if (sig == 4)
 	{
 		signal(SIGINT, &handle_sigint_heredoc);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (sig == 5)
+	{
+		signal(SIGPIPE, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 	}
 }

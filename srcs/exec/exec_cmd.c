@@ -6,15 +6,15 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/25 17:57:07 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/25 18:45:01 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include <builtins.h>
 #include <exec.h>
 #include <expand.h>
 #include <lexor.h>
-#include <builtins.h>
+#include <minishell.h>
 #include <signals.h>
 
 void	exec_cmd(t_minishell *minish, t_chris *cmd)
@@ -107,6 +107,7 @@ void	exec_loop(t_minishell *minish, t_chris *lst)
 	t_chris	*cmd;
 
 	cmd = lst;
+	signals_init(5);
 	while (cmd)
 	{
 		if (cmd->next)
@@ -126,6 +127,7 @@ void	exec_loop(t_minishell *minish, t_chris *lst)
 		cmd = cmd->next;
 	}
 	wait_loop(minish, &lst);
+	signals_init(1);
 }
 
 void	exec_all_cmd(t_minishell *minish)

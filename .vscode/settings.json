@@ -11,7 +11,8 @@
 		"errno.h": "c",
 		"builtins.h": "c",
 		"ioctl.h": "c",
-		"resource.h": "c"
+		"resource.h": "c",
+		"cmath": "c"
 	},
 	"cmake.configureOnOpen": true
 }
