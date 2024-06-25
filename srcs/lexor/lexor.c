@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/20 17:24:59 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:38:40 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <check_builtins.h>
+#include <exec.h>
 #include <expand.h>
 #include <lexor.h>
 #include <minishell.h>

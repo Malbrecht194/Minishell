@@ -5,7 +5,7 @@
 		"termios.h": "c",
 		"heredoc.h": "c",
 		"lexor.h": "c",
-		"check_builtins.h": "c",
+		"exec.h": "c",
 		"expand.h": "c",
 		"error.h": "c",
 		"errno.h": "c",

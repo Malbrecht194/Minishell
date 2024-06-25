@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:33:07 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/18 13:30:16 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:38:40 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <check_builtins.h>
+#include <exec.h>
 #include <lexor.h>
 #include <expand.h>
 
