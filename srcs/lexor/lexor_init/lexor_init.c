@@ -6,11 +6,11 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:54:21 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/24 16:54:05 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/19 13:33:44 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <exec.h>
+#include <check_builtins.h>
 #include <expand.h>
 #include <lexor.h>
 #include <minishell.h>

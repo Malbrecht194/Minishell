@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:22:28 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/21 22:53:27 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/02 18:26:13 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <exec.h>
+#include <check_builtins.h>
 #include <minishell.h>
 #include <expand.h>
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:31:31 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/24 16:55:06 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/18 13:24:08 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	handler_sigint(int sig)
 {
-	g_sig.signals = sig;
-	*g_sig.error = 130;
+	g_sig = sig;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -26,8 +25,7 @@ void	handle_sigint_heredoc(int sig)
 {
 	char	c;
 
-	g_sig.signals = sig;
-	*g_sig.error = 130;
+	g_sig = sig;
 	c = '\n';
 	ioctl(0, TIOCSTI, &c);
 	rl_on_new_line();

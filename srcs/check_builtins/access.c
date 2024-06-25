@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 17:08:06 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/24 16:53:43 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/05/14 16:56:23 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ char	*check_access(char **paths, char *cmd)
 	char	*tmp_cmd;
 	char	*tmp_path;
 
-	i = -1;
+	i = 0;
 	tmp_cmd = ft_strjoin("/", cmd);
 	if (!tmp_cmd)
 		return (NULL);
-	while (paths[++i])
+	while (paths[i])
 	{
-		tmp_path = ft_strjoin(paths[i], tmp_cmd);
+		tmp_path = ft_strjoin(paths[i++], tmp_cmd);
 		if (!tmp_path)
 			return (NULL);
 		if (access(tmp_path, F_OK | X_OK) == 0)

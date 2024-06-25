@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/24 16:54:46 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/20 17:24:59 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <exec.h>
+#include <check_builtins.h>
 #include <expand.h>
 #include <lexor.h>
 #include <minishell.h>
@@ -56,8 +56,6 @@ void	select_in_out(t_init *lst, t_chris *node, t_minishell *minish)
 		fd = &node->fd_out;
 	else if (lst->type == INFILE || lst->type == HEREDOC)
 		fd = &node->fd_in;
-	if (*fd)
-		close(*fd);
 	(*fd) = open_fd(lst->str, lst->type, minish);
 	if ((*fd) == -1)
 	{

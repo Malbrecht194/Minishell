@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 #include <expand.h>
-#include <exec.h>
+#include <check_builtins.h>
 
 void	init_args(t_minishell *minish, char *rl_args)
 {

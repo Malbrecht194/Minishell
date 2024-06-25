@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:45:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/24 16:53:34 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/19 13:07:45 by malbrech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/ioctl.h>
+# include <sys/resource.h>
+# include <sys/time.h>
+# include <sys/types.h>
+# include <term.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <sys/ioctl.h>
-# include <sys/resource.h>
-# include <sys/stat.h>
-# include <sys/time.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <term.h>
 # include <unistd.h>
 
 /*================================ PIPE FD TYPE ==============================*/
@@ -40,11 +41,7 @@
 
 /*=================================== STRUCT =================================*/
 
-typedef struct s_signals
-{
-	int		signals;
-	int		*error;
-}			t_signals;
+extern int		g_sig;
 
 typedef struct s_minishell
 {
@@ -76,12 +73,10 @@ typedef struct s_f_lex
 
 typedef struct s_exp
 {
-	size_t			i;
-	size_t			j;
-	size_t			exp_size;
+	size_t	i;
+	size_t	j;
+	size_t	exp_size;
 }					t_exp;
-
-extern t_signals	g_sig;
 
 char				**mini_split(char const *s, char sep);
 char				*test_access(char *command, t_minishell *minish);
