@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:45:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/25 19:11:32 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/26 00:09:11 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,6 @@ typedef struct s_f_lex
 	int				error;
 	struct s_f_lex	*next;
 }					t_init;
-
-typedef struct s_exp
-{
-	size_t			i;
-	size_t			j;
-	size_t			exp_size;
-}					t_exp;
 
 typedef struct s_signals
 {

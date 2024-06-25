@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 10:56:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/25 17:42:02 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/25 23:07:18 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,5 @@ t_init	*relink_node(t_init *first, t_init *last, t_minishell *minish)
 	first->next = NULL;
 	relink_loop(first, last, minish, arg);
 	ft_initadd_back(&first, last);
-	ft_free_2d_array(arg, ft_array_len(arg));
 	return (first);
 }

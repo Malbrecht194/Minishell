@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/25 19:56:32 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/25 23:44:10 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ void	check_expand(char **arg, t_minishell *minish)
 			i += to_next_quote((*arg) + i + 1, '\'') + 1;
 		else if ((*arg)[i] == '$')
 		{
-			do_simple_expand(arg, &i, minish);
+			if (do_simple_expand(arg, &i, minish) >= 0)
+				i--;
 			while (++j < i)
 				(*arg)[j] = check_ifs((*arg)[j]);
 		}

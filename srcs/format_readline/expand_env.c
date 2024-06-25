@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:29:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/25 20:15:59 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/26 00:15:42 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,13 @@ int	quote_in_expand(char **arg, char *to_check, int index, int end_of_exp)
 	return (0);
 }
 
-int	no_quote(char *state, t_exp *exp, int **index, char ***arg)
-{
-	if (!(*state))
-	{
-		exp->i += quote_in_expand(*arg, (**arg) + (**index), (**index),
-				exp->exp_size);
-		return (1);
-	}
-	return (0);
-}
-
 int	do_simple_expand(char **arg, int *index, t_minishell *minish)
 {
 	size_t	exp_size;
-	
+
 	exp_size = 0;
 	if (!(*arg)[*index + 1])
-		return (0);
+		return (-1);
 	rm_char(arg, *index);
 	if ((*arg)[*index] == '\'' || (*arg)[*index] == '\"')
 		return (0);
@@ -67,69 +56,47 @@ int	do_simple_expand(char **arg, int *index, t_minishell *minish)
 		|| (*arg)[*index] == '?')
 	{
 		exp_size += expand_env(arg, *index, minish) - 1;
-		(*index) += exp_size - 1;
-		*index += quote_in_expand(arg, (*arg) + (*index), (*index),
-				exp_size);
+		(*index) += quote_in_expand(arg, (*arg) + (*index), (*index), exp_size);
+		(*index) += exp_size;
 	}
 	return (1);
 }
 
-int	do_quote_expand(char **arg, int *index,  t_minishell *minish)
+int	do_quote_expand(char **arg, int *index, t_minishell *minish)
 {
 	size_t	i;
 	size_t	exp_size;
 
-	i = 0;
+	i = *index;
 	exp_size = 0;
-	while ((*arg)[++i + (*index)] && (*arg)[i + (*index)] != '\"')
+	while ((*arg)[++i] && (*arg)[i] != '\"')
 	{
-		if ((*arg)[i + (*index)] == '\"')
+		if ((*arg)[i] == '\"')
 			break ;
-		if ((*arg)[i + (*index)] == '$')
+		if ((*arg)[i] == '$')
 		{
-			if (ft_var_name_is_ok(&arg, i + (*index)))
+			if (ft_isalnum((*arg)[i + 1]) || (*arg)[i + 1] == '_' || (*arg)[i
+				+ 1] == '?')
 			{
-				rm_char(arg, i  + (*index));
-				exp_size = expand_env(arg, i  + (*index), minish);
+				rm_char(arg, i);
+				exp_size = expand_env(arg, i, minish);
 				i += exp_size - 1;
 			}
 		}
-		if (i  + (*index) > ft_strlen(*arg))
+		if (i > ft_strlen(*arg))
 			break ;
 	}
-	*index += i;
+	*index = i;
 	return (exp_size);
 }
 
-// int	do_quote_expand(char **arg, int *index,  t_minishell *minish)
-// {
-// 	t_exp	exp;
-
-// 	init_exp_var(&exp, &index);
-// 	while ((*arg)[exp.i + exp.j] && (*arg)[exp.i + exp.j] != '\"')
-// 	{
-// 		if ((*arg)[exp.i + exp.j] == '\"')
-// 			break ;
-// 		if ((*arg)[exp.i + exp.j] == '$')
-// 		{
-// 			if (ft_var_name_is_ok(&arg, &(exp.i), &(exp.j)))
-// 			{
-// 				if (!is_first_quote(&arg, &(exp.i), &(exp.j), &index))
-// 					return (0);
-// 				if (!expand_rm_quote(&arg, &(exp.i), &(exp.j)))
-// 					continue ;
-// 				exp.exp_size = expand_env(arg, exp.i + exp.j, minish);
-// 				exp.i += exp.exp_size - 1;
-// 			}
-// 			if (no_quote("\"", &exp, &index, &arg))
-// 				break ;
-// 		}
-// 		if ((exp.i)++ + exp.j > ft_strlen(*arg))
-// 			break ;
-// 	}
-// 	*index = exp.i + exp.j;
-// 	return (exp.exp_size);
-// }
+static void	expand_env_part(char **tmp, char **s_env, char **b_expand)
+{
+	if (!(*tmp))
+		*tmp = "";
+	free(*s_env);
+	*b_expand = join_and_free(*b_expand, *tmp, 1, 0);
+}
 
 int	expand_env(char **arg, int index, t_minishell *minish)
 {
