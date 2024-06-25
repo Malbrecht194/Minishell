@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:41:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/20 17:27:46 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:24:51 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <builtins.h>
 #include <minishell.h>
 #include <signals.h>
-#include <builtins.h>
 
-int			g_sig;
+t_signals	g_sig;
 
 char	*get_line(t_minishell *minish)
 {
@@ -73,6 +73,7 @@ int	main(int ac, char **av, char **envp)
 		if (!minish->env)
 			error_handle(MALLOC_ERROR, NULL, NULL, exit);
 	}
+	g_sig.error = &minish->last_error;
 	signals_init(1);
 	rl_loop(minish);
 	signals_init(2);

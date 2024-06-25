@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:21 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/18 14:20:03 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:25:54 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	heredoc_rl(char *delimiter, int fd,
 	while (1)
 	{
 		buffer = readline("> ");
-		if (g_sig == SIGINT)
+		if (g_sig.signals == SIGINT)
 		{
 			free(buffer);
 			break ;
@@ -112,7 +112,7 @@ int	heredoc(char *delimiter, t_minishell *minish)
 
 	fd = open_rand(&filename);
 	add_heredoc_name(minish, filename);
-	g_sig = 0;
+	g_sig.signals = 0;
 	signals_init(4);
 	heredoc_rl(delimiter, fd, minish, need_expand(&delimiter));
 	close(fd);
