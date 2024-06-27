@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:41:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/25 17:24:51 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/27 14:54:57 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <minishell.h>
 #include <signals.h>
 
-t_signals	g_sig;
+int	g_sig;
 
 char	*get_line(t_minishell *minish)
 {
@@ -73,8 +73,7 @@ int	main(int ac, char **av, char **envp)
 		if (!minish->env)
 			error_handle(MALLOC_ERROR, NULL, NULL, exit);
 	}
-	g_sig.error = &minish->last_error;
-	signals_init(1);
+	signals_init(1, minish);
 	rl_loop(minish);
-	signals_init(2);
+	signals_init(2, minish);
 }

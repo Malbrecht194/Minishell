@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:31:31 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/25 18:44:54 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/27 15:00:00 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	handler_sigint(int sig)
 {
-	g_sig.signals = sig;
-	*g_sig.error = 130;
+	g_sig = sig;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -26,8 +25,7 @@ void	handle_sigint_heredoc(int sig)
 {
 	char	c;
 
-	g_sig.signals = sig;
-	*g_sig.error = 130;
+	g_sig = sig;
 	c = '\n';
 	ioctl(0, TIOCSTI, &c);
 	rl_on_new_line();
@@ -48,12 +46,20 @@ void	signal_messages(t_minishell *minish, int *bool)
 	}
 }
 
-void	signals_init(int sig)
+void	signal_error(t_minishell *minish)
+{
+	if (g_sig == SIGINT)
+		minish->last_error = 130;
+	g_sig = 0;
+}
+
+void	signals_init(int sig, t_minishell *minish)
 {
 	if (sig == 1)
 	{
 		signal(SIGINT, &handler_sigint);
 		signal(SIGQUIT, SIG_IGN);
+		signal_error(minish);
 	}
 	else if (sig == 2)
 	{
@@ -68,6 +74,7 @@ void	signals_init(int sig)
 	else if (sig == 4)
 	{
 		signal(SIGINT, &handle_sigint_heredoc);
+		signal_error(minish);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (sig == 5)

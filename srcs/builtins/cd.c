@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:05:22 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:11:58 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:30:15 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ft_cd(int ac, char **av, t_chris *cmd, t_minishell *minish)
 		free(to_move);
 	if (cd_state == -1)
 	{
-		error_handle(NO_F_O_D_CD, minish, av, NULL);
+		error_handle(CD_ERROR, minish, av, NULL);
 		return (1);
 	}
 	replace_pwd(&minish->env);

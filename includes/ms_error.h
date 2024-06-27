@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_error.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 09:44:39 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/18 14:30:00 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:29:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef enum e_errcode
 	IS_DIR,
 	NOT_VALID_ID,
 	TOO_MANY_ARGS,
-	NO_F_O_D_CD,
+	CD_ERROR,
 	NUM_ARG_REQUIRED,
 	JUST_EXIT
 }				t_err_code;

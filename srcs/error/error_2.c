@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 07:51:27 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:15:21 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:30:58 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ t_err_struct	builtins_error(t_err_code error, void *arg)
 		s_error.err_msg = MS_NOT_VALID_ID;
 	else if (error == TOO_MANY_ARGS)
 		s_error.err_msg = MS_TOO_MANY_ARGS;
-	else if (error == NO_F_O_D_CD)
-		s_error.err_msg = strerror(ENOENT);
+	else if (error == CD_ERROR)
+		s_error.err_msg = strerror(errno);
 	else if (error == NUM_ARG_REQUIRED)
 		s_error.err_msg = MS_NUM_ARG_REQUIRED;
-	if (error == NOT_VALID_ID || error == NO_F_O_D_CD)
+	if (error == NOT_VALID_ID || error == CD_ERROR)
 	{
 		s_error.cmd_name = args[0];
 		s_error.args = args[1];

@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:29:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/26 00:15:42 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/27 15:14:39 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ int	do_simple_expand(char **arg, int *index, t_minishell *minish)
 	else if (ft_isalnum((*arg)[*index]) || (*arg)[*index] == '_'
 		|| (*arg)[*index] == '?')
 	{
-		exp_size += expand_env(arg, *index, minish) - 1;
-		(*index) += quote_in_expand(arg, (*arg) + (*index), (*index), exp_size);
+		exp_size += expand_env(arg, *index, minish);
+		(*index) += quote_in_expand(arg, (*arg) + (*index), (*index), exp_size );
+		if (exp_size)
+			exp_size--;
 		(*index) += exp_size;
 	}
 	return (1);
@@ -71,8 +73,6 @@ int	do_quote_expand(char **arg, int *index, t_minishell *minish)
 	exp_size = 0;
 	while ((*arg)[++i] && (*arg)[i] != '\"')
 	{
-		if ((*arg)[i] == '\"')
-			break ;
 		if ((*arg)[i] == '$')
 		{
 			if (ft_isalnum((*arg)[i + 1]) || (*arg)[i + 1] == '_' || (*arg)[i
@@ -80,7 +80,9 @@ int	do_quote_expand(char **arg, int *index, t_minishell *minish)
 			{
 				rm_char(arg, i);
 				exp_size = expand_env(arg, i, minish);
-				i += exp_size - 1;
+				if (exp_size)
+					exp_size--;
+				i += exp_size;
 			}
 		}
 		if (i > ft_strlen(*arg))

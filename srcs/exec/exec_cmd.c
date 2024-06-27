@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/25 18:45:01 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/27 14:48:26 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	fork_exec(t_minishell *minish, t_chris *lst)
 	int	error;
 
 	builtins = NO_BUILTINS;
-	signals_init(2);
+	signals_init(2, minish);
 	if (lst->cmd)
 		builtins = is_builtins(lst->cmd[0]);
 	lst->pid = fork();
@@ -57,7 +57,7 @@ int	fork_exec(t_minishell *minish, t_chris *lst)
 		return (0);
 	if (!lst->pid)
 	{
-		signals_init(3);
+		signals_init(3, minish);
 		if (lst->next)
 			try_close(lst->next->fd_in);
 		if (builtins == NO_BUILTINS)
@@ -107,7 +107,7 @@ void	exec_loop(t_minishell *minish, t_chris *lst)
 	t_chris	*cmd;
 
 	cmd = lst;
-	signals_init(5);
+	signals_init(5, minish);
 	while (cmd)
 	{
 		if (cmd->next)
@@ -127,7 +127,7 @@ void	exec_loop(t_minishell *minish, t_chris *lst)
 		cmd = cmd->next;
 	}
 	wait_loop(minish, &lst);
-	signals_init(1);
+	signals_init(1, minish);
 }
 
 void	exec_all_cmd(t_minishell *minish)
@@ -151,5 +151,5 @@ void	exec_all_cmd(t_minishell *minish)
 	}
 	else
 		exec_loop(minish, lst);
-	signals_init(1);
+	signals_init(1, minish);
 }

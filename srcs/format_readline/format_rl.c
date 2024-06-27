@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:43:02 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/25 23:44:10 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/27 15:23:40 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ void	check_expand(char **arg, t_minishell *minish)
 		{
 			if (do_simple_expand(arg, &i, minish) >= 0)
 				i--;
-			while (++j < i)
+			while (++j < i + 1)
 				(*arg)[j] = check_ifs((*arg)[j]);
 		}
 		i++;
-		if (i >= (int)ft_strlen(*arg))
+		if (i >= (int)ft_strlen(*arg) || !(*arg)[i])
 			break ;
 	}
 }

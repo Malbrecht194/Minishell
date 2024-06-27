@@ -13,6 +13,7 @@
 #include <minishell.h>
 #include <expand.h>
 #include <exec.h>
+#include <signals.h>
 
 void	init_args(t_minishell *minish, char *rl_args)
 {
@@ -21,6 +22,7 @@ void	init_args(t_minishell *minish, char *rl_args)
 	format_rl(&rl_args, minish);
 	if (!rl_args)
 		return ;
+	signal_error(minish);
 	minish->cmd_line = chris_lexor(rl_args, minish);
 	if (!minish->cmd_line)
 		return ;

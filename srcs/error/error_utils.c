@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:14:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/18 14:19:22 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:31:32 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	print_error(t_err_struct s_error, void *minish)
 		ft_printf_fd(2, "%s: ", s_error.cmd_name);
 	if (s_error.code == NOT_VALID_ID)
 		ft_printf_fd(2, "`%s': ", s_error.args);
-	else if (s_error.code == NO_F_O_D_CD)
+	else if (s_error.code == CD_ERROR)
 		ft_printf_fd(2, "%s: ", s_error.args);
 	ft_printf_fd(2, "%s", s_error.err_msg);
 	if (s_error.code == SYNTAX_ERROR)
