@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/18 21:23:58 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/27 16:25:10 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ void	free_minish(t_minishell *minishell)
 		ft_free_2d_array(minishell->env, ft_array_len(minishell->env));
 	try_free(minishell->prompt);
 	try_free(minishell);
-	clear_history();
+	rl_clear_history();
 }
