@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:21 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/27 14:48:39 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/06/28 13:37:10 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,11 @@ int	heredoc(char *delimiter, t_minishell *minish)
 	signals_init(4, minish);
 	heredoc_rl(delimiter, fd, minish, need_expand(&delimiter));
 	close(fd);
+	if (g_sig == SIGINT)
+	{
+		ft_free_2d_array(minish->heredocs, ft_array_len(minish->heredocs));
+		return (-2);
+	}
 	fd = open(filename, O_RDONLY);
 	return (fd);
 }
