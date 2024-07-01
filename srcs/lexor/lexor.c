@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/28 13:43:46 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/01 11:14:21 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 int	arg_format(t_chris **f_chris, t_init *lst, t_chris *node)
 {
-	int			i;
-	char		**array;
+	int		i;
+	char	**array;
 
 	i = 0;
 	array = ft_calloc(sizeof(char *), ft_array_len(node->cmd) + 2);
@@ -43,9 +43,10 @@ int	arg_format(t_chris **f_chris, t_init *lst, t_chris *node)
 	return (1);
 }
 
-int	select_in_out(t_chris **f_chris, t_init *lst, t_chris *node, t_minishell *minish)
+int	select_in_out(t_chris **f_chris, t_init *lst, t_chris *node,
+		t_minishell *minish)
 {
-	int	*fd;	
+	int	*fd;
 
 	fd = NULL;
 	if (!check_ambigous(lst->str, minish))
@@ -89,8 +90,8 @@ t_chris	*creat_chris_node(t_chris **f_chris, t_init *lst, t_minishell *minish)
 	return (n_node);
 }
 
-t_chris	*creat_chris(t_chris **f_chris, t_init *lst, \
-	t_chris *node, t_minishell *minish)
+t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node,
+		t_minishell *minish)
 {
 	if (!lst)
 		return (NULL);
@@ -104,7 +105,7 @@ t_chris	*creat_chris(t_chris **f_chris, t_init *lst, \
 			return (NULL);
 		}
 	}
-	else if (lst->type == OUT_A || lst->type == OUT_T || lst->type == INFILE \
+	else if (lst->type == OUT_A || lst->type == OUT_T || lst->type == INFILE
 		|| lst->type == HEREDOC)
 	{
 		if (select_in_out(f_chris, lst, node, minish) == -2)

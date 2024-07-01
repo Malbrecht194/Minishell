@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:29:13 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/27 15:14:39 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/01 11:14:04 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	do_simple_expand(char **arg, int *index, t_minishell *minish)
 		|| (*arg)[*index] == '?')
 	{
 		exp_size += expand_env(arg, *index, minish);
-		(*index) += quote_in_expand(arg, (*arg) + (*index), (*index), exp_size );
+		(*index) += quote_in_expand(arg, (*arg) + (*index), (*index), exp_size);
 		if (exp_size)
 			exp_size--;
 		(*index) += exp_size;

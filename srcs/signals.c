@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:31:31 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/28 13:19:07 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/01 11:11:04 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,19 @@ void	signal_error(t_minishell *minish)
 
 void	signals_init(int sig, t_minishell *minish)
 {
+	if (sig == 1 || sig == 2 || sig == 4 || sig == 5)
+		signal(SIGQUIT, SIG_IGN);
+	else if (sig == 3)
+		signal(SIGQUIT, SIG_DFL);
 	if (sig == 1)
 	{
 		signal(SIGINT, &handler_sigint);
-		signal(SIGQUIT, SIG_IGN);
 		signal_error(minish);
 	}
 	else if (sig == 2)
-	{
 		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
-	}
 	else if (sig == 3)
-	{
 		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-	}
 	else if (sig == 4)
 	{
 		signal(SIGINT, &handle_sigint_heredoc);
@@ -78,8 +75,5 @@ void	signals_init(int sig, t_minishell *minish)
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (sig == 5)
-	{
 		signal(SIGPIPE, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
-	}
 }
