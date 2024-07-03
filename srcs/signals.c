@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:31:31 by malbrech          #+#    #+#             */
-/*   Updated: 2024/07/01 11:11:04 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/03 17:37:28 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@ void	handle_sigint_heredoc(int sig)
 	ioctl(0, TIOCSTI, &c);
 	rl_on_new_line();
 	rl_replace_line("", 0);
-}
-
-void	signal_messages(t_minishell *minish, int *bool)
-{
-	if (minish->last_error == 130 && (*bool) == 0)
-	{
-		write(1, "\n", 1);
-		(*bool)++;
-	}
-	else if (minish->last_error == 131 && (*bool) == 0)
-	{
-		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
-		(*bool)++;
-	}
 }
 
 void	signal_error(t_minishell *minish)

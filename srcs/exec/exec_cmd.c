@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/07/01 11:16:11 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/03 17:36:37 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,28 +76,27 @@ void	wait_loop(t_minishell *minish, t_chris **lst)
 {
 	t_chris	*tmp;
 	int		wait_ret;
-	int		bool;
 
 	tmp = *lst;
-	bool = 0;
 	close_all_fd(minish->cmd_line);
 	while (tmp)
 	{
-		if (!tmp->pid || tmp->pid == -1)
+		if (tmp->pid && tmp->pid != -1)
 		{
-			tmp = tmp->next;
-			continue ;
+			waitpid(tmp->pid, &wait_ret, 0);
+			if (tmp->error)
+				minish->last_error = 1;
+			else if (WIFEXITED(wait_ret))
+				minish->last_error = WEXITSTATUS(wait_ret);
+			else if (WIFSIGNALED(wait_ret))
+				minish->last_error = WTERMSIG(wait_ret) + 128;
+			if (minish->last_error == 130)
+				write(1, "\n", 1);
 		}
-		waitpid(tmp->pid, &wait_ret, 0);
-		if (tmp->error)
-			minish->last_error = 1;
-		else if (WIFEXITED(wait_ret))
-			minish->last_error = WEXITSTATUS(wait_ret);
-		else if (WIFSIGNALED(wait_ret))
-			minish->last_error = WTERMSIG(wait_ret) + 128;
-		signal_messages(minish, &bool);
 		tmp = tmp->next;
 	}
+	if (minish->last_error == 131)
+		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 	ft_chrisclear(lst);
 }
 
