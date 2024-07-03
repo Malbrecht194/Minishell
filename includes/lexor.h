@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 10:37:38 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/18 21:24:52 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/03 18:08:52 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,25 @@ enum	e_lexor
 
 /*================================ FONCTIONS ================================*/
 
-t_chris	*chris_lexor(char *rl_args, t_minishell *minish);
+t_exec	*exec_lexor(char *rl_args, t_minishell *minish);
 int		check_rl_args(char *rl, t_minishell *minish);
 t_init	*init_lexor(t_init **f_init, char *rl_args, t_minishell *minish);
 int		check_ambigous(char *str, t_minishell *minish);
-int		check_quote(char *arg, int index, t_minishell *minish);
 int		check_type(char *arg);
 int		open_fd(char *f_name, int type, t_minishell *minish);
 void	ft_initadd_back(t_init **lst, t_init *new);
 t_init	*ft_initlast(t_init *lst);
 void	ft_initclear(t_init **lst);
-void	ft_chrisadd_back(t_chris **chris, t_chris *new);
-t_chris	*ft_chrislast(t_chris *chris);
-void	ft_chrisclear(t_chris **chris);
-t_chris	*ft_chrisnew(void);
+void	ft_execadd_back(t_exec **exec, t_exec *new);
+t_exec	*ft_execlast(t_exec *exec);
+void	ft_execclear(t_exec **exec);
+t_exec	*ft_execnew(void);
 void	close_all(int fd[2]);
-int		add_to_array(char ***args, char *arg, int index);
 void	remove_to_array(char ***args, int index);
 t_init	*check_init_args(t_init *first, t_init *prev, t_init *node,
 			t_minishell *minish);
 t_init	*relink_node(t_init *first, t_init *last, t_minishell *minish);
-t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node,
+t_exec	*creat_exec(t_exec **f_exec, t_init *lst, t_exec *node,
 			t_minishell *minish);
 
 /*================================ HEREDOC ================================*/

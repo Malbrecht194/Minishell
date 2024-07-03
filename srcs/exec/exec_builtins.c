@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:22:28 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/25 17:38:40 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include <minishell.h>
 #include <expand.h>
 
-int	exec_builtins(t_minishell *minish, t_chris *cmd, int b_num)
+int	exec_builtins(t_minishell *minish, t_exec *cmd, int b_num)
 {
 	size_t	array_len;
-	int		(*builtins[8])(int, char **, t_chris *, t_minishell *);
+	int		(*builtins[8])(int, char **, t_exec *, t_minishell *);
 
 	if (!cmd || cmd->error)
 		return (1);

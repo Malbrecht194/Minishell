@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:38:09 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/04/17 13:16:09 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_flags(char *av)
 		return (0);
 }
 
-int	ft_echo(int ac, char **av, t_chris *cmd, t_minishell *minish)
+int	ft_echo(int ac, char **av, t_exec *cmd, t_minishell *minish)
 {
 	int		nl;
 	int		o_nl;

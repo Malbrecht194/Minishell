@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:45:34 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/27 14:25:04 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 
 typedef struct s_minishell
 {
-	struct s_chris	*cmd_line;
+	struct s_exec	*cmd_line;
 	char			**heredocs;
 	char			*location;
 	char			*prompt;
@@ -50,15 +50,15 @@ typedef struct s_minishell
 	int				last_error;
 }					t_minishell;
 
-typedef struct s_chris
+typedef struct s_exec
 {
 	char			**cmd;
 	int				fd_in;
 	int				fd_out;
 	pid_t			pid;
 	int				error;
-	struct s_chris	*next;
-}					t_chris;
+	struct s_exec	*next;
+}					t_exec;
 
 typedef struct s_f_lex
 {

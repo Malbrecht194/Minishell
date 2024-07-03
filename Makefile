@@ -27,7 +27,7 @@ SRCS = main.c \
 	lexor/heredoc.c \
 	lexor/lexor_utils.c \
 	lexor/lexor_utils_2.c \
-	lexor/tchris_utils.c \
+	lexor/texec_utils.c \
 	lexor/lexor_init/lexor_init.c \
 	lexor/lexor_init/lexor_init_utils.c \
 	exec/access.c \

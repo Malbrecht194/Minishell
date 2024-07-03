@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xeo <xeo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:10:46 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/02 22:54:16 by xeo              ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ft_getenv(char *to_get, char **env)
 		return (NULL);
 }
 
-int	ft_env(int ac, char **av, t_chris *cmd, t_minishell *minish)
+int	ft_env(int ac, char **av, t_exec *cmd, t_minishell *minish)
 {
 	int	i;
 

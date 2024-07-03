@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:02:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/27 16:25:10 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	free_minish(t_minishell *minishell)
 	if (!minishell)
 		return ;
 	if (minishell->cmd_line)
-		ft_chrisclear(&minishell->cmd_line);
+		ft_execclear(&minishell->cmd_line);
 	if (minishell->heredocs)
 		unlink_free_heredocs(minishell);
 	if (minishell->env)

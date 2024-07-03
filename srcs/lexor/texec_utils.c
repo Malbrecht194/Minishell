@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tchris_utils.c                                     :+:      :+:    :+:   */
+/*   texec_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,11 +13,11 @@
 #include <lexor.h>
 #include <minishell.h>
 
-t_chris	*ft_chrisnew(void)
+t_exec	*ft_execnew(void)
 {
-	t_chris	*new;
+	t_exec	*new;
 
-	new = (t_chris *)ft_calloc(sizeof(t_chris), 1);
+	new = (t_exec *)ft_calloc(sizeof(t_exec), 1);
 	if (!new)
 		return (NULL);
 	new->fd_in = STDIN_FILENO;
@@ -25,45 +25,45 @@ t_chris	*ft_chrisnew(void)
 	return (new);
 }
 
-void	ft_chrisclear(t_chris **chris)
+void	ft_execclear(t_exec **exec)
 {
-	t_chris	*tmp;
+	t_exec	*tmp;
 
-	if (!chris || !(*chris))
+	if (!exec || !(*exec))
 		return ;
-	while ((*chris))
+	while ((*exec))
 	{
-		tmp = (*chris)->next;
-		if ((*chris)->cmd)
-			ft_free_2d_array((*chris)->cmd,
-				ft_array_len((*chris)->cmd));
-		try_close((*chris)->fd_in);
-		try_close((*chris)->fd_out);
-		free(*chris);
-		*chris = tmp;
+		tmp = (*exec)->next;
+		if ((*exec)->cmd)
+			ft_free_2d_array((*exec)->cmd,
+				ft_array_len((*exec)->cmd));
+		try_close((*exec)->fd_in);
+		try_close((*exec)->fd_out);
+		free(*exec);
+		*exec = tmp;
 	}
-	*chris = NULL;
+	*exec = NULL;
 }
 
-t_chris	*ft_chrislast(t_chris *chris)
+t_exec	*ft_execlast(t_exec *exec)
 {
-	if (!chris->next)
-		return (chris);
+	if (!exec->next)
+		return (exec);
 	else
-		return (ft_chrislast(chris->next));
+		return (ft_execlast(exec->next));
 }
 
-void	ft_chrisadd_back(t_chris **chris, t_chris *new)
+void	ft_execadd_back(t_exec **exec, t_exec *new)
 {
-	t_chris	*tmp;
+	t_exec	*tmp;
 
-	if (!chris || !new)
+	if (!exec || !new)
 		return ;
-	else if (!(*chris))
-		*chris = new;
+	else if (!(*exec))
+		*exec = new;
 	else
 	{
-		tmp = ft_chrislast(*chris);
+		tmp = ft_execlast(*exec);
 		tmp->next = new;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:05:22 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/27 15:30:15 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*find_to_move(int ac, char *av, char **env, int fd)
 	return (to_move);
 }
 
-int	ft_cd(int ac, char **av, t_chris *cmd, t_minishell *minish)
+int	ft_cd(int ac, char **av, t_exec *cmd, t_minishell *minish)
 {
 	char	*to_move;
 	int		cd_state;

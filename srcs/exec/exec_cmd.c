@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:46:32 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/07/03 17:36:37 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <minishell.h>
 #include <signals.h>
 
-void	exec_cmd(t_minishell *minish, t_chris *cmd)
+void	exec_cmd(t_minishell *minish, t_exec *cmd)
 {
 	char		*command;
 	struct stat	s_stat;
@@ -43,7 +43,7 @@ void	exec_cmd(t_minishell *minish, t_chris *cmd)
 		error_handle(NO_PERM, minish, cmd->cmd[0], exit);
 }
 
-int	fork_exec(t_minishell *minish, t_chris *lst)
+int	fork_exec(t_minishell *minish, t_exec *lst)
 {
 	int	builtins;
 	int	error;
@@ -72,9 +72,9 @@ int	fork_exec(t_minishell *minish, t_chris *lst)
 	return (1);
 }
 
-void	wait_loop(t_minishell *minish, t_chris **lst)
+void	wait_loop(t_minishell *minish, t_exec **lst)
 {
-	t_chris	*tmp;
+	t_exec	*tmp;
 	int		wait_ret;
 
 	tmp = *lst;
@@ -97,13 +97,13 @@ void	wait_loop(t_minishell *minish, t_chris **lst)
 	}
 	if (minish->last_error == 131)
 		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
-	ft_chrisclear(lst);
+	ft_execclear(lst);
 }
 
-void	exec_loop(t_minishell *minish, t_chris *lst)
+void	exec_loop(t_minishell *minish, t_exec *lst)
 {
 	int		pipe_fd[2];
-	t_chris	*cmd;
+	t_exec	*cmd;
 
 	cmd = lst;
 	signals_init(5, minish);
@@ -131,7 +131,7 @@ void	exec_loop(t_minishell *minish, t_chris *lst)
 
 void	exec_all_cmd(t_minishell *minish)
 {
-	t_chris	*lst;
+	t_exec	*lst;
 	int		builtins;
 
 	lst = minish->cmd_line;

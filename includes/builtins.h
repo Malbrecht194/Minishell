@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 09:44:39 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:06:08 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	unlink_free_heredocs(t_minishell *minish);
 int		export_error(char *str, t_minishell *minish);
 
 /*============================= BUILTINS PROTOTYPE ===========================*/
-int		ft_echo(int ac, char **av, t_chris *cmd, t_minishell *minish);
-int		ft_env(int ac, char **av, t_chris *cmd, t_minishell *minish);
-int		ft_exit(int ac, char **av, t_chris *cmd, t_minishell *minish);
-int		ft_pwd(int ac, char **av, t_chris *cmd, t_minishell *minish);
-int		ft_cd(int ac, char **av, t_chris *cmd, t_minishell *minish);
-int		ft_export(int ac, char **av, t_chris *cmd, t_minishell *minish);
-int		ft_unset(int ac, char **av, t_chris *cmd, t_minishell *minish);
+int		ft_echo(int ac, char **av, t_exec *cmd, t_minishell *minish);
+int		ft_env(int ac, char **av, t_exec *cmd, t_minishell *minish);
+int		ft_exit(int ac, char **av, t_exec *cmd, t_minishell *minish);
+int		ft_pwd(int ac, char **av, t_exec *cmd, t_minishell *minish);
+int		ft_cd(int ac, char **av, t_exec *cmd, t_minishell *minish);
+int		ft_export(int ac, char **av, t_exec *cmd, t_minishell *minish);
+int		ft_unset(int ac, char **av, t_exec *cmd, t_minishell *minish);
 
 #endif

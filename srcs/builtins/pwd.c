@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhaouas <mhaouas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:14 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/05 13:38:16 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <builtins.h>
 #include <minishell.h>
 
-int	ft_pwd(int ac, char **av, t_chris *cmd, t_minishell *minish)
+int	ft_pwd(int ac, char **av, t_exec *cmd, t_minishell *minish)
 {
 	char	*pwd;
 

@@ -23,7 +23,7 @@ void	init_args(t_minishell *minish, char *rl_args)
 	if (!rl_args)
 		return ;
 	signal_error(minish);
-	minish->cmd_line = chris_lexor(rl_args, minish);
+	minish->cmd_line = exec_lexor(rl_args, minish);
 	if (!minish->cmd_line)
 		return ;
 	exec_all_cmd(minish);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:26 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/05/14 17:12:16 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	check_env(char **env, char *av)
 	return (-1);
 }
 
-int	ft_unset(int ac, char **av, t_chris *cmd, t_minishell *minish)
+int	ft_unset(int ac, char **av, t_exec *cmd, t_minishell *minish)
 {
 	int	i;
 	int	tmp;

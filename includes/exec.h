@@ -29,14 +29,14 @@ enum	e_builtins
 	NO_BUILTINS
 };
 
-void	close_and_execve(t_minishell **minish, t_chris **cmd);
-void	check_cmd_for_loop(t_chris **cmd, int pipe_fd[2]);
+void	close_and_execve(t_minishell **minish, t_exec **cmd);
+void	check_cmd_for_loop(t_exec **cmd, int pipe_fd[2]);
 int		full_dup(int n_stdin, int n_stdout);
-int		exec_builtins(t_minishell *minish, t_chris *cmd, int b_num);
-void	check_cmd_for_loop(t_chris **cmd, int pipe_fd[2]);
+int		exec_builtins(t_minishell *minish, t_exec *cmd, int b_num);
+void	check_cmd_for_loop(t_exec **cmd, int pipe_fd[2]);
 int		is_builtins(char *cmd);
-size_t	count_cmd(t_chris *lst);
+size_t	count_cmd(t_exec *lst);
 void	exec_all_cmd(t_minishell *minish);
-void	close_all_fd(t_chris *lst);
+void	close_all_fd(t_exec *lst);
 
 #endif

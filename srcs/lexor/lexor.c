@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:51 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/07/01 11:14:21 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <lexor.h>
 #include <minishell.h>
 
-int	arg_format(t_chris **f_chris, t_init *lst, t_chris *node)
+int	arg_format(t_exec **f_exec, t_init *lst, t_exec *node)
 {
 	int		i;
 	char	**array;
@@ -24,7 +24,7 @@ int	arg_format(t_chris **f_chris, t_init *lst, t_chris *node)
 	array = ft_calloc(sizeof(char *), ft_array_len(node->cmd) + 2);
 	if (!array)
 	{
-		ft_chrisclear(f_chris);
+		ft_execclear(f_exec);
 		return (0);
 	}
 	while (node->cmd && node->cmd[i])
@@ -35,7 +35,7 @@ int	arg_format(t_chris **f_chris, t_init *lst, t_chris *node)
 	array[i] = ft_strdup(lst->str);
 	if (!array[i])
 	{
-		ft_chrisclear(f_chris);
+		ft_execclear(f_exec);
 		return (0);
 	}
 	try_free(node->cmd);
@@ -43,7 +43,7 @@ int	arg_format(t_chris **f_chris, t_init *lst, t_chris *node)
 	return (1);
 }
 
-int	select_in_out(t_chris **f_chris, t_init *lst, t_chris *node,
+int	select_in_out(t_exec **f_exec, t_init *lst, t_exec *node,
 		t_minishell *minish)
 {
 	int	*fd;
@@ -67,39 +67,39 @@ int	select_in_out(t_chris **f_chris, t_init *lst, t_chris *node,
 	}
 	else if ((*fd) == -2)
 	{
-		ft_chrisclear(f_chris);
+		ft_execclear(f_exec);
 		return (-2);
 	}
 	return (1);
 }
 
-t_chris	*creat_chris_node(t_chris **f_chris, t_init *lst, t_minishell *minish)
+t_exec	*creat_exec_node(t_exec **f_exec, t_init *lst, t_minishell *minish)
 {
-	t_chris	*n_node;
+	t_exec	*n_node;
 
-	n_node = ft_chrisnew();
+	n_node = ft_execnew();
 	if (!n_node)
 	{
-		ft_chrisclear(f_chris);
+		ft_execclear(f_exec);
 		return (NULL);
 	}
-	if (!f_chris)
-		creat_chris(&n_node, lst, n_node, minish);
+	if (!f_exec)
+		creat_exec(&n_node, lst, n_node, minish);
 	else
-		creat_chris(f_chris, lst, n_node, minish);
+		creat_exec(f_exec, lst, n_node, minish);
 	return (n_node);
 }
 
-t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node,
+t_exec	*creat_exec(t_exec **f_exec, t_init *lst, t_exec *node,
 		t_minishell *minish)
 {
 	if (!lst)
 		return (NULL);
 	if (!node && !lst->error)
-		return (creat_chris_node(f_chris, lst, minish));
+		return (creat_exec_node(f_exec, lst, minish));
 	else if (lst->type == ARG)
 	{
-		if (!arg_format(f_chris, lst, node))
+		if (!arg_format(f_exec, lst, node))
 		{
 			error_handle(MALLOC_ERROR, minish, NULL, NULL);
 			return (NULL);
@@ -108,21 +108,21 @@ t_chris	*creat_chris(t_chris **f_chris, t_init *lst, t_chris *node,
 	else if (lst->type == OUT_A || lst->type == OUT_T || lst->type == INFILE
 		|| lst->type == HEREDOC)
 	{
-		if (select_in_out(f_chris, lst, node, minish) == -2)
+		if (select_in_out(f_exec, lst, node, minish) == -2)
 			return (NULL);
 	}
 	if (lst->type == PIPE)
-		ft_chrisadd_back(&node, creat_chris(f_chris, lst->next, NULL, minish));
+		ft_execadd_back(&node, creat_exec(f_exec, lst->next, NULL, minish));
 	else
-		creat_chris(f_chris, lst->next, node, minish);
-	if (!f_chris && node)
-		ft_chrisclear(&node);
+		creat_exec(f_exec, lst->next, node, minish);
+	if (!f_exec && node)
+		ft_execclear(&node);
 	return (node);
 }
 
-t_chris	*chris_lexor(char *rl_args, t_minishell *minish)
+t_exec	*exec_lexor(char *rl_args, t_minishell *minish)
 {
-	t_chris	*c_lst;
+	t_exec	*c_lst;
 	t_init	*lst;
 
 	if (!check_rl_args(rl_args, minish))
@@ -137,7 +137,7 @@ t_chris	*chris_lexor(char *rl_args, t_minishell *minish)
 	lst = check_init_args(NULL, NULL, lst, minish);
 	if (!lst)
 		return (NULL);
-	c_lst = creat_chris(NULL, lst, NULL, minish);
+	c_lst = creat_exec(NULL, lst, NULL, minish);
 	ft_initclear(&lst);
 	if (!c_lst)
 		return (NULL);

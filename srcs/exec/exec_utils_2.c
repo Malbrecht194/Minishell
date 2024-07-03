@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malbrech <malbrech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 13:29:30 by malbrech          #+#    #+#             */
-/*   Updated: 2024/06/18 13:31:31 by malbrech         ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	close_all_fd(t_chris *lst)
+void	close_all_fd(t_exec *lst)
 {
 	while (lst)
 	{

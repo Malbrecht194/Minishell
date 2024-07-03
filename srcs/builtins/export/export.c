@@ -6,7 +6,7 @@
 /*   By: mhaouas <mhaouas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:57:49 by mhaouas           #+#    #+#             */
-/*   Updated: 2024/06/25 18:08:46 by mhaouas          ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:49 by mhaouas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	cat_env(char ***env, char *av, int b_count, int *error)
 	}
 }
 
-int	no_arg(t_chris *cmd, t_minishell *minish)
+int	no_arg(t_exec *cmd, t_minishell *minish)
 {
 	char	**n_arg;
 
@@ -114,7 +114,7 @@ int	export_type(char **av, char ***env, t_minishell *minish)
 	return (error);
 }
 
-int	ft_export(int ac, char **av, t_chris *cmd, t_minishell *minish)
+int	ft_export(int ac, char **av, t_exec *cmd, t_minishell *minish)
 {
 	int		error;
 
